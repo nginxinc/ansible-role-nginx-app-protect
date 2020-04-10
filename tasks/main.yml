@@ -1,0 +1,12 @@
+---
+# tasks file for ansible-role-nginx-app-protect
+
+- name: Get package facts
+  package_facts:
+    manager: "auto"
+- name: Set NGINX Plus version
+  set_fact:
+    nginx_plus_version: "{{ ansible_facts.packages['nginx-plus']|
+                            map(attribute='version')|
+                            list }}"
+  when: "'nginx-plus' in ansible_facts.packages"
