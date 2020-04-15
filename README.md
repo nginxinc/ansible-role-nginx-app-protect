@@ -41,66 +41,56 @@ The NGINX Ansible role supports all platforms supported by [NGINX Plus](https://
 **NGINX Plus**
 
 ```yaml
-Alpine:
-  versions:
-    - 3.8
-    - 3.9
-    - 3.10
-Amazon Linux:
-  versions:
-    - 2018.03
-Amazon Linux 2:
-  versions:
-    - LTS
 CentOS:
   versions:
-    - 6.5+
-    - 7.4+
-    - 8
-Debian:
-  versions:
-    - stretch
-    - buster
-FreeBSD:
-  versions:
-    - 11.2+
-    - 12
-Oracle Linux:
-  versions:
-    - 6.5+
-    - 7.4+
-RedHat:
-  versions:
-    - 6.5+
-    - 7.4+
-    - 8
-SUSE/SLES:
-  versions:
-    - 12
-    - 15
-Ubuntu:
-  versions:
-    - xenial
-    - bionic
+    - 7.4
 ```
 
 Role Variables
 --------------
 
-This role has multiple variables. The descriptions and defaults for all these variables can be found in the directory **`defaults/main`** in the following files:
+This role has multiple variables. The descriptions and defaults for all these variables can be found in the **[defaults/main.yml](./defaults/main.yml)`**.
 
--   **[defaults/main/main.yml](./defaults/main/main.yml):** NGINX installation variables
--   **[defaults/main/upload.yml](./defaults/main/upload.yml):** NGINX configuration/HTML/SSL upload variables
--   **[defaults/main/linux.yml](./defaults/main/linux.yml):** Linux installation variables
--   **[defaults/main/bsd.yml](./defaults/main/bsd.yml):** BSD installation variables
 
 Dependencies
 ------------
 
-None
+Since this role uses the [package_facts](https://docs.ansible.com/ansible/latest/modules/package_facts_module.html) module, on debian-based systems the `python-apt` package must be installed on targeted hosts.
 
 Example Playbook
 ----------------
+
+
+This is a sample playbook file for using the role to install NGINX App Protect on NGINX Plus and configure it using basic settings to all `wafs` inventory hosts.
+
+```yaml
+---
+- hosts: wafs
+  become: true
+  vars:
+    # Installs NGINX App Protect and all dependencies to the target host
+    app_protect_install: true
+
+    # Creates basic configuration files and enables NGINX App Protect on the target host
+    app_protect_configure: true
+
+    # For use with the app_protect_configure option to determine if the default security policy will be written to the target host
+    app_protect_security_policy_template_enable: true
+
+    # For use with the app_protect_configure option to determine if the default log policy will be written to the target host
+    app_protect_log_policy_template_enable: true
+
+    # For use with the app_protect_configure option to determine if the sample nginx.conf will be written to the target host. 
+    # Since this can be dangerous, this value is default to false in the role defaults
+    nginx_conf_template_enable: true
+
+    # For use with the app_protect_configure option to determine the syslog target to be injected 
+    # into the default log policy that will be written to the target host
+    log_policy_syslog_target: 10.1.1.8:5144
+
+  roles:
+    - role: ansible-role-nginx-app-protect
+```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX App Protect role in a localhost and installing NGINX App Protect on NGINX Plus.
 

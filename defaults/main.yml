@@ -1,2 +1,43 @@
 ---
 # defaults file for ansible-role-nginx-app-protect
+
+app_protect_install: true
+app_protect_configure: true
+
+tmp_dir: /tmp/app-protect
+cleanup_when_done: true
+
+# Start NGINX service.
+# Default is true.
+nginx_start: true
+
+# populate this dictionary of lists with appropriate values from the ansible_os_family and ansible_distribution_version facts
+app_protect_linux_families:
+  RedHat:
+    - 7.4
+
+app_protect_security_policy_template_enable: true
+app_protect_security_policy_template:
+  template_file: app-protect-security-policy.j2
+  out_file_name: app-protect-security-policy.json
+  out_file_location: /etc/nginx/
+
+app_protect_log_policy_template_enable: true
+app_protect_log_policy_template:
+  template_file: app-protect-log-policy.j2
+  out_file_name: app-protect-log-policy.json
+  out_file_location: /etc/nginx/
+
+nginx_conf_template_enable: false
+nginx_conf_template:
+  template_file: nginx.conf.j2
+  out_file_name: nginx.conf
+  out_file_location: /etc/nginx/
+
+# possible values: transparent, blocking
+security_policy_enforcement_mode: transparent
+
+# possible values: TBD
+log_policy_filter_request_type: all
+
+log_policy_syslog_target: 127.0.0.1:514

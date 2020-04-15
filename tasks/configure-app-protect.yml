@@ -1,0 +1,40 @@
+---
+- name: "Ensure NGINX Main Directory Exists"
+  file:
+    path: "{{ nginx_conf_template.out_file_location}}"
+    state: directory
+  when: app_protect_security_policy_template_enable or app_protect_log_policy_template_enable or nginx_conf_template_enable
+
+- name: Backup existing nginx.conf
+  copy:
+    src: "{{ nginx_conf_template.out_file_location }}{{ nginx_conf_template.out_file_name }}"
+    dest: "{{ nginx_conf_template.out_file_location }}{{ nginx_conf_template.out_file_name }}.orig"
+    remote_src: yes
+  when: nginx_conf_template_enable
+
+- name: "Dynamically Generate NGINX App Protect security policy file"
+  template:
+    src: "{{ app_protect_security_policy_template.template_file }}"
+    dest: "{{ app_protect_security_policy_template.out_file_location }}{{ app_protect_security_policy_template.out_file_name }}"
+    backup: yes
+  when: app_protect_security_policy_template_enable
+
+- name: "Dynamically Generate NGINX App Protect log policy file"
+  template:
+    src: "{{ app_protect_log_policy_template.template_file }}"
+    dest: "{{ app_protect_log_policy_template.out_file_location }}{{ app_protect_log_policy_template.out_file_name }}"
+    backup: yes
+  when: app_protect_log_policy_template_enable
+
+- name: "Dynamically Generate NGINX conf file"
+  template:
+    src: "{{ nginx_conf_template.template_file }}"
+    dest: "{{ nginx_conf_template.out_file_location }}{{ nginx_conf_template.out_file_name }}"
+    backup: yes
+  when: nginx_conf_template_enable
+
+- name: "Reload NGINX"
+  debug:
+    msg: "trigger nginx reloaded if needed"
+  notify: "(Handler: All OSs) Reload NGINX"
+  changed_when: app_protect_security_policy_template_enable or app_protect_log_policy_template_enable or nginx_conf_template_enable
