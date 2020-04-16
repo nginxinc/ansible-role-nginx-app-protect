@@ -73,26 +73,21 @@
     use_regex: true
     patterns:
       - "^(?!.*nginx-plus-{{ app_protect_version }}).*\\.rpm$"
-  register: rpm_files
+  register: rpm_files_dict
 
-- name: Install f5 packages
-  package:
-    name: "{{ rpm_files | select('match', '^f5.*.rpm$') | list }}"
-    state: present
+- name: Remap list to just filenames
+  set_fact:
+    key_value: "" # appeasing the linter
+    rpm_files: "{{ rpm_files_dict.files | map(attribute='path' | basename) | list }}"
 
-- name: Install app-protect dependency packages
-  package:
-    name: "{{ rpm_files | select('match', '^app-protect-[^\\d].*\\.rpm$') | list }}"
-    state: present
+- name: Debug rpm files found
+  debug:
+    msg: "rpm files found: {{ rpm_files }}"
+    verbosity: 2
 
-- name: Install app-protect NGINX+ module package
+- name: Install packages
   package:
-    name: "{{ rpm_files | select('match', '^nginx-plus-module-appprotect-.*\\.rpm$') | list }}"
-    state: present
-
-- name: Install app-protect core package
-  package:
-    name: "{{ rpm_files | select('match', '^app-protect-\\d{2,3}.*\\.rpm$') | list }}"
+    name: "{{ rpm_files }}"
     state: present
 
 - name: Disable SELinux

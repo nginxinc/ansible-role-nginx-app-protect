@@ -55,7 +55,9 @@ This role has multiple variables. The descriptions and defaults for all these va
 Dependencies
 ------------
 
-Since this role uses the [package_facts](https://docs.ansible.com/ansible/latest/modules/package_facts_module.html) module, on debian-based systems the `python-apt` package must be installed on targeted hosts.
+- Since this role uses the [package_facts](https://docs.ansible.com/ansible/latest/modules/package_facts_module.html) module, on debian-based systems the `python-apt` package must be installed on targeted hosts.
+
+- NGINX+ R18-R20 must already be installed on the target system 
 
 Example Playbook
 ----------------
