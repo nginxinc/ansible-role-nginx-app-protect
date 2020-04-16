@@ -4,7 +4,7 @@ Ansible NGINX Role
 <!-- [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx) -->
 <!-- [![Build Status](https://travis-ci.org/nginxinc/ansible-role-nginx-app-protect.svg?branch=master)](https://travis-ci.org/nginxinc/ansible-role-nginx-app-protect) -->
 
-This role installs and configures NGINX App Protect (WAF) for NGINX Plus, on your target host.
+This role installs and configures NGINX App Protect (WAF) for NGINX Plus on your target host.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
