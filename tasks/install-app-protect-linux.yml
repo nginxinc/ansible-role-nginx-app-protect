@@ -36,8 +36,8 @@
     that:
       - nginx_plus_version is defined
       - nginx_plus_version | int >= 18
-    fail_msg: "'nginx_plus_version' release version must be a minimum of 18 for App Protect. Actual: {{ nginx_plus_version }}"
-    success_msg: "'nginx_plus_version' is {{ nginx_plus_version }}"
+    fail_msg: "'nginx_plus_version' release version must be a minimum of 18 for App Protect. Actual: {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
+    success_msg: "'nginx_plus_version' is {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
     quiet: true
 
 - name: Fail if app protect zip doesn't not match detected NGINX+ version
@@ -62,8 +62,8 @@
 - name: Unarchive the App Protect package file that is already on the remote machine
   unarchive:
     src: "{{ install_zip }}"
-    dest: "{{ tmp_dir }}"
-    remote_src: yes
+    dest: "{{ tmp_dir }}/"
+    remote_src: true
 
 - name: Display paths of all .rpm files in dir; exclude NGINX+ installer
   find:
@@ -93,6 +93,21 @@
 - name: Disable SELinux
   selinux:
     state: disabled
+
+- name: "Start NGINX App Protect"
+  service:
+    name: nginx-app-protect
+    state: started
+    enabled: yes
+  when:
+    - not ansible_check_mode
+
+- name: "Start NGINX"
+  service:
+    name: nginx
+    state: reloaded
+  when:
+    - not ansible_check_mode
 
 - name: Recursively remove extracted directory
   file:
