@@ -77,18 +77,38 @@ This is a sample playbook file for using the role to install NGINX App Protect o
     app_protect_configure: true
 
     # For use with the app_protect_configure option to determine if the default security policy will be written to the target host
+    # Used when `app_protect_configure: true`.
     app_protect_security_policy_template_enable: true
 
-    # For use with the app_protect_configure option to determine if the default log policy will be written to the target host
+    # Default app protect enforcement mode. Values can be `blocking` or `transparent`. 
+    # Used when `app_protect_configure: true` and `app_protect_security_policy_template_enable: true`.
+    security_policy_enforcement_mode: blocking
+
+    # For use with the app_protect_configure option to determine if the default log policy will be written to the target host.
+    # Used when `app_protect_configure: true`.
     app_protect_log_policy_template_enable: true
 
+    # Which violation types to log. Possible values: TBD
+    # Used when `app_protect_configure: true` and `app_protect_log_policy_template_enable: true`.
+    log_policy_filter_request_type: all
+
     # For use with the app_protect_configure option to determine if the sample nginx.conf will be written to the target host. 
-    # Since this can be dangerous, this value is default to false in the role defaults
+    # Since this can be dangerous, this value is default to false in the role defaults.
+    # Used when `app_protect_configure: true`.
     nginx_conf_template_enable: true
 
     # For use with the app_protect_configure option to determine the syslog target to be injected 
-    # into the default log policy that will be written to the target host
+    # into the default log policy that will be written to the target host. 
+    # Used when `nginx_conf_template_enable: true`.
     log_policy_syslog_target: 10.1.1.8:5144
+
+    # DEPRECATED: A proxy pass workload used in the sample nginx.conf for demo purposes.
+    # Will be removed from this role in the future. 
+    # Used when `nginx_conf_template_enable: true`.
+    nginx_demo_workload: http://10.1.10.105:8080
+
+    # Determines whether or not to clean up tmp files created during the installation and configuration steps.
+    cleanup_when_done: true
 
   roles:
     - role: ansible-role-nginx-app-protect
