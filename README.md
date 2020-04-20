@@ -1,4 +1,6 @@
-Ansible NGINX Role
+![NGINX App Protect logo](images/nap-logo.png)
+
+Ansible NGINX App Protect Role
 ==================
 
 <!-- [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx) -->
