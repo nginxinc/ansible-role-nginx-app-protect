@@ -15,6 +15,10 @@ http {
     sendfile        on;
     keepalive_timeout  65;
 
+    upstream backend_hosts {
+        server {{ nginx_demo_workload_host }};
+    }
+
     server {
         listen       80;
         server_name  localhost;
@@ -28,7 +32,7 @@ http {
         location / {
             client_max_body_size 0;
             default_type text/html;
-            proxy_pass {{ nginx_demo_workload }}$request_uri;
+            proxy_pass {{ nginx_demo_workload_protocol }}backend_hosts$request_uri;
         }
     }
 }

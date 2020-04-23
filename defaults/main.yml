@@ -41,4 +41,6 @@ security_policy_enforcement_mode: transparent
 log_policy_filter_request_type: all
 
 log_policy_syslog_target: 127.0.0.1:514
-nginx_demo_workload: http://10.1.1.1:8080
+
+nginx_demo_workload_protocol: http://
+nginx_demo_workload_host: 10.1.1.1:8080
