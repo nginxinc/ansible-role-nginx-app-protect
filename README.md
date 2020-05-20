@@ -37,15 +37,34 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx-app-protect.git` t
 Platforms
 ---------
 
-The NGINX Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/):
-
-
-**NGINX Plus**
+The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list:
 
 ```yaml
 CentOS:
   versions:
     - 7.4
+    - 7.5
+    - 7.6
+    - 7.7
+    - 7.8
+    - 8.0
+    - 8.1
+    - 8.2
+Debian:
+  versions:
+    - 9.0
+    - 9.1
+    - 9.2
+    - 9.3
+    - 9.4
+    - 9.5
+    - 9.6
+    - 9.7
+    - 9.8
+    - 9.9
+    - 9.10
+    - 9.11
+    - 9.12
 ```
 
 Role Variables
@@ -59,7 +78,7 @@ Dependencies
 
 - Since this role uses the [package_facts](https://docs.ansible.com/ansible/latest/modules/package_facts_module.html) module, on debian-based systems the `python-apt` package must be installed on targeted hosts.
 
-- NGINX+ R18-R20 must already be installed on the target system 
+- NGINX+ R19-R21 must already be installed on the target system 
 
 Example Playbook
 ----------------
@@ -73,10 +92,25 @@ This is a sample playbook file for using the role to install NGINX App Protect o
   become: true
   vars:
     # Installs NGINX App Protect and all dependencies to the target host
-    app_protect_install: true
+    app_protect_enable: true
+
+    # Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
+    # Can be used with `app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
+    # Using 'present' will install the latest version (or 'app_protect_version') of NGINX App Protect on a fresh install.
+    # Using 'latest' will upgrade NGINX App Protect to the latest version (that matches your 'app_protect_version') of NGINX App Protect on every playbook execution.
+    # Using 'absent' will remove NGINX App Protect from your system.
+    # Default is present.
+    app_protect_state: present
+
+    # The installation of NGINX App Protect includes a base signature set, which may be out of date. 
+    # This option installs the latest NGINX App Protect signatures.
+    app_protect_install_signatures: true
 
     # Creates basic configuration files and enables NGINX App Protect on the target host
     app_protect_configure: true
+
+    # Removes the license (certificate and key) for the NGINX App Protect repositories on the target host(s) when playbook run is complete.
+    app_protect_delete_license: true
 
     # For use with the app_protect_configure option to determine if the default security policy will be written to the target host
     # Used when `app_protect_configure: true`.
@@ -90,7 +124,7 @@ This is a sample playbook file for using the role to install NGINX App Protect o
     # Used when `app_protect_configure: true`.
     app_protect_log_policy_template_enable: true
 
-    # Which violation types to log. Possible values: TBD
+    # Which violation types to log. Possible values: all, illegal, blocked
     # Used when `app_protect_configure: true` and `app_protect_log_policy_template_enable: true`.
     log_policy_filter_request_type: all
 
@@ -109,8 +143,10 @@ This is a sample playbook file for using the role to install NGINX App Protect o
     # Used when `nginx_conf_template_enable: true`.
     nginx_demo_workload: http://10.1.10.105:8080
 
-    # Determines whether or not to clean up tmp files created during the installation and configuration steps.
-    cleanup_when_done: true
+    # The location of the certificate and key to be used when downloading the packages onto the host
+    nginx_license: 
+      certificate: "{{playbook_dir}}/license/nginx-repo.crt"
+      key: "{{playbook_dir}}/license/nginx-repo.key"
 
   roles:
     - role: ansible-role-nginx-app-protect

@@ -1,0 +1,5 @@
+---
+- name: "(Install: Debian) Install Required Debian Dependencies"
+  package:
+    name: apt-transport-https, lsb-release, ca-certificates
+    state: present

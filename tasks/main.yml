@@ -1,30 +1,63 @@
 ---
-- name: set supported_os when platform and version are in supported platforms dictionary
+- name: Get package facts
+  package_facts:
+    manager: "auto"
+
+- name: Set supported_os when platform and version are in supported platforms dictionary
   set_fact:
     key_value: "" # appeasing the linter
     supported_os: true
   loop: "{{ query('dict', app_protect_linux_families) }}"
-  when: ansible_os_family in item.key and ansible_distribution_version | float in item.value
+  when: ansible_distribution in item.key and ansible_distribution_version | float in item.value
 
-- name: set supported_os to false if fact not defined
+- name: Set supported_os to false if fact not defined
   set_fact:
     key_value: "" # appeasing the linter
     supported_os: false
   when: supported_os is not defined
 
-- name: debug supported os
+- name: Debug supported os
   debug:
     msg: "supported_os {{ supported_os }}"
     verbosity: 2
 
 - name: Abort if the OS/version combination is not supported
   fail:
-    msg: "NGINX App Protect is not supported on os family {{ ansible_os_family }} version {{ ansible_distribution_version }}"
+    msg: "NGINX App Protect is not supported on os family {{ ansible_distribution }} version {{ ansible_distribution_version }}"
   when: not supported_os
 
-- name: "(Install: Linux) Install NGINX Plus App Protect"
-  include_tasks: install-app-protect-linux.yml
-  when: supported_os and app_protect_install
+- include_tasks: prerequisites/install-prerequisites.yml
+  tags: nginx_prerequisites
+
+- import_tasks: keys/apt-key.yml
+  when:
+    - ansible_os_family == "Debian"
+    - app_protect_install_signatures
+  tags: nginx_aptkey
+
+- import_tasks: keys/rpm-key.yml
+  when:
+    - ansible_os_family == "RedHat"
+    - app_protect_install_signatures
+  tags: nginx_rpmkey
+
+- name: "(All OSs) Setup license"
+  include_tasks: setup-license.yml
+  when: app_protect_enable or app_protect_install_signatures
+
+- name: "NGINX App Protect"
+  include_tasks: install-app-protect.yml
+  when: supported_os and app_protect_enable
+
+- name: "NGINX App Protect Signatures"
+  include_tasks: install-signatures.yml
+  when: supported_os and app_protect_install_signatures
+
+- name: "Remove license"
+  include_tasks: delete-license.yml
+  when:
+    - app_protect_delete_license
+  tags: app_protect_delete_license
 
 - name: "Configure NGINX Plus App Protect"
   include_tasks: configure-app-protect.yml

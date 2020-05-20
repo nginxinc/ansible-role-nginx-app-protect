@@ -1,0 +1,17 @@
+---
+- name: "(Setup: All OSs) Set NGINX App Protect License State"
+  set_fact:
+    key_value: "" # appeasing the linter
+    nginx_license_status: absent
+
+- name: "(Setup: All OSs) Delete NGINX App Protect License"
+  file:
+    path: /etc/ssl/nginx
+    state: absent
+  when: ansible_distribution != "Alpine"
+
+- import_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
+
+- import_tasks: setup-redhat.yml
+  when: ansible_os_family == "RedHat"

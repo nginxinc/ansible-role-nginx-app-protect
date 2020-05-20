@@ -9,28 +9,28 @@
   copy:
     src: "{{ nginx_conf_template.out_file_location }}{{ nginx_conf_template.out_file_name }}"
     dest: "{{ nginx_conf_template.out_file_location }}{{ nginx_conf_template.out_file_name }}.orig"
-    remote_src: yes
+    remote_src: true
   when: nginx_conf_template_enable
 
 - name: "Dynamically Generate NGINX App Protect security policy file"
   template:
     src: "{{ app_protect_security_policy_template.template_file }}"
     dest: "{{ app_protect_security_policy_template.out_file_location }}{{ app_protect_security_policy_template.out_file_name }}"
-    backup: yes
+    backup: true
   when: app_protect_security_policy_template_enable
 
 - name: "Dynamically Generate NGINX App Protect log policy file"
   template:
     src: "{{ app_protect_log_policy_template.template_file }}"
     dest: "{{ app_protect_log_policy_template.out_file_location }}{{ app_protect_log_policy_template.out_file_name }}"
-    backup: yes
+    backup: true
   when: app_protect_log_policy_template_enable
 
 - name: "Dynamically Generate NGINX conf file"
   template:
     src: "{{ nginx_conf_template.template_file }}"
     dest: "{{ nginx_conf_template.out_file_location }}{{ nginx_conf_template.out_file_name }}"
-    backup: yes
+    backup: true
   when: nginx_conf_template_enable
 
 - name: "Reload NGINX"

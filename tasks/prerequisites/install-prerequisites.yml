@@ -1,0 +1,13 @@
+---
+- name: Debug ansible_distribution
+  debug:
+    msg: "ansible_distribution {{ ansible_distribution }}"
+    verbosity: 2
+
+- name: "(Setup: Debian) Install Prerequisites"
+  import_tasks: setup-debian.yml
+  when: ansible_distribution == "Debian"
+
+- name: "(Setup: CentOS) Install Prerequisites"
+  import_tasks: setup-centos.yml
+  when: ansible_distribution == "CentOS"
