@@ -9,7 +9,7 @@
   package:
     name: "app-protect{{ nginx_version | default('') }}"
     state: "{{ app_protect_state }}"
-  notify: "(Handler: All OSs) Start NGINX"
+  notify: "(Handler: All OSs) Restart NGINX"
 
 # - name: "Start NGINX App Protect"
 #   service:

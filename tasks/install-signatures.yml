@@ -18,4 +18,4 @@
   package:
     name: "app-protect-attack-signatures"
     state: "{{ app_protect_state }}"
-  notify: "(Handler: All OSs) Start NGINX"
+  notify: "(Handler: All OSs) Restart NGINX"

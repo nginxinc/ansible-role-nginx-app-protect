@@ -9,10 +9,10 @@
         state: started
         enabled: true
 
-    - name: "(Handler: All OSs) Reload NGINX"
+    - name: "(Handler: All OSs) Restart NGINX"
       service:
         name: nginx
-        state: reloaded
+        state: restarted
 
   when:
     - nginx_start | bool

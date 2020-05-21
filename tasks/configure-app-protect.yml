@@ -35,6 +35,6 @@
 
 - name: "Reload NGINX"
   debug:
-    msg: "trigger nginx reloaded if needed"
-  notify: "(Handler: All OSs) Reload NGINX"
+    msg: "trigger nginx reload if needed"
+  notify: "(Handler: All OSs) Restart NGINX"
   changed_when: app_protect_security_policy_template_enable or app_protect_log_policy_template_enable or nginx_conf_template_enable
