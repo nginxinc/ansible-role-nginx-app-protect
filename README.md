@@ -1,4 +1,4 @@
-![NGINX App Protect logo](images/nap-logo.png)
+<img src="images/nap-logo.png" width="60">
 
 NGINX App Protect Ansible Role
 ==============================
