@@ -20,7 +20,7 @@ app_protect_state: present
 app_protect_install_signatures: true
 
 # Creates basic configuration files and enables NGINX App Protect on the target host
-app_protect_configure: true
+app_protect_configure: false
 
 # Removes the license (certificate and key) for the NGINX App Protect repositories on the target host(s) when playbook run is complete.
 app_protect_delete_license: true
