@@ -1,122 +1,27 @@
 ---
-- name: Check that the NGINX App Protect install zip exists locally
-  stat:
-    path: "{{ install_zip}}"
-  register: local_install_zip_stat
-  connection: local
+- import_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
 
-- name: Check preconditions
-  assert:
-    that:
-      - "local_install_zip_stat.stat.exists == true"
-    quiet: true
+- import_tasks: setup-redhat.yml
+  when: ansible_os_family == "RedHat"
 
-- name: Copy NGINX App Protect install zip to host
-  copy:
-    src: "{{ install_zip }}"
-    dest: "{{ install_zip }}"
-
-- name: Get package facts
-  package_facts:
-    manager: "auto"
-
-- name: Set zip version number
-  set_fact:
-    key_value: "" # appeasing the linter
-    app_protect_version: "{{ install_zip | regex_search('(\\d+)') }}"
-
-- name: Set NGINX Plus version
-  set_fact:
-    key_value: "" # appeasing the linter
-    nginx_plus_version: "{{ ansible_facts.packages['nginx-plus'] | map(attribute='version') | list | first | regex_search('^(\\d{1,3})') }}"
-  when: "'nginx-plus' in ansible_facts.packages"
-
-- name: Fail if NGINX+ version preconditions fail
-  assert:
-    that:
-      - nginx_plus_version is defined
-      - nginx_plus_version | int >= 18
-    fail_msg: "'nginx_plus_version' release version must be a minimum of 18 for App Protect. Actual: {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
-    success_msg: "'nginx_plus_version' is {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
-    quiet: true
-
-- name: Fail if app protect zip doesn't not match detected NGINX+ version
-  assert:
-    that:
-      - app_protect_version is defined
-      - nginx_plus_version | int == app_protect_version | int
-    fail_msg: "'nginx_plus_version' {{ nginx_plus_version }} must match the NGINX App Protect version {{ app_protect_version }}"
-    success_msg: "'nginx_plus_version' is {{ nginx_plus_version }} and 'app_protect_version' is {{ app_protect_version }}"
-    quiet: true
-
-- name: Install epel-release, unzip and openssl packages
+- name: "(Install: Linux) Install NGINX App Protect"
   package:
-    name: epel-release, unzip, openssl
-    state: present
+    name: "app-protect{{ nginx_version | default('') }}"
+    state: "{{ app_protect_state }}"
+  notify: "(Handler: All OSs) Restart NGINX"
 
-- name: Create a directory if it does not exist
-  file:
-    path: "{{ tmp_dir }}"
-    state: directory
+# - name: "Start NGINX App Protect"
+#   service:
+#     name: nginx-app-protect
+#     state: started
+#     enabled: true
+#   when:
+#     - not ansible_check_mode
 
-- name: Unarchive the App Protect package file that is already on the remote machine
-  unarchive:
-    src: "{{ install_zip }}"
-    dest: "{{ tmp_dir }}/"
-    remote_src: true
-
-- name: Display paths of all .rpm files in dir; exclude NGINX+ installer
-  find:
-    paths: 
-      - "{{ tmp_dir }}"
-    file_type: file
-    use_regex: true
-    patterns:
-      - "^(?!.*nginx-plus-{{ app_protect_version }}).*\\.rpm$"
-  register: rpm_files_dict
-
-- name: Remap list to just filenames
-  set_fact:
-    key_value: "" # appeasing the linter
-    rpm_files: "{{ rpm_files_dict.files | map(attribute='path' | basename) | list }}"
-
-- name: Debug rpm files found
-  debug:
-    msg: "rpm files found: {{ rpm_files }}"
-    verbosity: 2
-
-- name: Install packages
-  package:
-    name: "{{ rpm_files }}"
-    state: present
-
-- name: Disable SELinux
-  selinux:
-    state: disabled
-
-- name: "Start NGINX App Protect"
-  service:
-    name: nginx-app-protect
-    state: started
-    enabled: yes
-  when:
-    - not ansible_check_mode
-
-- name: "Start NGINX"
-  service:
-    name: nginx
-    state: reloaded
-  when:
-    - not ansible_check_mode
-
-- name: Recursively remove extracted directory
-  file:
-    path: "{{ tmp_dir }}"
-    state: absent
-  when: cleanup_when_done
-
-- name: Remove source zip
-  file:
-    path: "{{ install_zip }}"
-    state: absent
-  when: cleanup_when_done
+# - name: "Start NGINX"
+#   service:
+#     name: nginx
+#     state: reloaded
+#   when:
+#     - not ansible_check_mode

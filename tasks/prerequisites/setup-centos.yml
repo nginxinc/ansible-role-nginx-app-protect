@@ -1,0 +1,10 @@
+---
+- name: "(Install: CentOS) Install Required CentOS Dependencies"
+  package:
+    name: ca-certificates, epel-release
+    state: present
+
+# TODO: make this surgical rather than disabling SELinux globally
+- name: Disable SELinux
+  selinux:
+    state: disabled

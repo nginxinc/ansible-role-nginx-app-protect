@@ -1,20 +1,63 @@
 ---
 # defaults file for ansible-role-nginx-app-protect
 
-app_protect_install: true
-app_protect_configure: true
+# Installs NGINX App Protect and all dependencies to the target host
+app_protect_enable: true
 
-tmp_dir: /tmp/app-protect
-cleanup_when_done: true
+# Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
+# Can be used with `app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
+# Using 'present' will install the latest version (or 'app_protect_version') of NGINX App Protect on a fresh install.
+# Using 'latest' will upgrade NGINX App Protect to the latest version (that matches your 'app_protect_version') of NGINX App Protect on every playbook execution.
+# Using 'absent' will remove NGINX App Protect from your system.
+# Default is present.
+app_protect_state: present
 
-# Start NGINX service.
+# # OPTIONAL - Installs a specific version of NGINX App Protect
+# app_protect_version: 20
+
+# The installation of NGINX App Protect includes a base signature set, which may be out of date. 
+# This option installs the latest NGINX App Protect signatures.
+app_protect_install_signatures: true
+
+# Creates basic configuration files and enables NGINX App Protect on the target host
+app_protect_configure: false
+
+# Removes the license (certificate and key) for the NGINX App Protect repositories on the target host(s) when playbook run is complete.
+app_protect_delete_license: true
+
+# Start/Restart NGINX service when App Protect related changes are complete.
 # Default is true.
 nginx_start: true
 
+# Choose where to fetch the NGINX App Protect signing key from.
+# Default is the official NGINX App Protect signing key host.
+# app_protect_signing_key: https://cs.nginx.com/static/keys/app-protect.key
+
 # populate this dictionary of lists with appropriate values from the ansible_os_family and ansible_distribution_version facts
 app_protect_linux_families:
-  RedHat:
+  CentOS:
     - 7.4
+    - 7.5
+    - 7.6
+    - 7.7
+    - 7.8
+    - 8.0
+    - 8.1
+    - 8.2
+  Debian:
+    - 9.0
+    - 9.1
+    - 9.2
+    - 9.3
+    - 9.4
+    - 9.5
+    - 9.6
+    - 9.7
+    - 9.8
+    - 9.9
+    - 9.10
+    - 9.11
+    - 9.12
 
 app_protect_security_policy_template_enable: true
 app_protect_security_policy_template:
@@ -37,7 +80,7 @@ nginx_conf_template:
 # possible values: transparent, blocking
 security_policy_enforcement_mode: transparent
 
-# possible values: TBD
+# possible values: all, illegal, blocked
 log_policy_filter_request_type: all
 
 log_policy_syslog_target: 127.0.0.1:514

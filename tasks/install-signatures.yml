@@ -1,0 +1,21 @@
+---
+- name: Get NGINX Plus version
+  set_fact:
+    key_value: "" # appeasing the linter
+    nginx_plus_version: "{{ ansible_facts.packages['nginx-plus'] | map(attribute='version') | list | first | regex_search('^(\\d{1,3})') }}"
+  when: "'nginx-plus' in ansible_facts.packages"
+
+- name: Fail if NGINX+ version preconditions fail
+  assert:
+    that:
+      - nginx_plus_version is defined
+      - nginx_plus_version | int >= 19
+    fail_msg: "'nginx_plus_version' release version must be a minimum of 19 for App Protect. Actual: {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
+    success_msg: "'nginx_plus_version' is {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
+    quiet: true
+
+- name: "(Install: Linux) Install Latest NGINX App Protect Signatures"
+  package:
+    name: "app-protect-attack-signatures"
+    state: "{{ app_protect_state }}"
+  notify: "(Handler: All OSs) Restart NGINX"
