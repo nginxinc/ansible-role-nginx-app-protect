@@ -1,0 +1,38 @@
+# OSX leaves these everywhere on SMB shares
+._*
+
+# OSX trash
+.DS_Store
+
+# Eclipse files
+.classpath
+.project
+.settings/**
+
+# Emacs save files
+*~
+\#*\#
+.\#*
+
+# Vim-related files
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+
+# NGINX Plus license files
+*.crt
+*.key
+
+# Visual Studio Code settings
+.vscode
+
+# Default certificate and key
+default.pem
+
+# IntelliJ IDEA
+.idea
+
+# Scratch Directory
+scratch/
