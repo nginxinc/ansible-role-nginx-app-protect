@@ -89,4 +89,4 @@ nginx_demo_workload_protocol: http://
 nginx_demo_workload_host: 10.1.1.1:8080
 
 # Enable enforcing selinux (you may need to open ports on your own)
-nginx_selinux: true
+nginx_selinux: false
