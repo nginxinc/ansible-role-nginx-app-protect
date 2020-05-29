@@ -1,0 +1,106 @@
+---
+- name: "(Install: SELinux) Install Required CentOS Dependencies"
+  package:
+    name: policycoreutils-python, setools
+    state: present
+
+- name: "(Install: SELinux: Booleans) Allow HTTP network connection"
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+
+- name: "(Install: SELinux: Booleans) Allow HTTP relay connection"
+  seboolean:
+    name: httpd_can_network_relay
+    state: yes
+    persistent: yes
+
+- name: "(Install: SELinux: Booleans) Allow HTTP mod auth pam"
+  seboolean:
+    name: httpd_mod_auth_pam
+    state: yes
+    persistent: yes
+
+- name: "(Install: SELinux: Booleans) enable NIS"
+  seboolean:
+    name: nis_enabled
+    state: yes
+    persistent: yes
+
+- name: "(Install: SELinux: Contexts) App Protect Logs"
+  sefcontext:
+    target: '/var/log/app_protect(/.*)?'
+    setype: httpd_log_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Opt"
+  sefcontext:
+    target: '/opt/app_protect(/.*)?'
+    setype: httpd_var_run_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Pipe"
+  sefcontext:
+    target: '/opt/app_protect/pipe(/.*)?'
+    setype: httpd_initrc_exec_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Config"
+  sefcontext:
+    target: '/opt/app_protect/config(/.*)?'
+    setype: httpd_config_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect bin"
+  sefcontext:
+    target: '/opt/app_protect/bin(/.*)?'
+    setype: httpd_exec_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect lock"
+  sefcontext:
+    target: '/opt/app_protect/lock(/.*)?'
+    setype: httpd_lock_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Temp"
+  sefcontext:
+    target: '/opt/app_protect/temp(/.*)?'
+    setype: httpd_tmp_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Tmp"
+  sefcontext:
+    target: '/opt/app_protect/tmp(/.*)?'
+    setype: httpd_tmp_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) Apply contexts to opt"
+  command: restorecon -iRv /opt/app_protect
+
+- name: "(Install: SELinux: Contexts) Apply contexts to log"
+  command: restorecon -iRv /var/log/app_protect
+
+- name: "(Install: SELinux: Custom) Copy custom policy"
+  copy:
+    src: "{{ role_path }}/files/my-appprotect.te"
+    dest: /tmp/my-appprotect.te
+
+- name: "(Install: SELinux: Custom) Convert custom policy"
+  command: checkmodule -M -m -o /tmp/my-appprotect.mod /tmp/my-appprotect.te
+
+- name: "(Install: SELinux: Custom) Compile custom policy"
+  command: semodule_package -o /tmp/my-appprotect.pp -m /tmp/my-appprotect.mod
+
+- name: "(Install: SELinux: Custom) Apply custom policy"
+  command: semanage -i /tmp/my-appprotect.pp
+
+- name: "(Install: SELinux: Custom) Remove temporary files"
+  file:
+    path: /tmp/my-appprotect.*
+    state: absent
+
+- name: "(Install: SELinux) Enforce SELinux"
+  selinux:
+    state: enforcing

@@ -4,7 +4,10 @@
     name: ca-certificates, epel-release
     state: present
 
-# TODO: make this surgical rather than disabling SELinux globally
-- name: Disable SELinux
+- name: "(Install: CentOS) Disable SELinux"
   selinux:
-    state: disabled
+    state: permissive
+
+- name: "(Install: CentOS) Setup SELinux"
+  import_tasks: setup-selinux.yml
+  when: nginx_selinux

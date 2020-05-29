@@ -1,0 +1,52 @@
+
+
+#============= audisp_t ==============
+
+#!!!! WARNING: 'unlabeled_t' is a base type.
+#!!!! The file '/etc/ld.so.cache' is mislabeled on your system.  
+#!!!! Fix with $ restorecon -R -v /etc/ld.so.cache
+allow audisp_t unlabeled_t:file { execute execute_no_trans getattr open };
+
+#============= httpd_t ==============
+allow httpd_t faillog_t:file { open read };
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t http_cache_port_t:tcp_socket name_connect;
+allow httpd_t httpd_config_t:file write;
+allow httpd_t httpd_initrc_exec_t:sock_file write;
+allow httpd_t httpd_log_t:file write;
+allow httpd_t httpd_sys_rw_content_t:fifo_file { getattr ioctl open read write };
+allow httpd_t httpd_var_run_t:fifo_file { getattr ioctl open read write };
+allow httpd_t httpd_var_run_t:file { execute execute_no_trans };
+
+#!!!! The file '/opt/app_protect/pipe/app_protect_plugin_socket' is mislabeled on your system.  
+#!!!! Fix with $ restorecon -R -v /opt/app_protect/pipe/app_protect_plugin_socket
+allow httpd_t initrc_t:unix_stream_socket connectto;
+allow httpd_t lastlog_t:file { open read write };
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t memcache_port_t:tcp_socket name_connect;
+allow httpd_t security_t:security compute_av;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t self:capability audit_write;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t self:netlink_audit_socket nlmsg_relay;
+allow httpd_t self:netlink_selinux_socket { bind create };
+allow httpd_t self:passwd passwd;
+allow httpd_t systemd_logind_t:dbus send_msg;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t unreserved_port_t:tcp_socket { name_bind name_connect };
+allow httpd_t usr_t:dir { create rmdir };
+
+#!!!! WARNING: 'usr_t' is a base type.
+allow httpd_t usr_t:file { create rename setattr unlink write };
+
+#!!!! WARNING: 'usr_t' is a base type.
+allow httpd_t usr_t:sock_file write;
+allow httpd_t var_log_t:file { open read write };
+
+#============= systemd_logind_t ==============
+allow systemd_logind_t httpd_t:dbus send_msg;
