@@ -86,8 +86,8 @@
   shell:
     cmd: cat /var/log/audit/audit.log | audit2allow -M local
     chdir: /tmp/
-    args:
-      executable: /bin/bash
+  args:
+    executable: /bin/bash
 
 - name: "(Install: SELinux: Custom) Apply local policy"
   command: semodule -i /tmp/local.pp
