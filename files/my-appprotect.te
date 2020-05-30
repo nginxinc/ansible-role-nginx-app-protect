@@ -34,7 +34,7 @@ require {
 #!!!! WARNING: 'unlabeled_t' is a base type.
 #!!!! The file '/etc/ld.so.cache' is mislabeled on your system.  
 #!!!! Fix with $ restorecon -R -v /etc/ld.so.cache
-allow audisp_t unlabeled_t:file { execute execute_no_trans getattr open };
+allow audisp_t unlabeled_t:file { execute execute_no_trans open };
 
 #============= httpd_t ==============
 allow httpd_t faillog_t:file { open read };
