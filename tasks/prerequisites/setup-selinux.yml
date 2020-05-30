@@ -104,3 +104,4 @@
 - name: "(Install: SELinux) Enforce SELinux"
   selinux:
     state: enforcing
+    policy: targeted

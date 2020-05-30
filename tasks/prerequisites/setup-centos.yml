@@ -7,6 +7,7 @@
 - name: "(Install: CentOS) Disable SELinux"
   selinux:
     state: permissive
+    policy: targeted
 
 - name: "(Install: CentOS) Setup SELinux"
   import_tasks: setup-selinux.yml
