@@ -89,7 +89,6 @@
     args:
       executable: /bin/bash
 
-
 - name: "(Install: SELinux: Custom) Apply local policy"
   command: semodule -i /tmp/local.pp
 
