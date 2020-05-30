@@ -94,7 +94,7 @@
   command: semodule_package -o /tmp/my-appprotect.pp -m /tmp/my-appprotect.mod
 
 - name: "(Install: SELinux: Custom) Apply custom policy"
-  command: semanage -i /tmp/my-appprotect.pp
+  command: semodule -i /tmp/my-appprotect.pp
 
 - name: "(Install: SELinux: Custom) Remove temporary files"
   file:
