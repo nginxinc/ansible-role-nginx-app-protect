@@ -1,5 +1,5 @@
 
-module local 1.0;
+module my-appprotect 1.0;
 
 require {
 	type unlabeled_t;
