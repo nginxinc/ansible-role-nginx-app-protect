@@ -82,6 +82,16 @@
 - name: "(Install: SELinux: Contexts) Apply contexts to log"
   command: restorecon -iRv /var/log/app_protect
 
+- name: "(Install: SELinux: Custom) Generate policy"
+  shell:
+    args:
+      chdir: /tmp/
+      executable: bash
+      cmd: cat /var/log/audit/audit.log | audit2allow -M local
+
+- name: "(Install: SELinux: Custom) Apply local policy"
+  command: semodule -i /tmp/local.pp
+
 - name: "(Install: SELinux: Custom) Copy custom policy"
   copy:
     src: "{{ role_path }}/files/my-appprotect.te"
