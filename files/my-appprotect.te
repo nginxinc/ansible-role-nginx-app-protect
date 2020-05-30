@@ -32,21 +32,16 @@ require {
 #============= audisp_t ==============
 
 #!!!! WARNING: 'unlabeled_t' is a base type.
-#!!!! The file '/etc/ld.so.cache' is mislabeled on your system.  
-#!!!! Fix with $ restorecon -R -v /etc/ld.so.cache
-allow audisp_t unlabeled_t:file { execute execute_no_trans getattr open };
+#!!!! The file '/usr/sbin/sedispatch' is mislabeled on your system.  
+#!!!! Fix with $ restorecon -R -v /usr/sbin/sedispatch
+allow audisp_t unlabeled_t:file execute_no_trans;
 
 #============= httpd_t ==============
 allow httpd_t faillog_t:file { open read };
 
 #!!!! This avc is allowed in the current policy
 allow httpd_t http_cache_port_t:tcp_socket name_connect;
-allow httpd_t httpd_config_t:file write;
-allow httpd_t httpd_initrc_exec_t:sock_file write;
 allow httpd_t httpd_log_t:file write;
-allow httpd_t httpd_sys_rw_content_t:fifo_file { getattr ioctl open read write };
-allow httpd_t httpd_var_run_t:fifo_file { getattr ioctl open read write };
-allow httpd_t httpd_var_run_t:file { execute execute_no_trans };
 
 #!!!! The file '/opt/app_protect/pipe/app_protect_plugin_socket' is mislabeled on your system.  
 #!!!! Fix with $ restorecon -R -v /opt/app_protect/pipe/app_protect_plugin_socket
@@ -67,8 +62,8 @@ allow httpd_t self:passwd passwd;
 allow httpd_t systemd_logind_t:dbus send_msg;
 
 #!!!! This avc is allowed in the current policy
-allow httpd_t unreserved_port_t:tcp_socket { name_bind name_connect };
-allow httpd_t usr_t:dir { create rmdir };
+allow httpd_t unreserved_port_t:tcp_socket name_connect;
+allow httpd_t usr_t:dir create;
 
 #!!!! WARNING: 'usr_t' is a base type.
 allow httpd_t usr_t:file { create rename setattr unlink write };
