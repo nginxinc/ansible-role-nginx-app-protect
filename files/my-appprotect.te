@@ -1,4 +1,33 @@
 
+module local 1.0;
+
+require {
+	type unlabeled_t;
+	type audisp_t;
+	type security_t;
+	type faillog_t;
+	type systemd_logind_t;
+	type httpd_t;
+	type usr_t;
+	type unreserved_port_t;
+	type initrc_t;
+	type var_log_t;
+	type httpd_log_t;
+	type lastlog_t;
+	type http_cache_port_t;
+	type memcache_port_t;
+	class passwd passwd;
+	class unix_stream_socket connectto;
+	class dbus send_msg;
+	class capability audit_write;
+	class tcp_socket name_connect;
+	class netlink_selinux_socket { bind create };
+	class file { create execute_no_trans open read rename setattr unlink write };
+	class netlink_audit_socket nlmsg_relay;
+	class sock_file write;
+	class security compute_av;
+	class dir create;
+}
 
 #============= audisp_t ==============
 
