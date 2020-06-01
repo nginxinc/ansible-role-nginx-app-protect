@@ -4,6 +4,12 @@
     name: policycoreutils-python, setools
     state: present
 
+- name: "(Install: SELinux) Permissive SELinux"
+  selinux:
+    state: permissive
+    policy: targeted
+  when: nginx_selinux
+
 - name: "(Install: SELinux: Booleans) Allow HTTP network connection"
   seboolean:
     name: httpd_can_network_connect
