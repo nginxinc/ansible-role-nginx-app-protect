@@ -16,5 +16,3 @@
 
 - name: "(Install: Linux) Install NGINX Plus"
   import_tasks: install-app-protect-linux.yml
-  # should not be needed, as a check is occurring for this in a higher level playbook is occuring 
-  # when: ansible_os_family in nginx_plus_linux_families

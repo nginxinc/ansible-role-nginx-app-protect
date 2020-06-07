@@ -68,9 +68,7 @@
 
     - name: "Configure NGINX App Protect"
       import_tasks: configure-app-protect.yml
-      when: 
-        - supported_os
-        - app_protect_configure
+      when: app_protect_configure
 
   when: app_protect_state != "absent"
 
@@ -79,5 +77,9 @@
 
     - name: "Remove NGINX App Protect"
       import_tasks: install-app-protect.yml
+
+    - name: "Disable NGINX App Protect Configuration"
+      import_tasks: configure-app-protect.yml
+      when: app_protect_configure
 
   when: app_protect_state == "absent"
