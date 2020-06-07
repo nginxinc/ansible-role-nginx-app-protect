@@ -10,18 +10,3 @@
     name: "app-protect{{ nginx_version | default('') }}"
     state: "{{ app_protect_state }}"
   notify: "(Handler: All OSs) Restart NGINX"
-
-# - name: "Start NGINX App Protect"
-#   service:
-#     name: nginx-app-protect
-#     state: started
-#     enabled: true
-#   when:
-#     - not ansible_check_mode
-
-# - name: "Start NGINX"
-#   service:
-#     name: nginx
-#     state: reloaded
-#   when:
-#     - not ansible_check_mode

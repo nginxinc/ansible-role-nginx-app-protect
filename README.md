@@ -91,8 +91,6 @@ This is a sample playbook file for using the role to install NGINX App Protect o
 - hosts: wafs
   become: true
   vars:
-    # Installs NGINX App Protect and all dependencies to the target host
-    app_protect_enable: true
 
     # Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
     # Can be used with `app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.

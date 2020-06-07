@@ -1,9 +1,6 @@
 ---
 # defaults file for ansible-role-nginx-app-protect
 
-# Installs NGINX App Protect and all dependencies to the target host
-app_protect_enable: true
-
 # Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
 # Can be used with `app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
 # Using 'present' will install the latest version (or 'app_protect_version') of NGINX App Protect on a fresh install.
