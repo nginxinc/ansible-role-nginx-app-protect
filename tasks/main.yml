@@ -72,7 +72,7 @@
         - supported_os
         - app_protect_configure
 
-  when: app_protect_state != absent
+  when: app_protect_state != "absent"
 
 - name: "Remove NGINX App Protect"
   block:
@@ -80,4 +80,4 @@
     - name: "Remove NGINX App Protect"
       import_tasks: install-app-protect.yml
 
-  when: app_protect_state == absent
+  when: app_protect_state == "absent"
