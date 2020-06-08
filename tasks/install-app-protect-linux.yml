@@ -1,9 +1,14 @@
 ---
-- import_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
+- name: "Remove NGINX App Protect"
+  block:
 
-- import_tasks: setup-redhat.yml
-  when: ansible_os_family == "RedHat"
+    - import_tasks: setup-debian.yml
+      when: ansible_os_family == "Debian"
+
+    - import_tasks: setup-redhat.yml
+      when: ansible_os_family == "RedHat"
+
+  when: app_protect_state != "absent"
 
 - name: "(Install: Linux) Install NGINX App Protect"
   package:
