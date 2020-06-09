@@ -12,6 +12,6 @@
 
 - name: "(Install: Linux) Install NGINX App Protect"
   package:
-    name: "app-protect{{ nginx_version | default('') }}"
+    name: "app-protect{{ app_protect_version | default('') }}"
     state: "{{ app_protect_state }}"
   notify: "(Handler: All OSs) Restart NGINX"
