@@ -8,3 +8,4 @@
 - name: Disable SELinux
   selinux:
     state: disabled
+  when: "'selinux' in ansible_facts.packages"
