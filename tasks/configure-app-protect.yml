@@ -1,7 +1,7 @@
 ---
 - name: "Ensure NGINX Main Directory Exists"
   file:
-    path: "{{ nginx_conf_template.out_file_location}}"
+    path: "{{ nginx_conf_template.out_file_location }}"
     state: directory
   when: app_protect_security_policy_template_enable or app_protect_log_policy_template_enable or nginx_conf_template_enable
 
@@ -37,7 +37,7 @@
 
 - name: "Remove NGINX App Protect"
   block:
-     
+
     - name: Comment out NGINX App Protect module reference in nginx.conf
       replace:
         path: /etc/nginx/nginx.conf

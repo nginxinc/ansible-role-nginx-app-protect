@@ -26,4 +26,3 @@
     gpgcheck: true
     state: "{{ nginx_license_status | default ('present') }}"
   when: ansible_distribution != "Amazon"
-
