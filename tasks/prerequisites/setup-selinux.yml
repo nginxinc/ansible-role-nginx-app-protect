@@ -98,25 +98,6 @@
 - name: "(Install: SELinux: Custom) Apply local policy"
   command: semodule -i /tmp/local.pp
 
-# - name: "(Install: SELinux: Custom) Copy custom policy"
-#   copy:
-#     src: "{{ role_path }}/files/my-appprotect.te"
-#     dest: /tmp/my-appprotect.te
-
-# - name: "(Install: SELinux: Custom) Convert custom policy"
-#   command: checkmodule -M -m -o /tmp/my-appprotect.mod /tmp/my-appprotect.te
-
-# - name: "(Install: SELinux: Custom) Compile custom policy"
-#   command: semodule_package -o /tmp/my-appprotect.pp -m /tmp/my-appprotect.mod
-
-# - name: "(Install: SELinux: Custom) Apply custom policy"
-#   command: semodule -i /tmp/my-appprotect.pp
-
-# - name: "(Install: SELinux: Custom) Remove temporary files"
-#   file:
-#     path: /tmp/my-appprotect.*
-#     state: absent
-
 - name: "(Install: SELinux) Enforce SELinux"
   selinux:
     state: enforcing
