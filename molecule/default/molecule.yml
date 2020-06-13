@@ -1,0 +1,18 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: centos-7
+    image: docker.io/pycontribs/centos:7
+    pre_build_image: true
+provisioner:
+  name: ansible
+  log: true
+verifier:
+  name: ansible
+lint: |   
+    yamllint .
+    ansible-lint
+    flake8

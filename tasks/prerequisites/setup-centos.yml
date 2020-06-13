@@ -8,3 +8,7 @@
 - name: Disable SELinux
   selinux:
     state: disabled
+  when:
+    - ansible_selinux is defined
+    - ansible_selinux != false
+    - ansible_selinux.status == 'enabled'
