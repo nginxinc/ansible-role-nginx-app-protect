@@ -1,27 +1,17 @@
 ---
-- import_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
+- name: "Remove NGINX App Protect"
+  block:
 
-- import_tasks: setup-redhat.yml
-  when: ansible_os_family == "RedHat"
+    - import_tasks: setup-debian.yml
+      when: ansible_os_family == "Debian"
+
+    - import_tasks: setup-redhat.yml
+      when: ansible_os_family == "RedHat"
+
+  when: app_protect_state != "absent"
 
 - name: "(Install: Linux) Install NGINX App Protect"
   package:
-    name: "app-protect{{ nginx_version | default('') }}"
+    name: "app-protect{{ app_protect_version | default('') }}"
     state: "{{ app_protect_state }}"
   notify: "(Handler: All OSs) Restart NGINX"
-
-# - name: "Start NGINX App Protect"
-#   service:
-#     name: nginx-app-protect
-#     state: started
-#     enabled: true
-#   when:
-#     - not ansible_check_mode
-
-# - name: "Start NGINX"
-#   service:
-#     name: nginx
-#     state: reloaded
-#   when:
-#     - not ansible_check_mode
