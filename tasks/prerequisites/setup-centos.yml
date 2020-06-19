@@ -4,11 +4,6 @@
     name: ca-certificates, epel-release
     state: present
 
-# TODO: make this surgical rather than disabling SELinux globally
-- name: Disable SELinux
-  selinux:
-    state: disabled
-  when:
-    - ansible_selinux is defined
-    - ansible_selinux != false
-    - ansible_selinux.status == 'enabled'
+- name: "(Install: CentOS) Setup SELinux"
+  import_tasks: setup-selinux.yml
+  when: nginx_selinux

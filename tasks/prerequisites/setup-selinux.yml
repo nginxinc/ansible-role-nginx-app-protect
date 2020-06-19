@@ -1,0 +1,104 @@
+---
+- name: "(Install: SELinux) Install Required CentOS Dependencies"
+  package:
+    name: policycoreutils-python, setools
+    state: present
+
+- name: "(Install: SELinux) Permissive SELinux"
+  selinux:
+    state: permissive
+    policy: targeted
+  when: nginx_selinux
+
+- name: "(Install: SELinux: Booleans) Allow HTTP network connection"
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+
+- name: "(Install: SELinux: Booleans) Allow HTTP relay connection"
+  seboolean:
+    name: httpd_can_network_relay
+    state: yes
+    persistent: yes
+
+- name: "(Install: SELinux: Booleans) Allow HTTP mod auth pam"
+  seboolean:
+    name: httpd_mod_auth_pam
+    state: yes
+    persistent: yes
+
+- name: "(Install: SELinux: Booleans) enable NIS"
+  seboolean:
+    name: nis_enabled
+    state: yes
+    persistent: yes
+
+- name: "(Install: SELinux: Contexts) App Protect Logs"
+  sefcontext:
+    target: '/var/log/app_protect(/.*)?'
+    setype: httpd_log_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Opt"
+  sefcontext:
+    target: '/opt/app_protect(/.*)?'
+    setype: httpd_var_run_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Pipe"
+  sefcontext:
+    target: '/opt/app_protect/pipe(/.*)?'
+    setype: httpd_initrc_exec_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Config"
+  sefcontext:
+    target: '/opt/app_protect/config(/.*)?'
+    setype: httpd_config_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect bin"
+  sefcontext:
+    target: '/opt/app_protect/bin(/.*)?'
+    setype: httpd_exec_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect lock"
+  sefcontext:
+    target: '/opt/app_protect/lock(/.*)?'
+    setype: httpd_lock_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Temp"
+  sefcontext:
+    target: '/opt/app_protect/temp(/.*)?'
+    setype: httpd_tmp_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) App Protect Tmp"
+  sefcontext:
+    target: '/opt/app_protect/tmp(/.*)?'
+    setype: httpd_tmp_t
+    state: present
+
+- name: "(Install: SELinux: Contexts) Apply contexts to opt"
+  command: restorecon -iRv /opt/app_protect
+
+- name: "(Install: SELinux: Contexts) Apply contexts to log"
+  command: restorecon -iRv /var/log/app_protect
+
+- name: "(Install: SELinux: Custom) Generate policy"
+  shell:
+    cmd: cat /var/log/audit/audit.log | audit2allow -M local
+    chdir: /tmp/
+  args:
+    executable: /bin/bash
+
+- name: "(Install: SELinux: Custom) Apply local policy"
+  command: semodule -i /tmp/local.pp
+
+- name: "(Install: SELinux) Enforce SELinux"
+  selinux:
+    state: enforcing
+    policy: targeted
