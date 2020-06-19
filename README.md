@@ -100,6 +100,13 @@ This is a sample playbook file for using the role to install NGINX App Protect o
     # Default is present.
     app_protect_state: present
 
+    # OPTIONAL: Installs a specific version of NGINX App Protect
+    app_protect_version: 21
+
+    # Enable enforcing selinux (you may need to open ports on your own)
+    # WARNING: If this is set to false and you are installing NGINX Protect on a system with SELinux enforced, NGINX App Protect may fail to load. 
+    app_protect_selinux: false
+
     # The installation of NGINX App Protect includes a base signature set, which may be out of date. 
     # This option installs the latest NGINX App Protect signatures.
     app_protect_install_signatures: true

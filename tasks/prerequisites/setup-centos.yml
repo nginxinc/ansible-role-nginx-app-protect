@@ -6,4 +6,4 @@
 
 - name: "(Install: CentOS) Setup SELinux"
   import_tasks: setup-selinux.yml
-  when: nginx_selinux
+  when: app_protect_selinux
