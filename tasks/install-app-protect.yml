@@ -2,7 +2,11 @@
 - name: Get NGINX Plus version
   set_fact:
     key_value: "" # appeasing the linter
-    nginx_plus_version: "{{ ansible_facts.packages['nginx-plus'] | map(attribute='version') | list | first | regex_search('^(\\d{1,3})') }}"  # noqa 204
+    nginx_plus_version: >
+      "{{ ansible_facts.packages['nginx-plus'] |
+       map(attribute='version') |
+       list | first |
+       regex_search('^(\\d{1,3})') }}"
   when: "'nginx-plus' in ansible_facts.packages"
 
 - name: Debug nginx plus version
