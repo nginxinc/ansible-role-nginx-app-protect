@@ -3,6 +3,7 @@ module nginx-plus-module-appprotect 1.0;
 require {
         type faillog_t;
         type httpd_t;
+        type httpd_initrc_exec_t;
         type httpd_log_t;
         type http_cache_port_t;
         type httpd_config_t;
@@ -21,7 +22,7 @@ require {
         class capability { audit_write net_admin };
         class dbus send_msg;
         class dir { add_name create remove_name write }; 
-        class fifo_file write;
+        class fifo_file { getattr ioctl open read write };
         class file { create execute getattr read rename open setattr unlink write};
         class netlink_selinux_socket { create bind };
         class netlink_audit_socket { create nlmsg_relay read write };
@@ -37,6 +38,8 @@ allow httpd_t httpd_log_t:file write;
 allow httpd_t httpd_config_t:file write;
 allow httpd_t http_cache_port_t:tcp_socket name_connect;
 allow httpd_t httpd_var_run_t:file execute;
+
+allow httpd_t httpd_initrc_exec_t:fifo_file { getattr ioctl open read write };
 
 allow httpd_t lastlog_t:file { open read write };
 
