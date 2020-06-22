@@ -1,0 +1,10 @@
+module nginx-plus-module-f5-metrics 1.0;
+
+require {
+        type httpd_t;
+        type httpd_config_t;
+        class file append;
+}
+
+#============= httpd_t ==============
+allow httpd_t httpd_config_t:file append;
