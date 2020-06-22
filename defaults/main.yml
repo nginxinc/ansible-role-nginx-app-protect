@@ -32,8 +32,8 @@ nginx_start: true
 # Increase NGINX service timeout to accomdate ruleset loading from default 90s
 nginx_timeout: 180
 
-# App Protect Temporary Directory to use (Default: /opt/app_protect/tmp)
-app_protect_tempdir: /opt/app_protect/tmp
+# App Protect Temporary Directory to use (Default: /tmp)
+app_protect_tempdir: /tmp
 
 # Choose where to fetch the NGINX App Protect signing key from.
 # Default is the official NGINX App Protect signing key host.
