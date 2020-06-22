@@ -19,9 +19,7 @@
     that:
       - nginx_plus_version is defined
       - nginx_plus_version | int >= 19
-    fail_msg: >
-      "'nginx_plus_version' release version must be a minimum of 19 for App Protect.
-      Actual: {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
+    fail_msg: "'nginx_plus_version' release version must be a minimum of 19 for App Protect. Actual: {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
     success_msg: "'nginx_plus_version' is {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
     quiet: true
 
