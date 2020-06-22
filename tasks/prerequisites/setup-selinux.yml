@@ -8,7 +8,7 @@
   selinux:
     state: permissive
     policy: targeted
-  when: nginx_selinux
+  when: app_protect_selinux
 
 - name: "(Install: SELinux: Booleans) Allow HTTP network connection"
   seboolean:
