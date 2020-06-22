@@ -84,19 +84,53 @@
 
 - name: "(Install: SELinux: Contexts) Apply contexts to opt"
   command: restorecon -iRv /opt/app_protect
+  changed_when: false
 
 - name: "(Install: SELinux: Contexts) Apply contexts to log"
   command: restorecon -iRv /var/log/app_protect
+  changed_when: false
 
-- name: "(Install: SELinux: Custom) Generate policy"
-  shell:
-    cmd: cat /var/log/audit/audit.log | audit2allow -M local
-    chdir: /tmp/
+- name: "(Install: SELinux: Module) Create NGINX Plus App Protect Module"
+  template:
+    src: nginx-plus-module-appprotect.te.j2
+    dest: /tmp/nginx-plus-module-appprotect.te
+
+- name: "(Install: SELinux: Module) Check NGINX Plus App Protect Module"
+  command: checkmodule -M -m -o /tmp/nginx-plus-module-appprotect.mod /tmp/nginx-plus-module-appprotect.te
   args:
-    executable: /bin/bash
+    creates: /tmp/nginx-plus-module-appprotect.mod
+  changed_when: false
 
-- name: "(Install: SELinux: Custom) Apply local policy"
-  command: semodule -i /tmp/local.pp
+- name: "(Install: SELinux: Module) Compile NGINX Plus App Protect Module"
+  command: semodule_package -o /tmp/nginx-plus-module-appprotect.pp -m /tmp/nginx-plus-module-appprotect.mod
+  args:
+    creates: /tmp/nginx-plus-module-appprotect.pp
+  changed_when: false
+
+- name: "(Install: SELinux: Module) Import NGINX Plus App Protect Module"
+  command: semodule -i /tmp/nginx-plus-module-appprotect.pp
+  changed_when: false
+
+- name: "(Install: SELinux: Module) Create NGINX Plus Metrics Module"
+  template:
+    src: nginx-plus-module-f5-metrics.te.j2
+    dest: /tmp/nginx-plus-module-f5-metrics.te
+
+- name: "(Install: SELinux: Module) Check NGINX Plus Metrics Module"
+  command: checkmodule -M -m -o /tmp/nginx-plus-module-f5-metrics.mod /tmp/nginx-plus-module-f5-metrics.te
+  args:
+    creates: /tmp/nginx-plus-module-f5-metrics.mod
+  changed_when: false
+
+- name: "(Install: SELinux: Module) Compile NGINX Plus Metrics Module"
+  command: semodule_package -o /tmp/nginx-plus-module-f5-metrics.pp -m /tmp/nginx-plus-module-f5-metrics.mod
+  args:
+    creates: /tmp/nginx-plus-module-f5-metrics.pp
+  changed_when: false
+
+- name: "(Install: SELinux: Module) Import NGINX Plus Metrics Module"
+  command: semodule -i /tmp/nginx-plus-module-f5-metrics.pp
+  changed_when: false
 
 - name: "(Install: SELinux) Enforce SELinux"
   selinux:
