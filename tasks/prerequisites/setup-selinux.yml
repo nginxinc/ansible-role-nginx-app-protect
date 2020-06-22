@@ -9,6 +9,7 @@
     state: permissive
     policy: targeted
   when: app_protect_selinux
+  changed_when: false
 
 - name: "(Install: SELinux: Booleans) Allow HTTP network connection"
   seboolean:
@@ -136,3 +137,4 @@
   selinux:
     state: enforcing
     policy: targeted
+  changed_when: false
