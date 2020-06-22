@@ -11,6 +11,7 @@
     dest: "{{ nginx_conf_template.out_file_location }}{{ nginx_conf_template.out_file_name }}.orig"
     remote_src: true
   when: nginx_conf_template_enable
+  changed_when: false
 
 - name: "Dynamically Generate NGINX App Protect security policy file"
   template:
