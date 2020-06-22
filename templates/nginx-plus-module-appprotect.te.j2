@@ -4,7 +4,9 @@ require {
         type faillog_t;
         type httpd_t;
         type httpd_log_t;
+        type httpd_cache_port_t;
         type httpd_config_t;
+        type httpd_var_run_t;
         type lastlog_t;
         type initrc_t;
         type usr_t;
@@ -20,7 +22,7 @@ require {
         class dbus send_msg;
         class dir { add_name create remove_name write }; 
         class fifo_file write;
-        class file { create getattr read rename open setattr unlink write};
+        class file { create execute getattr read rename open setattr unlink write};
         class netlink_selinux_socket { create bind };
         class netlink_audit_socket { create nlmsg_relay read write };
         class passwd passwd;
@@ -33,6 +35,8 @@ require {
 #============= httpd_t ==============
 allow httpd_t httpd_log_t:file write;
 allow httpd_t httpd_config_t:file write;
+allow httpd_t httpd_cache_port_t:tcp_socket name_connect;
+allow httpd_t httpd_var_run_t:file execute;
 
 allow httpd_t lastlog_t:file { open read write };
 
