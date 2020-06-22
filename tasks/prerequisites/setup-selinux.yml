@@ -94,62 +94,44 @@
 - name: "(Install: SELinux: Module) Create NGINX Plus App Protect Module"
   template:
     src: nginx-plus-module-appprotect.te.j2
-    dest: /tmp/nginx-plus-module-appprotect.te
+    dest: /opt/app_protect/tmp/nginx-plus-module-appprotect.te
 
 - name: "(Install: SELinux: Module) Check NGINX Plus App Protect Module"
-  command: checkmodule -M -m -o /tmp/nginx-plus-module-appprotect.mod /tmp/nginx-plus-module-appprotect.te
+  command: checkmodule -M -m -o /opt/app_protect/tmp/nginx-plus-module-appprotect.mod /opt/app_protect/tmp/nginx-plus-module-appprotect.te
   args:
-    creates: /tmp/nginx-plus-module-appprotect.mod
+    creates: /opt/app_protect/tmp/nginx-plus-module-appprotect.mod
   changed_when: false
 
 - name: "(Install: SELinux: Module) Compile NGINX Plus App Protect Module"
-  command: semodule_package -o /tmp/nginx-plus-module-appprotect.pp -m /tmp/nginx-plus-module-appprotect.mod
+  command: semodule_package -o /opt/app_protect/tmp/nginx-plus-module-appprotect.pp -m /opt/app_protect/tmp/nginx-plus-module-appprotect.mod
   args:
-    creates: /tmp/nginx-plus-module-appprotect.pp
+    creates: /opt/app_protect/tmp/nginx-plus-module-appprotect.pp
   changed_when: false
 
 - name: "(Install: SELinux: Module) Import NGINX Plus App Protect Module"
-  command: semodule -i /tmp/nginx-plus-module-appprotect.pp
+  command: semodule -i /opt/app_protect/tmp/nginx-plus-module-appprotect.pp
   changed_when: false
-
-- name: "(Install: SELinux: Module) Cleanup NGINX Plus App Protect Module"
-  file:
-    path: "/tmp/{{ item }}"
-    state: absent
-  with_items:
-    - nginx-plus-module-appprotect.te
-    - nginx-plus-module-appprotect.mod
-    - nginx-plus-module-appprotect.pp
 
 - name: "(Install: SELinux: Module) Create NGINX Plus Metrics Module"
   template:
     src: nginx-plus-module-f5-metrics.te.j2
-    dest: /tmp/nginx-plus-module-f5-metrics.te
+    dest: /opt/app_protect/tmp/nginx-plus-module-f5-metrics.te
 
 - name: "(Install: SELinux: Module) Check NGINX Plus Metrics Module"
-  command: checkmodule -M -m -o /tmp/nginx-plus-module-f5-metrics.mod /tmp/nginx-plus-module-f5-metrics.te
+  command: checkmodule -M -m -o /opt/app_protect/tmp/nginx-plus-module-f5-metrics.mod /opt/app_protect/tmp/nginx-plus-module-f5-metrics.te
   args:
-    creates: /tmp/nginx-plus-module-f5-metrics.mod
+    creates: /opt/app_protect/tmp/nginx-plus-module-f5-metrics.mod
   changed_when: false
 
 - name: "(Install: SELinux: Module) Compile NGINX Plus Metrics Module"
-  command: semodule_package -o /tmp/nginx-plus-module-f5-metrics.pp -m /tmp/nginx-plus-module-f5-metrics.mod
+  command: semodule_package -o /opt/app_protect/tmp/nginx-plus-module-f5-metrics.pp -m /opt/app_protect/tmp/nginx-plus-module-f5-metrics.mod
   args:
-    creates: /tmp/nginx-plus-module-f5-metrics.pp
+    creates: /opt/app_protect/tmp/nginx-plus-module-f5-metrics.pp
   changed_when: false
 
 - name: "(Install: SELinux: Module) Import NGINX Plus Metrics Module"
-  command: semodule -i /tmp/nginx-plus-module-f5-metrics.pp
+  command: semodule -i /opt/app_protect/tmp/nginx-plus-module-f5-metrics.pp
   changed_when: false
-
-- name: "(Install: SELinux: Module) Cleanup NGINX Plus Metrics Module"
-  file:
-    path: "/tmp/{{ item }}"
-    state: absent
-  with_items:
-    - nginx-plus-module-f5-metrics.te
-    - nginx-plus-module-f5-metrics.mod
-    - nginx-plus-module-f5-metrics.pp
 
 - name: "(Install: SELinux) Enforce SELinux"
   selinux:
