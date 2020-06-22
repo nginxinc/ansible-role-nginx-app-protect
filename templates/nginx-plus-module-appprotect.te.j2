@@ -4,6 +4,7 @@ require {
         type faillog_t;
         type httpd_t;
         type httpd_log_t;
+        type httpd_config_t;
         type lastlog_t;
         type initrc_t;
         type usr_t;
@@ -31,6 +32,7 @@ require {
 
 #============= httpd_t ==============
 allow httpd_t httpd_log_t:file write;
+allow httpd_t httpd_config_t:file write;
 
 allow httpd_t lastlog_t:file { open read write };
 
