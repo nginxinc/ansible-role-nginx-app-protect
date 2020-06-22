@@ -4,7 +4,7 @@ require {
         type faillog_t;
         type httpd_t;
         type httpd_log_t;
-        type httpd_cache_port_t;
+        type http_cache_port_t;
         type httpd_config_t;
         type httpd_var_run_t;
         type lastlog_t;
@@ -35,7 +35,7 @@ require {
 #============= httpd_t ==============
 allow httpd_t httpd_log_t:file write;
 allow httpd_t httpd_config_t:file write;
-allow httpd_t httpd_cache_port_t:tcp_socket name_connect;
+allow httpd_t http_cache_port_t:tcp_socket name_connect;
 allow httpd_t httpd_var_run_t:file execute;
 
 allow httpd_t lastlog_t:file { open read write };
