@@ -112,6 +112,15 @@
   command: semodule -i /tmp/nginx-plus-module-appprotect.pp
   changed_when: false
 
+- name: "(Install: SELinux: Module) Cleanup NGINX Plus App Protect Module"
+  file:
+    path: "/tmp/{{ item }}"
+    state: absent
+  with_items:
+    - nginx-plus-module-appprotect.te
+    - nginx-plus-module-appprotect.mod
+    - nginx-plus-module-appprotect.pp
+
 - name: "(Install: SELinux: Module) Create NGINX Plus Metrics Module"
   template:
     src: nginx-plus-module-f5-metrics.te.j2
@@ -132,6 +141,15 @@
 - name: "(Install: SELinux: Module) Import NGINX Plus Metrics Module"
   command: semodule -i /tmp/nginx-plus-module-f5-metrics.pp
   changed_when: false
+
+- name: "(Install: SELinux: Module) Cleanup NGINX Plus Metrics Module"
+  file:
+    path: "/tmp/{{ item }}"
+    state: absent
+  with_items:
+    - nginx-plus-module-f5-metrics.te
+    - nginx-plus-module-f5-metrics.mod
+    - nginx-plus-module-f5-metrics.pp
 
 - name: "(Install: SELinux) Enforce SELinux"
   selinux:
