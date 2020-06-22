@@ -114,29 +114,6 @@
   changed_when: false
   when: app_protect_module.changed
 
-- name: "(Install: SELinux: Module) Create NGINX Plus Metrics Module"
-  template:
-    src: nginx-plus-module-f5-metrics.te.j2
-    dest: "{{ app_protect_tempdir }}/nginx-plus-module-f5-metrics.te"
-  register: f5_metrics_module
-
-- name: "(Install: SELinux: Module) Check NGINX Plus Metrics Module"
-  command: "checkmodule -M -m -o {{ app_protect_tempdir }}/nginx-plus-module-f5-metrics.mod {{ app_protect_tempdir }}/nginx-plus-module-f5-metrics.te"
-  args:
-    creates: "{{ app_protect_tempdir }}/nginx-plus-module-f5-metrics.mod"
-  changed_when: false
-
-- name: "(Install: SELinux: Module) Compile NGINX Plus Metrics Module"
-  command: "semodule_package -o {{ app_protect_tempdir }}/nginx-plus-module-f5-metrics.pp -m {{ app_protect_tempdir }}/nginx-plus-module-f5-metrics.mod"
-  args:
-    creates: "{{ app_protect_tempdir }}/nginx-plus-module-f5-metrics.pp"
-  changed_when: false
-
-- name: "(Install: SELinux: Module) Import NGINX Plus Metrics Module"
-  command: "semodule -i {{ app_protect_tempdir }}/nginx-plus-module-f5-metrics.pp"
-  changed_when: false
-  when: f5_metrics_module.changed
-
 - name: "(Install: SELinux) Enforce SELinux"
   selinux:
     state: enforcing
