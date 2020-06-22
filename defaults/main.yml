@@ -29,6 +29,9 @@ app_protect_delete_license: true
 # Default is true.
 nginx_start: true
 
+# Increase NGINX service timeout to accomdate ruleset loading from default 90s
+nginx_timeout: 180
+
 # Choose where to fetch the NGINX App Protect signing key from.
 # Default is the official NGINX App Protect signing key host.
 # app_protect_signing_key: https://cs.nginx.com/static/keys/app-protect.key
