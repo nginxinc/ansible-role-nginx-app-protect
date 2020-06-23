@@ -5,5 +5,6 @@
     state: present
 
 - name: "(Install: CentOS) Setup SELinux"
-  import_tasks: setup-selinux.yml
+  command: /bin/true
+  notify: "(Handler: All OSs) Enable SELinux"
   when: app_protect_selinux

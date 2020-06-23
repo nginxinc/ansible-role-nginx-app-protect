@@ -3,13 +3,6 @@
 - name: "(Handler: All OSs) Run NGINX"
   block:
 
-    - name: "(Handler: All OSs) Set App Protect Permissions"
-      file:
-        path: /opt/app_protect
-        owner: nginx
-        group: nginx
-        recurse: yes
-
     - name: "(Handler: All OSs) Start NGINX"
       service:
         name: nginx
@@ -30,3 +23,7 @@
 - name: "(Handler: All OSs) Check NGINX"
   command: "nginx -t"
   changed_when: false
+
+- name: "(Handler: All OSs) Enable SELinux"
+  include_tasks: configure-selinux.yml
+  notify: "(Handler: All OSs) Restart NGINX"

@@ -109,7 +109,7 @@
     creates: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp"
   changed_when: false
 
-- name: "(Install: SELinux: Module) Import NGINX Plus App Protect Module"
+- name: "(Install: SELinux: Module) Import NGINX Plus App Protect Module"  # noqa 503
   command: "semodule -i {{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp"
   changed_when: false
   when: app_protect_module.changed
