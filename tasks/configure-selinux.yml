@@ -4,11 +4,16 @@
     name: policycoreutils-python, setools
     state: present
 
+- name: "(Install: SELinux) Check for SELinux enabled"
+  msg: "You need to enable selinux, if it was disabled you need to reboot"
+  when: ansible_selinux is not defined
+
 - name: "(Install: SELinux) Permissive SELinux"
   selinux:
     state: permissive
     policy: targeted
   changed_when: false
+  when: ansible_selinux.mode == "enforcing"
 
 - name: "(Install: SELinux: Booleans) Allow HTTP network connection"
   seboolean:
@@ -126,4 +131,4 @@
     state: enforcing
     policy: targeted
   changed_when: false
-  when: app_protect_selinux_enforcing
+  when: app_protect_selinux_enforcing and ansible_selinux.mode == "permissive"
