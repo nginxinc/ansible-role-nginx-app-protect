@@ -3,6 +3,10 @@
 - name: "(Handler: All OSs) Enable SELinux"
   include_tasks: configure-selinux.yml
 
+- name: "(Handler: All OSs) Check NGINX"
+  command: "nginx -t"
+  changed_when: false
+
 - name: "(Handler: All OSs) Run NGINX"
   block:
 
@@ -22,7 +26,3 @@
   when:
     - nginx_start | bool
     - not ansible_check_mode
-
-- name: "(Handler: All OSs) Check NGINX"
-  command: "nginx -t"
-  changed_when: false
