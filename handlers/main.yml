@@ -26,4 +26,3 @@
 
 - name: "(Handler: All OSs) Enable SELinux"
   include_tasks: configure-selinux.yml
-  notify: "(Handler: All OSs) Restart NGINX"
