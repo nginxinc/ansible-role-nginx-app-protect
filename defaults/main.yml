@@ -15,6 +15,9 @@ app_protect_state: present
 # Enable enforcing selinux (you may need to open ports on your own)
 app_protect_selinux: false
 
+# Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with app_protect_selinux: true)
+app_protect_selinux_enforcing: true
+
 # The installation of NGINX App Protect includes a base signature set, which may be out of date. 
 # This option installs the latest NGINX App Protect signatures.
 app_protect_install_signatures: true
