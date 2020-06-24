@@ -87,6 +87,14 @@
   command: restorecon -iRv /opt/app_protect
   changed_when: false
 
+- name: "(Install: SELinux: Contexts) Apply permissions to opt/config"
+  file:
+    path: /opt/app_protect/config
+    owner: nginx
+    group: nginx
+    mode: u=rwx,go=rx,g+s
+    state: directory
+  
 - name: "(Install: SELinux: Contexts) Apply contexts to log"
   command: restorecon -iRv /var/log/app_protect
   changed_when: false
