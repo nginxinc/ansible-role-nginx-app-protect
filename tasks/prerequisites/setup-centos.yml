@@ -3,10 +3,3 @@
   package:
     name: ca-certificates, epel-release
     state: present
-
-- name: "(Install: CentOS) Setup SELinux"
-  debug:
-    msg: "Enabling selinux..."
-  notify: "(Handler: All OSs) Enable SELinux"
-  when: app_protect_selinux
-  changed_when: false
