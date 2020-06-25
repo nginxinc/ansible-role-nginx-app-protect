@@ -4,11 +4,17 @@
     name: policycoreutils-python, setools
     state: present
 
+- name: "(Install: SELinux) Check for SELinux enabled"
+  debug:
+    msg: "You need to enable selinux, if it was disabled you need to reboot"
+  when: ansible_selinux is undefined
+
 - name: "(Install: SELinux) Permissive SELinux"
   selinux:
     state: permissive
     policy: targeted
-  when: app_protect_selinux
+  changed_when: false
+  when: ansible_selinux.mode == "enforcing"
 
 - name: "(Install: SELinux: Booleans) Allow HTTP network connection"
   seboolean:
@@ -84,21 +90,46 @@
 
 - name: "(Install: SELinux: Contexts) Apply contexts to opt"
   command: restorecon -iRv /opt/app_protect
+  changed_when: false
 
+- name: "(Install: SELinux: Contexts) Apply permissions to opt/config"
+  file:
+    path: /opt/app_protect/config
+    owner: nginx
+    group: nginx
+    mode: u=rwx,go=rx,g+s
+    state: directory
+  
 - name: "(Install: SELinux: Contexts) Apply contexts to log"
   command: restorecon -iRv /var/log/app_protect
+  changed_when: false
 
-- name: "(Install: SELinux: Custom) Generate policy"
-  shell:
-    cmd: cat /var/log/audit/audit.log | audit2allow -M local
-    chdir: /tmp/
+- name: "(Install: SELinux: Module) Create NGINX Plus App Protect Module"
+  template:
+    src: nginx-plus-module-appprotect.te.j2
+    dest: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.te"
+  register: app_protect_module
+
+- name: "(Install: SELinux: Module) Check NGINX Plus App Protect Module"
+  command: "checkmodule -M -m -o {{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod {{ app_protect_tempdir }}/nginx-plus-module-appprotect.te"
   args:
-    executable: /bin/bash
+    creates: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod"
+  changed_when: false
 
-- name: "(Install: SELinux: Custom) Apply local policy"
-  command: semodule -i /tmp/local.pp
+- name: "(Install: SELinux: Module) Compile NGINX Plus App Protect Module"
+  command: "semodule_package -o {{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp -m {{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod"
+  args:
+    creates: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp"
+  changed_when: false
+
+- name: "(Install: SELinux: Module) Import NGINX Plus App Protect Module"  # noqa 503
+  command: "semodule -i {{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp"
+  changed_when: false
+  when: app_protect_module.changed
 
 - name: "(Install: SELinux) Enforce SELinux"
   selinux:
     state: enforcing
     policy: targeted
+  changed_when: false
+  when: app_protect_selinux_enforcing and ansible_selinux.mode == "permissive"

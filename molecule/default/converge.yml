@@ -13,7 +13,7 @@
     log_policy_syslog_target: 10.1.10.105:5144
     nginx_demo_workload_protocol: http://
     nginx_demo_workload_host: 10.1.10.105:8080
-    nginx_license: 
+    nginx_license:
       certificate: "./license/nginx-repo.crt"
       key: "./license/nginx-repo.key"
 

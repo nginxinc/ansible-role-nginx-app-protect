@@ -3,7 +3,3 @@
   package:
     name: ca-certificates, epel-release
     state: present
-
-- name: "(Install: CentOS) Setup SELinux"
-  import_tasks: setup-selinux.yml
-  when: app_protect_selinux

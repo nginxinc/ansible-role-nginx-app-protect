@@ -15,6 +15,9 @@ app_protect_state: present
 # Enable enforcing selinux (you may need to open ports on your own)
 app_protect_selinux: false
 
+# Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with app_protect_selinux: true)
+app_protect_selinux_enforcing: true
+
 # The installation of NGINX App Protect includes a base signature set, which may be out of date. 
 # This option installs the latest NGINX App Protect signatures.
 app_protect_install_signatures: true
@@ -28,6 +31,12 @@ app_protect_delete_license: true
 # Start/Restart NGINX service when App Protect related changes are complete.
 # Default is true.
 nginx_start: true
+
+# Increase NGINX service timeout to accomdate ruleset loading from default 90s
+nginx_timeout: 180
+
+# App Protect Temporary Directory to use (Default: /tmp)
+app_protect_tempdir: /tmp
 
 # Choose where to fetch the NGINX App Protect signing key from.
 # Default is the official NGINX App Protect signing key host.

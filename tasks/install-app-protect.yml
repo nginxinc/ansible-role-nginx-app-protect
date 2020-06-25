@@ -21,5 +21,21 @@
     success_msg: "'nginx_plus_version' is {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
     quiet: true
 
+- name: "(Install: Linux) Create override for NGINX Plus service"
+  file:
+    path: /etc/systemd/system/nginx.service.d
+    state: directory
+    mode: '0755'
+  when: nginx_timeout is defined
+
+- name: "(Install: Linux) Increase timeout for NGINX Plus Service"
+  template:
+    src: nginx.service.override.conf.j2
+    dest: /etc/systemd/system/nginx.service.d/override.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when: nginx_timeout is defined
+
 - name: "(Install: Linux) Install NGINX Plus"
   import_tasks: install-app-protect-linux.yml
