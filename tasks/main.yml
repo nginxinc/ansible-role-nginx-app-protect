@@ -34,7 +34,7 @@
 - name: "Install NGINX App Protect"
   block:
 
-    - include_tasks: prerequisites/install-prerequisites.yml
+    - include_tasks: "{{ role_path }}/tasks/prerequisites/install-prerequisites.yml"
       tags: nginx_prerequisites
 
     - import_tasks: keys/apt-key.yml
