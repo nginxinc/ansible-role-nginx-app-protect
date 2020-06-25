@@ -5,7 +5,8 @@
     state: present
 
 - name: "(Install: CentOS) Setup SELinux"
-  command: echo "Enabling selinux..."
+  debug:
+    msg: "Enabling selinux..."
   notify: "(Handler: All OSs) Enable SELinux"
   when: app_protect_selinux
   changed_when: false
