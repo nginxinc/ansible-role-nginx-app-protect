@@ -73,9 +73,7 @@
   when: app_protect_state != "absent"
 
 - name: "(Install: CentOS) Setup SELinux"
-  debug:
-    msg: "Enabling selinux..."
-  notify: "(Handler: All OSs) Enable SELinux"
+  include_tasks: "{{ role_path }}/tasks/configure-selinux.yml"
   when: 
     - app_protect_selinux
     - ansible_os_family == "RedHat"
