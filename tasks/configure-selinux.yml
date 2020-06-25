@@ -4,9 +4,9 @@
     name: policycoreutils-python, setools
     state: present
 
-- name: "(Install: SELinux) Check for SELinux enabled"
-  msg: "You need to enable selinux, if it was disabled you need to reboot"
-  when: ansible_selinux is undefined
+# - name: "(Install: SELinux) Check for SELinux enabled"
+#   msg: "You need to enable selinux, if it was disabled you need to reboot"
+#   when: ansible_selinux is undefined
 
 - name: "(Install: SELinux) Permissive SELinux"
   selinux:
