@@ -79,7 +79,6 @@
   when: 
     - app_protect_selinux
     - ansible_os_family == "RedHat"
-  changed_when: false
 
 - name: "Remove NGINX App Protect"
   block:
