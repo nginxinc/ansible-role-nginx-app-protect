@@ -1,8 +1,5 @@
 ---
 # handlers file for ansible-role-nginx-app-protect
-- name: "(Handler: All OSs) Enable SELinux"
-  import_tasks: configure-selinux.yml
-
 - name: "(Handler: All OSs) Check NGINX"
   command: "nginx -t"
   changed_when: false
