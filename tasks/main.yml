@@ -40,18 +40,18 @@
     - import_tasks: keys/apt-key.yml
       when:
         - ansible_os_family == "Debian"
-        - app_protect_install_signatures
+        - app_protect_state != "absent" or app_protect_install_signatures or app_protect_install_threat_campaigns
       tags: nginx_aptkey
 
     - import_tasks: keys/rpm-key.yml
       when:
         - ansible_os_family == "RedHat"
-        - app_protect_install_signatures
+        - app_protect_state != "absent" or app_protect_install_signatures or app_protect_install_threat_campaigns
       tags: nginx_rpmkey
 
     - name: "(All OSs) Setup license"
       import_tasks: setup-license.yml
-      when: app_protect_install_signatures
+      when: app_protect_state != "absent" or app_protect_install_signatures or app_protect_install_threat_campaigns
 
     - name: "Install NGINX App Protect"
       import_tasks: install-app-protect.yml
@@ -59,6 +59,10 @@
     - name: "NGINX App Protect Signatures"
       import_tasks: install-signatures.yml
       when: app_protect_install_signatures
+
+    - name: "NGINX App Protect Threat Campaigns"
+      import_tasks: install-threat-campaigns.yml
+      when: app_protect_install_threat_campaigns
 
     - name: "Remove license"
       import_tasks: delete-license.yml
@@ -74,7 +78,7 @@
 
 - name: "(Install: CentOS) Setup SELinux"
   include_tasks: "{{ role_path }}/tasks/configure-selinux.yml"
-  when: 
+  when:
     - app_protect_selinux
     - ansible_os_family == "RedHat"
 

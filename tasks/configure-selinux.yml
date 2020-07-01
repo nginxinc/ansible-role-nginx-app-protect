@@ -99,7 +99,7 @@
     group: nginx
     mode: u=rwx,go=rx,g+s
     state: directory
-  
+
 - name: "(Install: SELinux: Contexts) Apply contexts to log"
   command: restorecon -iRv /var/log/app_protect
   changed_when: false

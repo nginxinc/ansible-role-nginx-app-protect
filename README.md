@@ -111,6 +111,10 @@ This is a sample playbook file for using the role to install NGINX App Protect o
     # This option installs the latest NGINX App Protect signatures.
     app_protect_install_signatures: true
 
+    # The installation of NGINX App Protect includes a base signature set, which may be out of date. 
+    # This option installs the latest NGINX App Protect signatures.
+    app_protect_install_signatures: true
+
     # Creates basic configuration files and enables NGINX App Protect on the target host
     app_protect_configure: true
 

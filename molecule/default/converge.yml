@@ -4,6 +4,7 @@
   vars:
     app_protect_enable: true
     app_protect_install_signatures: true
+    app_protect_install_threat_campaigns: true
     app_protect_configure: true
     app_protect_security_policy_template_enable: true
     security_policy_enforcement_mode: blocking
