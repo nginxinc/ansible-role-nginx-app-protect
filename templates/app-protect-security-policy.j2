@@ -3,4 +3,15 @@
     "template": { "name": "POLICY_TEMPLATE_NGINX_BASE" },
     "applicationLanguage": "utf-8",
     "enforcementMode": "{{ security_policy_enforcement_mode }}"
+{% if app_protect_install_threat_campaigns %},
+    "blocking-settings": {
+        "violations": [
+            {
+                "name": "VIOL_THREAT_CAMPAIGN",
+                "alarm": true,
+                "block": true
+            }
+        ]
+    }
+{% endif %}
 }

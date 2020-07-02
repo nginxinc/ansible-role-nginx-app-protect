@@ -1,11 +1,11 @@
 ---
-- name: "Remove NGINX App Protect"
+- name: "Setup NGINX App Protect Repositories"
   block:
 
-    - import_tasks: setup-debian.yml
+    - import_tasks: setup-debian-repos.yml
       when: ansible_os_family == "Debian"
 
-    - import_tasks: setup-redhat.yml
+    - import_tasks: setup-redhat-repos.yml
       when: ansible_os_family == "RedHat"
 
   when: app_protect_state != "absent"
