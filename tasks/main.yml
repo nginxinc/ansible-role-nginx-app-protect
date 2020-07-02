@@ -40,18 +40,25 @@
     - import_tasks: keys/apt-key.yml
       when:
         - ansible_os_family == "Debian"
-        - app_protect_state != "absent" or app_protect_install_signatures or app_protect_install_threat_campaigns
+        - app_protect_state != "absent"
+          or app_protect_install_signatures
+          or app_protect_install_threat_campaigns
       tags: nginx_aptkey
 
     - import_tasks: keys/rpm-key.yml
       when:
         - ansible_os_family == "RedHat"
-        - app_protect_state != "absent" or app_protect_install_signatures or app_protect_install_threat_campaigns
+        - app_protect_state != "absent"
+          or app_protect_install_signatures
+          or app_protect_install_threat_campaigns
       tags: nginx_rpmkey
 
     - name: "(All OSs) Setup license"
       import_tasks: setup-license.yml
-      when: app_protect_state != "absent" or app_protect_install_signatures or app_protect_install_threat_campaigns
+      when:
+        - app_protect_state != "absent"
+          or app_protect_install_signatures
+          or app_protect_install_threat_campaigns
 
     - name: "Install NGINX App Protect"
       import_tasks: install-app-protect.yml
