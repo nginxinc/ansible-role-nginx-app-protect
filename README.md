@@ -50,6 +50,16 @@ CentOS:
     - 8.0
     - 8.1
     - 8.2
+RHEL:
+  versions:
+    - 7.4
+    - 7.5
+    - 7.6
+    - 7.7
+    - 7.8
+    - 8.0
+    - 8.1
+    - 8.2
 Debian:
   versions:
     - 9.0
@@ -78,7 +88,7 @@ Dependencies
 
 - Since this role uses the [package_facts](https://docs.ansible.com/ansible/latest/modules/package_facts_module.html) module, on debian-based systems the `python-apt` package must be installed on targeted hosts.
 
-- NGINX+ R19-R21 must already be installed on the target system 
+- NGINX+ R20-R22 must already be installed on the target system 
 
 Example Playbook
 ----------------
@@ -101,11 +111,7 @@ This is a sample playbook file for using the role to install NGINX App Protect o
     app_protect_state: present
 
     # OPTIONAL: Installs a specific version of NGINX App Protect
-    app_protect_version: 21
-
-    # Enable enforcing selinux (you may need to open ports on your own)
-    # WARNING: If this is set to false and you are installing NGINX Protect on a system with SELinux enforced, NGINX App Protect may fail to load. 
-    app_protect_selinux: false
+    app_protect_version: 22
 
     # The installation of NGINX App Protect includes a base signature set, which may be out of date. 
     # This option installs the latest NGINX App Protect signatures.
@@ -158,7 +164,7 @@ This is a sample playbook file for using the role to install NGINX App Protect o
       key: "{{playbook_dir}}/license/nginx-repo.key"
 
   roles:
-    - role: ansible-role-nginx-app-protect
+    - role: nginxinc.nginx_app_protect
 ```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX App Protect role in a localhost and installing NGINX App Protect on NGINX Plus.

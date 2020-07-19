@@ -10,13 +10,7 @@
 app_protect_state: present
 
 # # OPTIONAL: Installs a specific version of NGINX App Protect
-# app_protect_version: 20
-
-# Enable enforcing selinux (you may need to open ports on your own)
-app_protect_selinux: false
-
-# Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with app_protect_selinux: true)
-app_protect_selinux_enforcing: true
+# app_protect_version: 22
 
 # The installation of NGINX App Protect includes a base signature set, which may be out of date. 
 # This option installs the latest NGINX App Protect signatures.
@@ -46,9 +40,18 @@ app_protect_tempdir: /tmp
 # Default is the official NGINX App Protect signing key host.
 # app_protect_signing_key: https://cs.nginx.com/static/keys/app-protect.key
 
-# populate this dictionary of lists with appropriate values from the ansible_os_family and ansible_distribution_version facts
+# populate this dictionary of lists with appropriate values from the ansible_distribution and ansible_distribution_version facts
 app_protect_linux_families:
   CentOS:
+    - 7.4
+    - 7.5
+    - 7.6
+    - 7.7
+    - 7.8
+    - 8.0
+    - 8.1
+    - 8.2
+  RedHat:
     - 7.4
     - 7.5
     - 7.6
