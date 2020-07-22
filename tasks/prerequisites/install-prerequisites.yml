@@ -10,4 +10,8 @@
 
 - name: "(Setup: CentOS) Install Prerequisites"
   import_tasks: setup-centos.yml
-  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat" 
+  when: ansible_distribution == "CentOS"
+
+- name: "(Setup: RedHat) Install Prerequisites"
+  import_tasks: setup-redhat.yml
+  when: ansible_distribution == "RedHat" 
