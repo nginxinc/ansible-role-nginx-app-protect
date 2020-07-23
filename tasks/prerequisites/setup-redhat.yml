@@ -1,5 +1,10 @@
 ---
-- name: "(Install: RedHat) Install Required Dependencies"
+- name: "(Install: RedHat) Install Required Dependencies - base"
   dnf:
-    name: ca-certificates, wget, "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+    name: ca-certificates,wget
     state: present
+
+- name: "(Install: RedHat) Install Required Dependencies - epel"
+  dnf:
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+    state: latest
