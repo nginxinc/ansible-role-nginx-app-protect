@@ -1,10 +1,10 @@
 ---
 - name: "(Install: RedHat) Install Required Dependencies - base"
-  dnf:
+  yum:
     name: ca-certificates,wget
     state: present
 
 - name: "(Install: RedHat) Install Required Dependencies - epel"
-  dnf:
+  yum:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
     state: latest
