@@ -1,28 +1,48 @@
 ---
-- name: "(Setup: CentOS/RedHat/Oracle Linux) Setup NGINX App Protect Repository"
-  yum_repository:
-    name: nginx-app-protect
-    baseurl: >-
-      https://plus-pkgs.nginx.com/centos/{{ (ansible_distribution_version | float >= 7.4 and ansible_distribution_version | float < 8.0)
-      | ternary(ansible_distribution_major_version | int, 7.4) }}/$basearch/
-    description: NGINX App Protect Repository
-    sslclientcert: "/etc/ssl/nginx/{{ nginx_license.certificate | basename }}"
-    sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
-    enabled: true
-    gpgcheck: true
-    state: "{{ nginx_license_status | default ('present') }}"
-  when: ansible_distribution != "Amazon"
+- name: "(Setup: CentOS/RedHat/Oracle Linux) Setup Repos"
+  block:
 
-- name: "(Setup: CentOS/RedHat/Oracle Linux) Setup NGINX App Protect Signatures Repository"
-  yum_repository:
-    name: nginx-app-protect-signatures
-    baseurl: >-
-      https://app-protect-sigs.nginx.com/centos/{{ (ansible_distribution_version | float >= 7.4 and ansible_distribution_version | float < 8.0)
-      | ternary(ansible_distribution_major_version | int, 7.4) }}/$basearch/
-    description: NGINX App Protect Signatures Repository
-    sslclientcert: "/etc/ssl/nginx/{{ nginx_license.certificate | basename }}"
-    sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
-    enabled: true
-    gpgcheck: true
-    state: "{{ nginx_license_status | default ('present') }}"
+    - name: "(Setup: CentOS/RedHat/Oracle Linux) Get OS Major Version"
+      set_fact:
+        key_value: "" # appeasing the linter
+        redhat_major_version: "{{ (ansible_distribution_version | float >= 7.4 and ansible_distribution_version | float < 8.0)
+          | ternary(ansible_distribution_major_version | int, 7.4) }}"
+
+    - name: "(Setup: CentOS/RedHat/Oracle Linux) Setup CentOS-7 Repository"
+      yum_repository:
+        name: centos
+        baseurl: >-
+          http://ftp.heanet.ie/pub/centos/{{ redhat_major_version }}/os/$basearch/
+        description: NGINX App Protect Repository
+        sslclientcert: "/etc/ssl/nginx/{{ nginx_license.certificate | basename }}"
+        sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
+        enabled: true
+        gpgcheck: true
+        gpgkey:  >-
+          http://ftp.heanet.ie/pub/centos/{{ redhat_major_version }}/os/$basearch/RPM-GPG-KEY-CentOS-{{ redhat_major_version }}
+        state: "{{ nginx_license_status | default ('present') }}"
+
+    - name: "(Setup: CentOS/RedHat/Oracle Linux) Setup NGINX App Protect Repository"
+      yum_repository:
+        name: nginx-app-protect
+        baseurl: >-
+          https://plus-pkgs.nginx.com/centos/{{ redhat_major_version }}/$basearch/
+        description: NGINX App Protect Repository
+        sslclientcert: "/etc/ssl/nginx/{{ nginx_license.certificate | basename }}"
+        sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
+        enabled: true
+        gpgcheck: true
+        state: "{{ nginx_license_status | default ('present') }}"
+
+    - name: "(Setup: CentOS/RedHat/Oracle Linux) Setup NGINX App Protect Signatures Repository"
+      yum_repository:
+        name: nginx-app-protect-signatures
+        baseurl: >-
+          https://app-protect-sigs.nginx.com/centos/{{ redhat_major_version }}/$basearch/
+        description: NGINX App Protect Signatures Repository
+        sslclientcert: "/etc/ssl/nginx/{{ nginx_license.certificate | basename }}"
+        sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
+        enabled: true
+        gpgcheck: true
+        state: "{{ nginx_license_status | default ('present') }}"
   when: ansible_distribution != "Amazon"
