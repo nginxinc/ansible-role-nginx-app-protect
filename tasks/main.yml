@@ -23,7 +23,7 @@
 
 - name: Debug app_protect_state
   debug:
-    msg: "app_protect_state {{ app_protect_state }}"
+    msg: "Desired app_protect_state {{ app_protect_state }}"
 
 - name: Abort if the OS/version combination is not supported
   fail:

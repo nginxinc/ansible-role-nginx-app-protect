@@ -88,7 +88,9 @@ Dependencies
 
 - Since this role uses the [package_facts](https://docs.ansible.com/ansible/latest/modules/package_facts_module.html) module, on debian-based systems the `python-apt` package must be installed on targeted hosts.
 
-- NGINX+ R20-R22 must already be installed on the target system 
+- If NGINX+ is *not* already installed on the system, this role will install the version of NGINX+ that is dependent on the version of NGINX App Protect set with the `app_protect_version` variable. If none is specified, the latest version of NGINX+ and NGINX App Protect will be installed.
+
+- When using the `app_protect_version` variable, a specific version of NGINX+ must already be installed on the target system.
 
 Example Playbook
 ----------------

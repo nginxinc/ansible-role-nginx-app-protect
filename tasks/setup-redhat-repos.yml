@@ -32,6 +32,7 @@
         sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
         enabled: true
         gpgcheck: true
+        gpgkey: https://cs.nginx.com/static/keys/app-protect.key
         state: "{{ nginx_license_status | default ('present') }}"
 
     - name: "(Setup: CentOS/RedHat/Oracle Linux) Setup NGINX App Protect Signatures Repository"
@@ -44,5 +45,6 @@
         sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
         enabled: true
         gpgcheck: true
+        gpgkey: https://cs.nginx.com/static/keys/app-protect.key
         state: "{{ nginx_license_status | default ('present') }}"
   when: ansible_distribution != "Amazon"
