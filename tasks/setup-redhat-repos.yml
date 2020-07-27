@@ -31,7 +31,7 @@
         sslclientcert: "/etc/ssl/nginx/{{ nginx_license.certificate | basename }}"
         sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
         enabled: true
-        gpgcheck: true
+        gpgcheck: false
         gpgkey: https://cs.nginx.com/static/keys/app-protect.key
         state: "{{ nginx_license_status | default ('present') }}"
 
@@ -44,7 +44,7 @@
         sslclientcert: "/etc/ssl/nginx/{{ nginx_license.certificate | basename }}"
         sslclientkey: "/etc/ssl/nginx/{{ nginx_license.key | basename }}"
         enabled: true
-        gpgcheck: true
+        gpgcheck: false
         gpgkey: https://cs.nginx.com/static/keys/app-protect.key
         state: "{{ nginx_license_status | default ('present') }}"
   when: ansible_distribution != "Amazon"
