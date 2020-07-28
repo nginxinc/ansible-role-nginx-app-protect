@@ -129,6 +129,10 @@ This is a sample playbook file for using the role to install NGINX App Protect o
     # Removes the license (certificate and key) for the NGINX App Protect repositories on the target host(s) when playbook run is complete.
     app_protect_delete_license: true
 
+    # If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
+    # Otherwise, it will source packages from CentOS' repositories.
+    app_protect_use_rhel_subscription_repos: true
+
     # For use with the app_protect_configure option to determine if the default security policy will be written to the target host
     # Used when `app_protect_configure: true`.
     app_protect_security_policy_template_enable: true
