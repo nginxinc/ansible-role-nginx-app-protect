@@ -36,6 +36,10 @@ nginx_timeout: 180
 # App Protect Temporary Directory to use (Default: /tmp)
 app_protect_tempdir: /tmp
 
+# Choose where to fetch the NGINX signing key from.
+# Default is the official NGINX signing key host.
+# nginx_signing_key: https://cs.nginx.com/static/keys/nginx_signing.key
+
 # Choose where to fetch the NGINX App Protect signing key from.
 # Default is the official NGINX App Protect signing key host.
 # app_protect_signing_key: https://cs.nginx.com/static/keys/app-protect.key
