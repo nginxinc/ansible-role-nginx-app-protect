@@ -10,13 +10,7 @@
 app_protect_state: present
 
 # # OPTIONAL: Installs a specific version of NGINX App Protect
-# app_protect_version: 20
-
-# Enable enforcing selinux (you may need to open ports on your own)
-app_protect_selinux: false
-
-# Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with app_protect_selinux: true)
-app_protect_selinux_enforcing: true
+# app_protect_version: 22
 
 # The installation of NGINX App Protect includes a base signature set, which may be out of date. 
 # This option installs the latest NGINX App Protect signatures.
@@ -32,6 +26,10 @@ app_protect_configure: false
 # Removes the license (certificate and key) for the NGINX App Protect repositories on the target host(s) when playbook run is complete.
 app_protect_delete_license: true
 
+# If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
+# Otherwise, it will source packages from CentOS' repositories.
+app_protect_use_rhel_subscription_repos: false
+
 # Start/Restart NGINX service when App Protect related changes are complete.
 # Default is true.
 nginx_start: true
@@ -42,13 +40,26 @@ nginx_timeout: 180
 # App Protect Temporary Directory to use (Default: /tmp)
 app_protect_tempdir: /tmp
 
+# Choose where to fetch the NGINX signing key from.
+# Default is the official NGINX signing key host.
+# nginx_signing_key: https://cs.nginx.com/static/keys/nginx_signing.key
+
 # Choose where to fetch the NGINX App Protect signing key from.
 # Default is the official NGINX App Protect signing key host.
 # app_protect_signing_key: https://cs.nginx.com/static/keys/app-protect.key
 
-# populate this dictionary of lists with appropriate values from the ansible_os_family and ansible_distribution_version facts
+# populate this dictionary of lists with appropriate values from the ansible_distribution and ansible_distribution_version facts
 app_protect_linux_families:
   CentOS:
+    - 7.4
+    - 7.5
+    - 7.6
+    - 7.7
+    - 7.8
+    - 8.0
+    - 8.1
+    - 8.2
+  RedHat:
     - 7.4
     - 7.5
     - 7.6
