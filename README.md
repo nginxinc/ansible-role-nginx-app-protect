@@ -131,7 +131,7 @@ This is a sample playbook file for using the role to install NGINX App Protect o
 
     # If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
     # Otherwise, it will source packages from CentOS' repositories.
-    app_protect_use_rhel_subscription_repos: true
+    app_protect_use_rhel_subscription_repos: false
 
     # For use with the app_protect_configure option to determine if the default security policy will be written to the target host
     # Used when `app_protect_configure: true`.
