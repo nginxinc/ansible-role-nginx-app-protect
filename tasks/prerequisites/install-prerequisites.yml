@@ -14,4 +14,4 @@
 
 - name: "(Setup: RedHat) Install Prerequisites"
   import_tasks: setup-redhat.yml
-  when: ansible_distribution == "RedHat" 
+  when: ansible_distribution == "RedHat"

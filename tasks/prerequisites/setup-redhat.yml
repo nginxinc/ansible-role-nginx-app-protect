@@ -7,11 +7,11 @@
 - name: "(Install: RedHat) Install Required Dependencies - RHEL Subscription"
   package:
     name: rhel-7-server-optional-rpms,rhel-7-server-rpms
-    state: latest
+    state: present
   when: app_protect_use_rhel_subscription_repos
 
 - name: "(Install: RedHat) Install Required Dependencies - Centos Epel"
   package:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
-    state: latest
+    state: present
   when: not app_protect_use_rhel_subscription_repos
