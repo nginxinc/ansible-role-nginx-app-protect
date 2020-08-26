@@ -1,0 +1,9 @@
+---
+- hosts: wafs
+  remote_user: centos  
+  pre_tasks:
+  - name: load the vars
+    include_vars: 
+      file: "{{playbook_dir}}/nginx-app-protect-vars.yml"
+  roles:
+    - nginxinc.nginx_app_protect          
