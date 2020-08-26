@@ -38,5 +38,4 @@ default.pem
 scratch/
 
 # nginx keys
-sample-playbook/license/nginx-repo.key
-sample-playbook/license/nginx-repo.crt
+sample-playbook/license/nginx-repo.*
