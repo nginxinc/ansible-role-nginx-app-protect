@@ -25,7 +25,7 @@
   template:
     src: "{{ app_protect_log_policy_template.template_file }}"
     dest: "{{ app_protect_log_policy_template.out_file_location }}{{ app_protect_log_policy_template.out_file_name }}"
-    mode: '0644'
+    mode: "0644"
     backup: true
   when: app_protect_log_policy_template_enable
 
