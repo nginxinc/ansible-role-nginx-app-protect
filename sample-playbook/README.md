@@ -2,7 +2,7 @@
 
 ## Usage
 
-install galaxy collections:
+install galaxy role:
 
 `ansible-galaxy install nginxinc.nginx_app_protect`
 

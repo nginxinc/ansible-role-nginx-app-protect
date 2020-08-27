@@ -100,7 +100,7 @@ This is a sample playbook file for using the role to install NGINX App Protect o
 
 A copy of this is in the sample-playbook directory in this repo.
 
-First create a file for all the varialbles as `nginx-app-protect-vars.yml`
+First create a file for all the variables as `nginx-app-protect-vars.yml`
 ```yaml
 ---
 
