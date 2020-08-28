@@ -36,3 +36,6 @@ default.pem
 
 # Scratch Directory
 scratch/
+
+# nginx keys
+sample-playbook/license/nginx-repo.*

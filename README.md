@@ -98,11 +98,11 @@ Example Playbook
 
 This is a sample playbook file for using the role to install NGINX App Protect on NGINX Plus and configure it using basic settings to all `wafs` inventory hosts.
 
+A copy of this is in the sample-playbook directory in this repo.
+
+First create a file for all the variables as `nginx-app-protect-vars.yml`
 ```yaml
 ---
-- hosts: wafs
-  become: true
-  vars:
 
     # Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
     # Can be used with `app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
@@ -169,31 +169,24 @@ This is a sample playbook file for using the role to install NGINX App Protect o
       certificate: "{{playbook_dir}}/license/nginx-repo.crt"
       key: "{{playbook_dir}}/license/nginx-repo.key"
 
-  roles:
-    - role: nginxinc.nginx_app_protect
 ```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX App Protect role in a localhost and installing NGINX App Protect on NGINX Plus.
 
 ```yaml
 ---
-- hosts: localhost
-  become: true
+- hosts: wafs
+  remote_user: centos  
+  pre_tasks:
+  - name: load the vars
+    include_vars: 
+      file: "{{playbook_dir}}/nginx-app-protect-vars.yml"
   roles:
-    - role: nginxinc.nginx_app_protect
+    - nginxinc.nginx_app_protect
 ```
 
-This is a sample playbook file for deploying the Ansible Galaxy NGINX App Protect role to a dynamic inventory containing the `nginx_plus` tag.
 
-```yaml
----
-- hosts: tag_nginx_plus
-  remote_user: root
-  roles:
-    - role: nginxinc.nginx_app_protect
-```
-
-To run any of the above sample playbooks create a `setup-nginx-app-protect.yml` file and paste the contents. Executing the Ansible Playbook is then as simple as executing `ansible-playbook setup-nginx.yml`.
+To run any of the above sample playbooks create a `nginx-app-protect-playbook.yml` file and paste the contents. Executing the Ansible Playbook is then as simple as executing `ansible-playbook nginx-app-protect-playbook.yml -b -i inventory`.
 
 Alternatively, you can also clone this repository instead of installing it from Ansible Galaxy. If you decide to do so, replace the role variable in the previous sample playbooks from `nginxinc.nginx_app_protect` to `ansible-role-nginx-app-protect`.
 

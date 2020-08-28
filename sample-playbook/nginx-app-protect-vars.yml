@@ -1,0 +1,69 @@
+
+    # Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
+    # Can be used with `app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
+    # Using 'present' will install the latest version (or 'app_protect_version') of NGINX App Protect on a fresh install.
+    # Using 'latest' will upgrade NGINX App Protect to the latest version (that matches your 'app_protect_version') of NGINX App Protect on every playbook execution.
+    # Using 'absent' will remove NGINX App Protect from your system.
+    # Default is present.
+    app_protect_state: present
+
+    # OPTIONAL: Installs a specific version of NGINX App Protect
+    #app_protect_version: 22
+
+    # The installation of NGINX App Protect includes a base signature set, which may be out of date.
+    # This option installs the latest NGINX App Protect signatures.
+    app_protect_install_signatures: true
+
+    # The installation of NGINX App Protect can include a page of frequently-updated, high-accuracy signatures called Threat Campaigns.
+    # This option installs the latest NGINX App Protect Threat Campaigns signatures.
+    app_protect_install_threat_campaigns: true
+
+    # Creates basic configuration files and enables NGINX App Protect on the target host
+    app_protect_configure: true
+
+    # Removes the license (certificate and key) for the NGINX App Protect repositories on the target host(s) when playbook run is complete.
+    app_protect_delete_license: true
+
+    # If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
+    # Otherwise, it will source packages from CentOS' repositories.
+    app_protect_use_rhel_subscription_repos: false
+
+    # For use with the app_protect_configure option to determine if the default security policy will be written to the target host
+    # Used when `app_protect_configure: true`.
+    app_protect_security_policy_template_enable: true
+
+    # Default app protect enforcement mode. Values can be `blocking` or `transparent`.
+    # Used when `app_protect_configure: true` and `app_protect_security_policy_template_enable: true`.
+    security_policy_enforcement_mode: blocking
+
+    # For use with the app_protect_configure option to determine if the default log policy will be written to the target host.
+    # Used when `app_protect_configure: true`.
+    app_protect_log_policy_template_enable: true
+
+    # Which violation types to log. Possible values: all, illegal, blocked
+    # Used when `app_protect_configure: true` and `app_protect_log_policy_template_enable: true`.
+    log_policy_filter_request_type: all
+
+    # For use with the app_protect_configure option to determine if the sample nginx.conf will be written to the target host.
+    # Since this can be dangerous, this value is default to false in the role defaults.
+    # Used when `app_protect_configure: true`.
+    nginx_conf_template_enable: true
+
+    # For use with the app_protect_configure option to determine the syslog target to be injected
+    # into the default log policy that will be written to the target host.
+    # Used when `nginx_conf_template_enable: true`.
+    log_policy_syslog_target: 10.0.0.2:514
+
+    # DEPRECATED: A proxy pass workload used in the sample nginx.conf for demo purposes.
+    # Will be removed from this role in the future.
+    # Used when `nginx_conf_template_enable: true`.
+    nginx_demo_workload: http://10.0.0.3:88
+
+    # The location of the certificate and key to be used when downloading the packages onto the host
+    nginx_license:
+      certificate: "{{playbook_dir}}/license/nginx-repo.crt"
+      key: "{{playbook_dir}}/license/nginx-repo.key"
+
+    # upstream target:
+    nginx_demo_workload_protocol: http://
+    nginx_demo_workload_host: 10.1.1.1:8080
