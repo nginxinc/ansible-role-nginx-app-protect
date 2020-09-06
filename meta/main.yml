@@ -16,6 +16,9 @@ galaxy_info:
     - name: Debian
       versions:
         - stretch
+    - name: Ubuntu
+      versions:
+        - bionic
 
   galaxy_tags:
     - waf

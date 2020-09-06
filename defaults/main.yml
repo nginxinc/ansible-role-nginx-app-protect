@@ -82,6 +82,8 @@ app_protect_linux_families:
     - 9.10
     - 9.11
     - 9.12
+  Ubuntu:
+    - 18.04
 
 app_protect_security_policy_template_enable: true
 app_protect_security_policy_template:
