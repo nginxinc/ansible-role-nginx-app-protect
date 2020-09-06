@@ -1,5 +1,5 @@
 ---
-- name: "(Install: Debian) Install Required Debian Dependencies"
+- name: "(Setup: Debian/Ubuntu) Install Required Debian and Ubuntu Dependencies"
   package:
-    name: apt-transport-https, lsb-release, ca-certificates
+    name: apt-transport-https, lsb-release, ca-certificates, wget
     state: present

@@ -1,12 +1,12 @@
 ---
-- name: "(Setup: Debian) Setup NGINX App Protect Repository"
+- name: "(Setup: Debian/Ubuntu) Setup NGINX App Protect Repository"
   apt_repository:
     repo: deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
     filename: nginx-plus
     update_cache: false
     state: "{{ nginx_license_status | default ('present') }}"
 
-- name: "(Setup: Debian) Setup NGINX App Protect Signatures Repository"
+- name: "(Setup: Debian/Ubuntu) Setup NGINX App Protect Signatures Repository"
   apt_repository:
     repo: deb [arch=amd64] https://app-protect-sigs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
     filename: app-protect-sigs
@@ -35,6 +35,6 @@
       Acquire::https::app-protect-sigs.nginx.com::SslKey      "/etc/ssl/nginx/{{ nginx_license.key | basename }}";
     state: "{{ nginx_license_status | default ('present') }}"
 
-- name: "(Setup: Debian) Update APT Cache"
+- name: "(Setup: Debian/Ubuntu) Update APT Cache"
   apt:
     update_cache: true

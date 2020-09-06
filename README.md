@@ -75,6 +75,9 @@ Debian:
     - 9.10
     - 9.11
     - 9.12
+Ubuntu:
+  versions:
+    - 18.04
 ```
 
 Role Variables

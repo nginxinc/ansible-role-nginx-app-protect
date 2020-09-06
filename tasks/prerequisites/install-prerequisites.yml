@@ -4,9 +4,9 @@
     msg: "ansible_distribution {{ ansible_distribution }}"
     verbosity: 2
 
-- name: "(Setup: Debian) Install Prerequisites"
+- name: "(Setup: Debian/Ubuntu) Install Prerequisites"
   import_tasks: setup-debian.yml
-  when: ansible_distribution == "Debian"
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: "(Setup: CentOS) Install Prerequisites"
   import_tasks: setup-centos.yml
