@@ -56,18 +56,12 @@ app_protect_linux_families:
     - 7.6
     - 7.7
     - 7.8
-    - 8.0
-    - 8.1
-    - 8.2
   RedHat:
     - 7.4
     - 7.5
     - 7.6
     - 7.7
     - 7.8
-    - 8.0
-    - 8.1
-    - 8.2
   Debian:
     - 9.0
     - 9.1
@@ -82,6 +76,7 @@ app_protect_linux_families:
     - 9.10
     - 9.11
     - 9.12
+    - 9.13
   Ubuntu:
     - 18.04
 
