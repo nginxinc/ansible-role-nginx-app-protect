@@ -59,7 +59,7 @@
 
 - name: Reload NGINX
   debug:
-    msg: "trigger nginx reload if needed"
+    msg: Trigger nginx reload if needed
   notify: (Handler) Restart NGINX
   when: nginx_app_protect_security_policy_template_enable | bool
         or nginx_app_protect_log_policy_template_enable | bool

@@ -45,4 +45,4 @@
   package:
     name: "app-protect{{ nginx_app_protect_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
-  notify: (Handler) Restart NGINX
+  notify: (Handler) Start NGINX

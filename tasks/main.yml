@@ -58,15 +58,18 @@
         - nginx_app_protect_state != "absent"
           or nginx_app_protect_install_signatures | bool
           or nginx_app_protect_install_threat_campaigns | bool
+      tags: nginx_app_protect_setup_license
 
     - name: Install NGINX App Protect
       include_tasks: "{{ role_path }}/tasks/install/install-app-protect.yml"
+      tags: nginx_app_protect_install_app_protect
 
     - name: Install NGINX App Protect signatures and threat campaigns
       include_tasks: "{{ role_path }}/tasks/install/install-signatures-threat-campaigns.yml"
       when:
         - nginx_app_protect_install_signatures | bool
         - nginx_app_protect_install_threat_campaigns | bool
+      tags: nginx_app_protect_install_signatures_threats
 
     - name: Remove NGINX App Protect license
       include_tasks: "{{ role_path }}/tasks/install/delete-license.yml"
@@ -76,14 +79,17 @@
     - name: Configure NGINX App Protect
       include_tasks: "{{ role_path }}/tasks/config/configure-app-protect.yml"
       when: nginx_app_protect_configure | bool
+      tags: nginx_app_protect_configure
   when: nginx_app_protect_state != "absent"
 
 - name: Remove NGINX App Protect
   block:
     - name: Remove NGINX App Protect package
       include_tasks: "{{ role_path }}/tasks/install/install-app-protect.yml"
+      tags: nginx_app_protect_remove
 
     - name: Disable NGINX App Protect config
       include_tasks: "{{ role_path }}/tasks/config/configure-app-protect.yml"
       when: nginx_app_protect_configure | bool
+      tags: nginx_app_protect_remove_config
   when: nginx_app_protect_state == "absent"
