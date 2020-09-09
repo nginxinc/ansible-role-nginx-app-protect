@@ -1,73 +1,65 @@
 ---
-# defaults file for ansible-role-nginx-app-protect
-
 # Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
-# Can be used with `app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
-# Using 'present' will install the latest version (or 'app_protect_version') of NGINX App Protect on a fresh install.
-# Using 'latest' will upgrade NGINX App Protect to the latest version (that matches your 'app_protect_version') of NGINX App Protect on every playbook execution.
+# Can be used with `nginx_app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
+# Using 'present' will install the latest version (or 'nginx_app_protect_version') of NGINX App Protect on a fresh install.
+# Using 'latest' will upgrade NGINX App Protect to the latest version (that matches your 'nginx_app_protect_version') of NGINX App Protect on every playbook execution.
 # Using 'absent' will remove NGINX App Protect from your system.
 # Default is present.
-app_protect_state: present
+nginx_app_protect_state: present
 
 # # OPTIONAL: Installs a specific version of NGINX App Protect
-# app_protect_version: 22
+# nginx_app_protect_version: 22
 
-# The installation of NGINX App Protect includes a base signature set, which may be out of date. 
+# The installation of NGINX App Protect includes a base signature set, which may be out of date.
 # This option installs the latest NGINX App Protect signatures.
-app_protect_install_signatures: true
+nginx_app_protect_install_signatures: true
 
 # The installation of NGINX App Protect can include a page of frequently-updated, high-accuracy signatures called Threat Campaigns.
 # This option installs the latest NGINX App Protect Threat Campaigns signatures.
-app_protect_install_threat_campaigns: false
+nginx_app_protect_install_threat_campaigns: false
 
 # Creates basic configuration files and enables NGINX App Protect on the target host
-app_protect_configure: false
+nginx_app_protect_configure: false
 
 # Removes the license (certificate and key) for the NGINX App Protect repositories on the target host(s) when playbook run is complete.
-app_protect_delete_license: true
+nginx_app_protect_delete_license: true
 
 # If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
 # Otherwise, it will source packages from CentOS' repositories.
-app_protect_use_rhel_subscription_repos: false
+nginx_app_protect_use_rhel_subscription_repos: false
 
 # Start/Restart NGINX service when App Protect related changes are complete.
 # Default is true.
-nginx_start: true
+nginx_app_protect_start: true
 
 # Increase NGINX service timeout to accomdate ruleset loading from default 90s
-nginx_timeout: 180
+nginx_app_protect_timeout: 180
 
 # App Protect Temporary Directory to use (Default: /tmp)
-app_protect_tempdir: /tmp
+nginx_app_protect_tempdir: /tmp
 
 # Choose where to fetch the NGINX signing key from.
 # Default is the official NGINX signing key host.
-# nginx_signing_key: https://cs.nginx.com/static/keys/nginx_signing.key
+# nginx_app_protect_signing_key: https://cs.nginx.com/static/keys/nginx_signing.key
 
 # Choose where to fetch the NGINX App Protect signing key from.
 # Default is the official NGINX App Protect signing key host.
-# app_protect_signing_key: https://cs.nginx.com/static/keys/app-protect.key
+# nginx_app_protect_signing_key: https://cs.nginx.com/static/keys/app-protect.key
 
 # populate this dictionary of lists with appropriate values from the ansible_distribution and ansible_distribution_version facts
-app_protect_linux_families:
+nginx_app_protect_linux_families:
   CentOS:
     - 7.4
     - 7.5
     - 7.6
     - 7.7
     - 7.8
-    - 8.0
-    - 8.1
-    - 8.2
   RedHat:
     - 7.4
     - 7.5
     - 7.6
     - 7.7
     - 7.8
-    - 8.0
-    - 8.1
-    - 8.2
   Debian:
     - 9.0
     - 9.1
@@ -82,34 +74,35 @@ app_protect_linux_families:
     - 9.10
     - 9.11
     - 9.12
+    - 9.13
   Ubuntu:
     - 18.04
 
-app_protect_security_policy_template_enable: true
-app_protect_security_policy_template:
+nginx_app_protect_security_policy_template_enable: true
+nginx_app_protect_security_policy_template:
   template_file: app-protect-security-policy.j2
   out_file_name: app-protect-security-policy.json
   out_file_location: /etc/nginx/
 
-app_protect_log_policy_template_enable: true
-app_protect_log_policy_template:
+nginx_app_protect_log_policy_template_enable: true
+nginx_app_protect_log_policy_template:
   template_file: app-protect-log-policy.j2
   out_file_name: app-protect-log-policy.json
   out_file_location: /etc/nginx/
 
-nginx_conf_template_enable: false
-nginx_conf_template:
+nginx_app_protect_conf_template_enable: false
+nginx_app_protect_conf_template:
   template_file: nginx.conf.j2
   out_file_name: nginx.conf
   out_file_location: /etc/nginx/
 
 # possible values: transparent, blocking
-security_policy_enforcement_mode: transparent
+nginx_app_protect_security_policy_enforcement_mode: transparent
 
 # possible values: all, illegal, blocked
-log_policy_filter_request_type: all
+nginx_app_protect_log_policy_filter_request_type: all
 
-log_policy_syslog_target: 127.0.0.1:514
+nginx_app_protect_log_policy_syslog_target: 127.0.0.1:514
 
-nginx_demo_workload_protocol: http://
-nginx_demo_workload_host: 10.1.1.1:8080
+nginx_app_protect_demo_workload_protocol: http://
+nginx_app_protect_demo_workload_host: 10.1.1.1:8080

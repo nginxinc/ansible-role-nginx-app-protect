@@ -4,14 +4,14 @@
     msg: "ansible_distribution {{ ansible_distribution }}"
     verbosity: 2
 
-- name: "(Setup: Debian/Ubuntu) Install Prerequisites"
-  import_tasks: setup-debian.yml
-  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+- name: Install Debian and Ubuntu prerequisites
+  include_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
 
-- name: "(Setup: CentOS) Install Prerequisites"
-  import_tasks: setup-centos.yml
+- name: Install CentOS prerequisites
+  include_tasks: setup-centos.yml
   when: ansible_distribution == "CentOS"
 
-- name: "(Setup: RedHat) Install Prerequisites"
-  import_tasks: setup-redhat.yml
+- name: Install Red Hat prerequisites
+  include_tasks: setup-redhat.yml
   when: ansible_distribution == "RedHat"

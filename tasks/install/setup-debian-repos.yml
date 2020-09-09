@@ -1,0 +1,42 @@
+---
+- name: Setup Debian and Ubuntu NGINX App Protect repository
+  apt_repository:
+    repo: deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
+    filename: nginx-plus
+    update_cache: false
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+
+- name: Setup Debian and Ubuntu NGINX App Protect signatures repository
+  apt_repository:
+    repo: deb [arch=amd64] https://app-protect-sigs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
+    filename: app-protect-sigs
+    update_cache: false
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+
+- name: Setup NGINX App Protect license
+  blockinfile:
+    path: /etc/apt/apt.conf.d/90nginx
+    create: true
+    block: |
+      Acquire::https::plus-pkgs.nginx.com::Verify-Peer "true";
+      Acquire::https::plus-pkgs.nginx.com::Verify-Host "true";
+      Acquire::https::plus-pkgs.nginx.com::SslCert     "/etc/ssl/nginx/{{ nginx_app_protect_license.certificate | basename }}";
+      Acquire::https::plus-pkgs.nginx.com::SslKey      "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}";
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+    mode: 0444
+
+- name: Setup NGINX App Protect signatures license
+  blockinfile:
+    path: /etc/apt/apt.conf.d/90app-protect-sigs
+    create: true
+    block: |
+      Acquire::https::app-protect-sigs.nginx.com::Verify-Peer "true";
+      Acquire::https::app-protect-sigs.nginx.com::Verify-Host "true";
+      Acquire::https::app-protect-sigs.nginx.com::SslCert     "/etc/ssl/nginx/{{ nginx_app_protect_license.certificate | basename }}";
+      Acquire::https::app-protect-sigs.nginx.com::SslKey      "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}";
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+    mode: 0444
+
+- name: Update APT cache
+  apt:
+    update_cache: true
