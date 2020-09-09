@@ -1,0 +1,48 @@
+---
+- name: Get NGINX Plus version
+  set_fact:
+    nginx_plus_version: "{{ ansible_facts.packages['nginx-plus'] | map(attribute='version') | list | first | regex_search('^(\\d{1,3})') }}"
+  when: "'nginx-plus' in ansible_facts.packages"
+
+- name: Fail if existing NGINX Plus version preconditions fails
+  assert:
+    that: nginx_plus_version | int >= 19
+    fail_msg: >
+      "'nginx_plus_version' release version must be a minimum of 19 for App Protect.
+      Actual: {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
+    success_msg: "'nginx_plus_version' is {{ (nginx_plus_version is defined) | ternary(nginx_plus_version, 'NONE') }}"
+    quiet: true
+  when: nginx_plus_version is defined
+
+- name: Create override for NGINX Plus service
+  file:
+    path: /etc/systemd/system/nginx.service.d
+    state: directory
+    mode: 0755
+  when: nginx_app_protect_timeout is defined
+
+- name: Increase timeout for NGINX Plus service
+  template:
+    src: nginx.service.override.conf.j2
+    dest: /etc/systemd/system/nginx.service.d/override.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: nginx_app_protect_timeout is defined
+
+- name: Setup NGINX App Protect repositories
+  block:
+    - name: Setup Debian repositories
+      include_tasks: "{{ role_path }}/tasks/install/setup-debian-repos.yml"
+      when: ansible_os_family == "Debian"
+
+    - name: Setup Red Hat repositories
+      include_tasks: "{{ role_path }}/tasks/install/setup-redhat-repos.yml"
+      when: ansible_os_family == "RedHat"
+  when: nginx_app_protect_state != "absent"
+
+- name: Install NGINX App Protect
+  package:
+    name: "app-protect{{ nginx_app_protect_version | default('') }}"
+    state: "{{ nginx_app_protect_state }}"
+  notify: (Handler) Start NGINX

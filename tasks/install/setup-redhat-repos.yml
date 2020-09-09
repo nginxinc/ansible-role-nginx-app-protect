@@ -1,0 +1,45 @@
+---
+- name: Get CentOS and Red Hat major version
+  set_fact:
+    redhat_major_version: "{{ (ansible_distribution_version | float >= 7.4 and ansible_distribution_version | float < 8.0)
+      | ternary(ansible_distribution_major_version | int, 7.4) }}"
+
+- name: Setup CentOS repository
+  yum_repository:
+    name: centos
+    baseurl: >-
+      http://ftp.heanet.ie/pub/centos/{{ redhat_major_version }}/os/$basearch/
+    description: NGINX App Protect Repository
+    sslclientcert: "/etc/ssl/nginx/{{ nginx_app_protect_license.certificate | basename }}"
+    sslclientkey: "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}"
+    enabled: true
+    gpgcheck: true
+    gpgkey: >-
+      http://ftp.heanet.ie/pub/centos/{{ redhat_major_version }}/os/$basearch/RPM-GPG-KEY-CentOS-{{ redhat_major_version }}
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+
+- name: Setup NGINX App Protect repository
+  yum_repository:
+    name: nginx-app-protect
+    baseurl: >-
+      https://plus-pkgs.nginx.com/centos/{{ redhat_major_version }}/$basearch/
+    description: NGINX App Protect Repository
+    sslclientcert: "/etc/ssl/nginx/{{ nginx_app_protect_license.certificate | basename }}"
+    sslclientkey: "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}"
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://cs.nginx.com/static/keys/app-protect.key
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+
+- name: Setup NGINX App Protect signatures repository
+  yum_repository:
+    name: nginx-app-protect-signatures
+    baseurl: >-
+      https://app-protect-sigs.nginx.com/centos/{{ redhat_major_version }}/$basearch/
+    description: NGINX App Protect Signatures Repository
+    sslclientcert: "/etc/ssl/nginx/{{ nginx_app_protect_license.certificate | basename }}"
+    sslclientkey: "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}"
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://cs.nginx.com/static/keys/app-protect.key
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
