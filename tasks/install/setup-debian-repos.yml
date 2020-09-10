@@ -30,10 +30,10 @@
     path: /etc/apt/apt.conf.d/90app-protect-security-updates
     create: true
     block: |
-      Acquire::https::app-protect-sigs.nginx.com::Verify-Peer "true";
-      Acquire::https::app-protect-sigs.nginx.com::Verify-Host "true";
-      Acquire::https::app-protect-sigs.nginx.com::SslCert     "/etc/ssl/nginx/{{ nginx_app_protect_license.certificate | basename }}";
-      Acquire::https::app-protect-sigs.nginx.com::SslKey      "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}";
+      Acquire::https::app-protect-security-updates.nginx.com::Verify-Peer "true";
+      Acquire::https::app-protect-security-updates.nginx.com::Verify-Host "true";
+      Acquire::https::app-protect-security-updates.nginx.com::SslCert     "/etc/ssl/nginx/{{ nginx_app_protect_license.certificate | basename }}";
+      Acquire::https::app-protect-security-updates.nginx.com::SslKey      "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}";
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
     mode: 0444
 
