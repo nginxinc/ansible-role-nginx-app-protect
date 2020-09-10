@@ -1,7 +1,7 @@
 ---
-# - name: Add APT NGINX signing key
-#   apt_key:
-#     url: "{{ nginx_app_protect_signing_keys.nginx }}"
+- name: Add APT NGINX Plus signing key
+  apt_key:
+    url: "{{ nginx_app_protect_signing_keys.nginx_plus }}"
 
 - name: Add APT NGINX App Protect signing key
   apt_key:

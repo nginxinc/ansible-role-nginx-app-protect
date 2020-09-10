@@ -1,7 +1,7 @@
 ---
-# - name: Add RPM NGINX signing key
-#   rpm_key:
-#     key: "{{ nginx_app_protect_signing_keys.nginx }}"
+- name: Add RPM NGINX Plus signing key
+  rpm_key:
+    key: "{{ nginx_app_protect_signing_keys.nginx_plus }}"
 
 - name: Add RPM NGINX App Protect signing key
   rpm_key:
