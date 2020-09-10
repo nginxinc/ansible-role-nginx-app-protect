@@ -1,16 +1,12 @@
 ---
-- name: Set APT NGINX signing key URL
-  set_fact:
-    nginx_keysite: "{{ nginx_app_protect_signing_key | default('https://cs.nginx.com/static/keys/nginx_signing.key') }}"
-
-- name: Set APT NGINX App Protect signing key URL
-  set_fact:
-    app_protect_keysite: "{{ nginx_app_protect_signing_key | default('https://cs.nginx.com/static/keys/app-protect.key') }}"
-
-- name: Add APT NGINX signing key
-  apt_key:
-    url: "{{ nginx_keysite }}"
+# - name: Add APT NGINX signing key
+#   apt_key:
+#     url: "{{ nginx_app_protect_signing_keys.nginx }}"
 
 - name: Add APT NGINX App Protect signing key
   apt_key:
-    url: "{{ app_protect_keysite }}"
+    url: "{{ nginx_app_protect_signing_keys.app_protect }}"
+
+- name: Add APT NGINX App Protect security updates signing key
+  apt_key:
+    url: "{{ nginx_app_protect_signing_keys.security_updates }}"

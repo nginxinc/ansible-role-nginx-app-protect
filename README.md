@@ -104,6 +104,13 @@ nginx_app_protect_delete_license: true
 # Otherwise, it will source packages from CentOS' repositories.
 nginx_app_protect_use_rhel_subscription_repos: false
 
+# OPTIONAL: Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
+# Default settings are the official NGINX signing key hosts.
+nginx_app_protect_signing_keys:
+  # nginx: https://cs.nginx.com/static/keys/nginx_signing.key
+  app_protect: https://cs.nginx.com/static/keys/app-protect.key
+  security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
+
 # For use with the nginx_app_protect_configure option to determine if the default security policy will be written to the target host
 # Used when `nginx_app_protect_configure: true`.
 nginx_app_protect_security_policy_template_enable: true
