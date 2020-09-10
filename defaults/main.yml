@@ -28,23 +28,22 @@ nginx_app_protect_delete_license: true
 # Otherwise, it will source packages from CentOS' repositories.
 nginx_app_protect_use_rhel_subscription_repos: false
 
+# Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
+# Default settings are the official NGINX signing key hosts.
+nginx_app_protect_signing_keys:
+  nginx_plus: https://cs.nginx.com/static/keys/nginx_signing.key
+  app_protect: https://cs.nginx.com/static/keys/app-protect.key
+  security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
+
 # Start/Restart NGINX service when App Protect related changes are complete.
 # Default is true.
 nginx_app_protect_start: true
 
-# Increase NGINX service timeout to accomdate ruleset loading from default 90s
+# Increase NGINX service timeout to accommodate ruleset loading from default 90s
 nginx_app_protect_timeout: 180
 
 # App Protect Temporary Directory to use (Default: /tmp)
 nginx_app_protect_tempdir: /tmp
-
-# Choose where to fetch the NGINX signing key from.
-# Default is the official NGINX signing key host.
-# nginx_app_protect_signing_key: https://cs.nginx.com/static/keys/nginx_signing.key
-
-# Choose where to fetch the NGINX App Protect signing key from.
-# Default is the official NGINX App Protect signing key host.
-# nginx_app_protect_signing_key: https://cs.nginx.com/static/keys/app-protect.key
 
 # populate this dictionary of lists with appropriate values from the ansible_distribution and ansible_distribution_version facts
 nginx_app_protect_linux_families:

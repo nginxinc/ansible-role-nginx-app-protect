@@ -28,18 +28,18 @@
     sslclientkey: "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}"
     enabled: true
     gpgcheck: true
-    gpgkey: https://cs.nginx.com/static/keys/app-protect.key
+    gpgkey: "{{ nginx_app_protect_signing_keys.app_protect }}"
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-- name: Setup NGINX App Protect signatures repository
+- name: Setup NGINX App Protect security updates repository
   yum_repository:
-    name: nginx-app-protect-signatures
+    name: nginx-app-protect-security-updates
     baseurl: >-
       https://app-protect-sigs.nginx.com/centos/{{ redhat_major_version }}/$basearch/
-    description: NGINX App Protect Signatures Repository
+    description: NGINX App Protect Security Updates Repository
     sslclientcert: "/etc/ssl/nginx/{{ nginx_app_protect_license.certificate | basename }}"
     sslclientkey: "/etc/ssl/nginx/{{ nginx_app_protect_license.key | basename }}"
     enabled: true
     gpgcheck: true
-    gpgkey: https://cs.nginx.com/static/keys/app-protect.key
+    gpgkey: "{{ nginx_app_protect_signing_keys.security_updates }}"
     state: "{{ nginx_app_protect_license_status | default ('present') }}"

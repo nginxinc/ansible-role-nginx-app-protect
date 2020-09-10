@@ -1,16 +1,12 @@
 ---
-- name: Set default RPM NGINX signing key
-  set_fact:
-    nginx_keysite: "{{ nginx_app_protect_signing_key | default('https://cs.nginx.com/static/keys/nginx_signing.key') }}"
-
-- name: Set default RPM NGINX App Protect signing key
-  set_fact:
-    app_protect_keysite: "{{ nginx_app_protect_signing_key | default('https://cs.nginx.com/static/keys/app-protect.key') }}"
-
-- name: Add RPM NGINX signing key
+- name: Add RPM NGINX Plus signing key
   rpm_key:
-    key: "{{ nginx_keysite }}"
+    key: "{{ nginx_app_protect_signing_keys.nginx_plus }}"
 
-- name: Add RPM NGINX signing key
+- name: Add RPM NGINX App Protect signing key
   rpm_key:
-    key: "{{ app_protect_keysite }}"
+    key: "{{ nginx_app_protect_signing_keys.app_protect }}"
+
+- name: Add RPM NGINX App Protect security updates signing key
+  rpm_key:
+    key: "{{ nginx_app_protect_signing_keys.security_updates }}"

@@ -64,8 +64,8 @@
       include_tasks: "{{ role_path }}/tasks/install/install-app-protect.yml"
       tags: nginx_app_protect_install_app_protect
 
-    - name: Install NGINX App Protect signatures and threat campaigns
-      include_tasks: "{{ role_path }}/tasks/install/install-signatures-threat-campaigns.yml"
+    - name: Install NGINX App Protect security updates (signatures and threat campaigns)
+      include_tasks: "{{ role_path }}/tasks/install/install-security-updates.yml"
       when:
         - nginx_app_protect_install_signatures | bool
         - nginx_app_protect_install_threat_campaigns | bool
