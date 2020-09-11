@@ -1,1 +1,32 @@
 ---
+# Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
+nginx_app_protect_linux_families:
+  CentOS:
+    - 7.4
+    - 7.5
+    - 7.6
+    - 7.7
+    - 7.8
+  RedHat:
+    - 7.4
+    - 7.5
+    - 7.6
+    - 7.7
+    - 7.8
+  Debian:
+    - 9.0
+    - 9.1
+    - 9.2
+    - 9.3
+    - 9.4
+    - 9.5
+    - 9.6
+    - 9.7
+    - 9.8
+    - 9.9
+    - 9.10
+    - 9.11
+    - 9.12
+    - 9.13
+  Ubuntu:
+    - 18.04

@@ -53,7 +53,13 @@ Ubuntu:
 Role Variables
 --------------
 
-This role has multiple variables. The descriptions and defaults for all these variables can be found in the **[defaults/main.yml](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/defaults/main.yml)**.
+This role has multiple variables. The descriptions and defaults for all these variables can be found in the **`defaults`** directory in the following files:
+
+-   **[defaults/main.yml](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/defaults/main.yml)**: NGINX App Protect installation and configuration variables
+
+Similarly, descriptions and defaults for preset variables can be found in the **`vars`** directory in the following files:
+
+-   **[vars/main.yml](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/vars/main.yml):** List of supported NGINX App Protect platforms
 
 Dependencies
 ------------
@@ -67,119 +73,31 @@ Dependencies
 Example Playbook
 ----------------
 
-This is a sample playbook file for using the role to install NGINX App Protect on NGINX Plus and configure it using basic settings to all `wafs` inventory hosts.
+A working functional playbook example can be found in the **`molecule/default`** directory in the following file:
 
-A copy of this is in the sample-playbook directory in this repo.
-
-First create a file for all the variables as `nginx-app-protect-vars.yml`
-
-```yaml
----
-# Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
-# Can be used with `nginx_app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
-# Using 'present' will install the latest version (or 'nginx_app_protect_version') of NGINX App Protect on a fresh install.
-# Using 'latest' will upgrade NGINX App Protect to the latest version (that matches your 'nginx_app_protect_version') of NGINX App Protect on every playbook execution.
-# Using 'absent' will remove NGINX App Protect from your system.
-# Default is present.
-nginx_app_protect_state: present
-
-# OPTIONAL: Installs a specific version of NGINX App Protect
-nginx_app_protect_version: 22
-
-# The installation of NGINX App Protect includes a base signature set, which may be out of date.
-# This option installs the latest NGINX App Protect signatures.
-nginx_app_protect_install_signatures: true
-
-# The installation of NGINX App Protect can include a page of frequently-updated, high-accuracy signatures called Threat Campaigns.
-# This option installs the latest NGINX App Protect Threat Campaigns signatures.
-nginx_app_protect_install_threat_campaigns: true
-
-# Creates basic configuration files and enables NGINX App Protect on the target host
-nginx_app_protect_configure: true
-
-# Removes the license (certificate and key) for the NGINX App Protect repositories on the target host(s) when playbook run is complete.
-nginx_app_protect_delete_license: true
-
-# If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
-# Otherwise, it will source packages from CentOS' repositories.
-nginx_app_protect_use_rhel_subscription_repos: false
-
-# OPTIONAL: Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
-# Default settings are the official NGINX signing key hosts.
-nginx_app_protect_signing_keys:
-  nginx_plus: https://cs.nginx.com/static/keys/nginx_signing.key
-  app_protect: https://cs.nginx.com/static/keys/app-protect.key
-  security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
-
-# For use with the nginx_app_protect_configure option to determine if the default security policy will be written to the target host
-# Used when `nginx_app_protect_configure: true`.
-nginx_app_protect_security_policy_template_enable: true
-
-# Default app protect enforcement mode. Values can be `blocking` or `transparent`.
-# Used when `nginx_app_protect_configure: true` and `nginx_app_protect_security_policy_template_enable: true`.
-nginx_app_protect_security_policy_enforcement_mode: blocking
-
-# For use with the nginx_app_protect_configure option to determine if the default log policy will be written to the target host.
-# Used when `nginx_app_protect_configure: true`.
-nginx_app_protect_log_policy_template_enable: true
-
-# Which violation types to log. Possible values: all, illegal, blocked
-# Used when `nginx_app_protect_configure: true` and `nginx_app_protect_log_policy_template_enable: true`.
-nginx_app_protect_log_policy_filter_request_type: all
-
-# For use with the nginx_app_protect_configure option to determine if the sample nginx.conf will be written to the target host.
-# Since this can be dangerous, this value is default to false in the role defaults.
-# Used when `nginx_app_protect_configure: true`.
-nginx_app_protect_conf_template_enable: true
-
-# For use with the nginx_app_protect_configure option to determine the syslog target to be injected
-# into the default log policy that will be written to the target host.
-# Used when `nginx_app_protect_conf_template_enable: true`.
-nginx_app_protect_log_policy_syslog_target: 10.1.1.8:5144
-
-# DEPRECATED: A proxy pass workload used in the sample nginx.conf for demo purposes.
-# Will be removed from this role in the future.
-# Used when `nginx_app_protect_conf_template_enable: true`.
-nginx_app_protect_demo_workload: http://10.1.10.105:8080
-
-# The location of the certificate and key to be used when downloading the packages onto the host.
-nginx_app_protect_license:
-  certificate: "{{ playbook_dir }}/license/nginx-repo.crt"
-  key: "{{ playbook_dir }}/license/nginx-repo.crt"
-```
-
-This is a sample playbook file for deploying the Ansible Galaxy NGINX App Protect role in a localhost and installing NGINX App Protect on NGINX Plus.
-
-```yaml
----
-- hosts: wafs
-  remote_user: centos
-  pre_tasks:
-  - name: load the vars
-    include_vars:
-      file: "{{ playbook_dir }}/nginx-app-protect-vars.yml"
-  roles:
-    - nginxinc.nginx_app_protect
-```
-
-
-To run any of the above sample playbooks create a `nginx-app-protect-playbook.yml` file and paste the contents. Executing the Ansible Playbook is then as simple as executing `ansible-playbook nginx-app-protect-playbook.yml -b -i inventory`.
-
-Alternatively, you can also clone this repository instead of installing it from Ansible Galaxy. If you decide to do so, replace the role variable in the previous sample playbooks from `nginxinc.nginx_app_protect` to `ansible-role-nginx-app-protect`.
+-   **[molecule/default/converge.yml](https://github.com/nginxinc/ansible-role-nginx-app_protect/blob/main/molecule/default/converge.yml):** Install and configure NGINX App Protect
 
 Other NGINX Roles
 -----------------
 
+You can find an Ansible role to install NGINX [here](https://github.com/nginxinc/ansible-role-nginx)
+
+You can find an Ansible role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config)
+
 You can find an Ansible collection of roles to help you install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller)
+
+You can find an Ansible role to install NGINX Unit [here](https://github.com/nginxinc/ansible-role-nginx-unit)
 
 License
 -------
 
-[Apache License, Version 2.0](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/master/LICENSE)
+[Apache License, Version 2.0](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/LICENSE)
 
 Author Information
 ------------------
 
 [Daniel Edgar](https://github.com/aknot242)
+
+[Alessandro Fael Garcia](https://github.com/alessfg)
 
 &copy; [F5 Networks, Inc.](https://www.f5.com/) 2020

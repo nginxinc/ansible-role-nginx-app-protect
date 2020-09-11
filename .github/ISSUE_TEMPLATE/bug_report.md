@@ -12,7 +12,7 @@ A clear and concise description of what the bug is.
 
 **To reproduce**
 Steps to reproduce the behavior:
-1. Deploy NGINX Config role using playbook.yml
+1. Deploy NGINX App Protect role using playbook.yml
 2. View output/logs/configuration on '...'
 3. See error
 
@@ -20,7 +20,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Your environment:**
--   Version of the NGINX Config Role or specific commit
+-   Version of the NGINX App Protect role or specific commit
 -   Version of Ansible
 -   Target deployment platform
 
