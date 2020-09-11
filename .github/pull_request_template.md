@@ -7,4 +7,4 @@ Before creating a PR, run through this checklist and mark each as complete.
 -   [ ] I have read the [CONTRIBUTING](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/CONTRIBUTING.md) document
 -   [ ] I have added Molecule tests that prove my fix is effective or that my feature works
 -   [ ] I have checked that all Molecule tests pass after adding my changes
--   [ ] I have updated any relevant documentation (`defaults/main/*.yml` and `README.md`)
+-   [ ] I have updated any relevant documentation (`defaults/main.yml`, `README.md` and `CHANGELOG.md`)
