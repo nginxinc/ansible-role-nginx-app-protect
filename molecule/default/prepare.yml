@@ -13,19 +13,19 @@
       file:
         path: "./license"
         state: directory
-        mode: "0777"
+        mode: 0755
 
-    - name: Create ephemeral license file from env var
+    - name: Create ephemeral license certificate file from b64 decoded env var
       copy:
-        content: "{{ lookup('env','NGINX_CRT') }}"
+        content: "{{ lookup('env','NGINX_CRT') | b64decode }}"
         dest: "{{ nginx_license.certificate }}"
-        mode: "0777"
+        mode: 0444
 
-    - name: Create ephemeral key file from env var
+    - name: Create ephemeral license key file from b64 decoded env var
       copy:
-        content: "{{ lookup('env','NGINX_KEY') }}"
+        content: "{{ lookup('env','NGINX_KEY') | b64decode }}"
         dest: "{{ nginx_license.key }}"
-        mode: "0777"
+        mode: 0444
 
 - hosts: workload
   tasks:
