@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.2 (September 12, 2020)
+
+ENHANCEMENTS:
+
+*   Added molecule tests and verifications
+
+## 0.2.1 (September 11, 2020)
+
+ENHANCEMENTS:
+
+*   Bring docs up to speed with other NGINX roles
+*   Move some default variables into the vars subfolder
+
 ## 0.2.0 (September 10, 2020)
 
 BREAKING CHANGES:
