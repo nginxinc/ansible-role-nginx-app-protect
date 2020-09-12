@@ -1,5 +1,7 @@
 ---
-- name: "(Install: Debian) Install Required Debian Dependencies"
-  package:
-    name: apt-transport-https, lsb-release, ca-certificates
-    state: present
+- name: Install required Debian and Ubuntu dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - dirmngr
+    update_cache: yes

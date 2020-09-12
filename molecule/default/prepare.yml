@@ -1,0 +1,34 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    nginx_license:
+      certificate: "./license/nginx-repo.crt"
+      key: "./license/nginx-repo.key"
+
+  tasks:
+    - name: Create license directory
+      file:
+        path: "./license"
+        state: directory
+        mode: "0777"
+
+    - name: Create ephemeral license file from env var
+      copy:
+        content: "{{ lookup('env','NGINX_CRT') }}"
+        dest: "{{ nginx_license.certificate }}"
+        mode: "0777"
+
+    - name: Create ephemeral key file from env var
+      copy:
+        content: "{{ lookup('env','NGINX_KEY') }}"
+        dest: "{{ nginx_license.key }}"
+        mode: "0777"
+
+- hosts: workload
+  tasks:
+    - name: Start nginx on test workload
+      raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
+      changed_when: false

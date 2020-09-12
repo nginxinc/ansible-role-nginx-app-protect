@@ -1,5 +1,6 @@
 ---
-- name: "(Install: CentOS) Install Required CentOS Dependencies"
-  package:
-    name: ca-certificates, epel-release
-    state: present
+- name: Install required CentOS dependencies
+  yum:
+    name:
+      - ca-certificates
+      - epel-release

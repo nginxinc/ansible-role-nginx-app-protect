@@ -12,10 +12,12 @@ galaxy_info:
     - name: EL
       versions:
         - 7
-        - 8
     - name: Debian
       versions:
         - stretch
+    - name: Ubuntu
+      versions:
+        - bionic
 
   galaxy_tags:
     - waf

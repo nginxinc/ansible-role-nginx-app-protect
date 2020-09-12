@@ -1,0 +1,18 @@
+---
+- name: Setup NGINX App Protect license
+  block:
+    - name: Create SSL directory
+      file:
+        path: /etc/ssl/nginx
+        state: directory
+        mode: 0755
+
+    - name: Copy NGINX App Protect certificate and license key
+      copy:
+        src: "{{ item }}"
+        dest: /etc/ssl/nginx
+        decrypt: true
+        mode: 0444
+      with_items:
+        - "{{ nginx_app_protect_license.certificate }}"
+        - "{{ nginx_app_protect_license.key }}"

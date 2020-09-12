@@ -1,0 +1,17 @@
+---
+- name: Set NGINX App Protect license state
+  set_fact:
+    nginx_app_protect_license_status: absent
+
+- name: Delete NGINX App Protect license
+  file:
+    path: /etc/ssl/nginx
+    state: absent
+
+- name: Delete Debian repository data
+  include_tasks: "{{ role_path }}/tasks/install/setup-debian-repos.yml"
+  when: ansible_os_family == "Debian"
+
+- name: Delete Red Hat repository data
+  include_tasks: "{{ role_path }}/tasks/install/setup-redhat-repos.yml"
+  when: ansible_os_family == "RedHat"

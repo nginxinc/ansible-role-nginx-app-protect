@@ -1,17 +1,16 @@
 ---
-- name: "(Install: RedHat) Install Required Dependencies - base"
-  package:
-    name: ca-certificates,wget
-    state: present
+- name: Install required base dependencies
+  yum:
+    name: ca-certificates
 
-- name: "(Install: RedHat) Install Required Dependencies - RHEL Subscription"
-  package:
-    name: rhel-7-server-optional-rpms,rhel-7-server-rpms
-    state: present
-  when: app_protect_use_rhel_subscription_repos
+- name: Install required base dependencies from your Red Hat subscription
+  yum:
+    name:
+      - rhel-7-server-optional-rpms
+      - rhel-7-server-rpms
+  when: nginx_app_protect_use_rhel_subscription_repos | bool
 
-- name: "(Install: RedHat) Install Required Dependencies - Centos Epel"
-  package:
+- name: Install required Red Hat dependencies from epel
+  yum:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
-    state: present
-  when: not app_protect_use_rhel_subscription_repos
+  when: not nginx_app_protect_use_rhel_subscription_repos | bool
