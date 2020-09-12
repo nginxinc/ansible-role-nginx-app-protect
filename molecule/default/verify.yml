@@ -1,10 +1,31 @@
 ---
 - name: Verify
-  hosts: all
+  hosts: nap
   tasks:
     - name: Check if NGINX is installed
       package:
         name: nginx-plus
+      check_mode: yes
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect is installed
+      package:
+        name: app-protect
+      check_mode: yes
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect Signatures is installed
+      package:
+        name: app-protect-attack-signatures
+      check_mode: yes
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect Threat Campaigns is installed
+      package:
+        name: app-protect-threat-campaigns
       check_mode: yes
       register: install
       failed_when: (install is changed) or (install is failed)
@@ -17,3 +38,17 @@
       check_mode: yes
       register: service
       failed_when: (service is changed) or (service is failed)
+
+    - name: Check that a page returns a status 200 and fail if the words Hello World are not in the page contents
+      uri:
+        url: "http://localhost"
+        return_content: yes
+      register: this
+      failed_when: "'Hello World' not in this.content"
+
+    - name: Check that a page returns a status 200 and fail if the words Request Rejected are not in the page contents
+      uri:
+        url: "http://localhost/?v=<script>"
+        return_content: yes
+      register: this
+      failed_when: "'Request Rejected' not in this.content"

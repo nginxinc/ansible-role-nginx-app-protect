@@ -1,6 +1,6 @@
 ---
 - name: Converge
-  hosts: all
+  hosts: nap
   tasks:
     - name: Install NGINX App Protect
       include_role:
@@ -17,7 +17,7 @@
         nginx_app_protect_conf_template_enable: true
         nginx_app_protect_log_policy_syslog_target: 10.1.10.105:5144
         nginx_app_protect_demo_workload_protocol: http://
-        nginx_app_protect_demo_workload_host: 10.1.10.105:8080
+        nginx_app_protect_demo_workload_host: test-workload:80
         nginx_app_protect_license:
           certificate: "license/nginx-repo.crt"
           key: "license/nginx-repo.key"
