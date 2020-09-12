@@ -6,6 +6,10 @@ ENHANCEMENTS:
 
 *   Added molecule tests and verifications
 
+BUG FIXES:
+
+*   Fixed newly appearing linting issues in role
+
 ## 0.2.1 (September 11, 2020)
 
 ENHANCEMENTS:
