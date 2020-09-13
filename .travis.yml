@@ -1,4 +1,9 @@
 ---
+# safelist - build only on the following branches
+branches:
+  only:
+  - master
+  - staging
 language: python
 services: docker
 jobs:
