@@ -1,5 +1,5 @@
 ---
-- name: Verify
+- name: Prepare
   hosts: localhost
   connection: local
   gather_facts: false
@@ -27,8 +27,18 @@
         dest: "{{ nginx_license.key }}"
         mode: 0444
 
-- hosts: workload
+- name: Set up rsyslog server for verifying NAP syslog events
+  hosts: nap
+  vars:
+    rsyslog_receiver: true
+    rsyslog_remote_tcp: true
+    rsyslog_remote_port: 514
+  roles:
+    - role: robertdebock.rsyslog
+
+- name: Start nginx on test workload
+  hosts: workload
+  gather_facts: false
   tasks:
-    - name: Start nginx on test workload
-      raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
+    - raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
       changed_when: false
