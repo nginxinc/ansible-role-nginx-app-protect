@@ -1,25 +1,22 @@
 ---
-# handlers file for ansible-role-nginx-app-protect
-- name: "(Handler: All OSs) Check NGINX"
+- name: (Handler) Check NGINX
   command: "nginx -t"
   changed_when: false
 
-- name: "(Handler: All OSs) Run NGINX"
+- name: (Handler) Run NGINX
   block:
-
-    - name: "(Handler: All OSs) Start NGINX"
+    - name: (Handler) Start NGINX
       service:
         name: nginx
         state: started
         enabled: true
-      notify: "(Handler: All OSs) Check NGINX"
+      notify: (Handler) Check NGINX
 
-    - name: "(Handler: All OSs) Restart NGINX"
+    - name: (Handler) Restart NGINX
       service:
         name: nginx
         state: restarted
       changed_when: false
-
   when:
-    - nginx_start | bool
+    - nginx_app_protect_start | bool
     - not ansible_check_mode
