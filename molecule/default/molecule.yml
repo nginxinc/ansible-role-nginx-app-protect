@@ -50,4 +50,7 @@ platforms:
     command: "/sbin/init"
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      no_target_syslog: true
   log: false

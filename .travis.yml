@@ -2,7 +2,7 @@
 # safelist - build only on the following branches
 branches:
   only:
-    - master
+    - main
     - staging
 language: python
 services: docker
