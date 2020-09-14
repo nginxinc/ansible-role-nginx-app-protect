@@ -23,6 +23,14 @@ Instructions on how to install Ansible can be found in the [Ansible website](htt
 
 Molecule is used to test the various functionalities of the role. Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/stable/installation.html).
 
+To run the Molecule tests, you must first add your NGINX repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
+
+``` bash
+export NGINX_CRT=$( cat <path to your certificate file> | base64)
+export NGINX_KEY=$( cat <path to your key file> | base64)
+molecule test
+```
+
 Installation
 ------------
 
