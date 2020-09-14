@@ -36,9 +36,10 @@
   roles:
     - role: robertdebock.rsyslog
 
-- name: Start nginx on test workload
+- name: Prepare workload for tests
   hosts: workload
   gather_facts: false
   tasks:
-    - raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
+    - name: Start nginx on test workload
+      raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
       changed_when: false
