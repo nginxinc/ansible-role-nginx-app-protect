@@ -4,4 +4,4 @@
     name:
       - apt-transport-https
       - dirmngr
-    update_cache: yes
+    update_cache: true

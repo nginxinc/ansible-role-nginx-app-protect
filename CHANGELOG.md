@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.2 (September 14, 2020)
+
+ENHANCEMENTS:
+
+*   Added molecule tests and verifications
+
+BUG FIXES:
+
+*   Fixed newly appearing linting issues in role
+
+## 0.2.1 (September 11, 2020)
+
+ENHANCEMENTS:
+
+*   Bring docs up to speed with other NGINX roles
+*   Move some default variables into the vars subfolder
+
 ## 0.2.0 (September 10, 2020)
 
 BREAKING CHANGES:

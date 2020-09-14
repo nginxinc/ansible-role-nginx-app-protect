@@ -3,6 +3,7 @@
   apt_repository:
     repo: deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
     filename: nginx-app-protect
+    mode: 0644
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
@@ -10,6 +11,7 @@
   apt_repository:
     repo: deb [arch=amd64] https://app-protect-security-updates.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
     filename: app-protect-security-updates
+    mode: 0644
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
