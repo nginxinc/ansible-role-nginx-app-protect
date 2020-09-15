@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.2 (September 14, 2020)
+## 0.2.2 (September 15, 2020)
 
 ENHANCEMENTS:
 
