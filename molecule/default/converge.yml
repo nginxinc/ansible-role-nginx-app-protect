@@ -22,4 +22,4 @@
           certificate: "license/nginx-repo.crt"
           key: "license/nginx-repo.key"
         nginx_app_protect_delete_license: false
-        nginx_app_protect_timeout: 300
+        nginx_app_protect_timeout: 600
