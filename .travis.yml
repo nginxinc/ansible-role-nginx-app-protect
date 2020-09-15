@@ -3,7 +3,6 @@
 branches:
   only:
     - main
-    - staging
 language: python
 services: docker
 jobs:
