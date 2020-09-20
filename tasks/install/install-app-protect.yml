@@ -1,8 +1,8 @@
 ---
 - name: Get NGINX Plus version
   set_fact:
-    nginx_plus_version: "{{ ansible_facts.packages['nginx-plus'] | map(attribute='version') | list | first | regex_search('^(\\d{1,3})') }}"
-  when: "'nginx-plus' in ansible_facts.packages"
+    nginx_plus_version: "{{ ansible_facts['packages']['nginx-plus'] | map(attribute='version') | list | first | regex_search('^(\\d{1,3})') }}"
+  when: "'nginx-plus' in ansible_facts['packages']"
 
 - name: Fail if existing NGINX Plus version preconditions fails
   assert:
@@ -14,35 +14,44 @@
     quiet: true
   when: nginx_plus_version is defined
 
-- name: Create override for NGINX Plus service
-  file:
-    path: /etc/systemd/system/nginx.service.d
-    state: directory
-    mode: 0755
-  when: nginx_app_protect_timeout is defined
-
-- name: Increase timeout for NGINX Plus service
-  template:
-    src: nginx.service.override.conf.j2
-    dest: /etc/systemd/system/nginx.service.d/override.conf
-    owner: root
-    group: root
-    mode: 0644
-  when: nginx_app_protect_timeout is defined
-
-- name: Setup NGINX App Protect repositories
-  block:
-    - name: Setup Debian repositories
-      include_tasks: "{{ role_path }}/tasks/install/setup-debian-repos.yml"
-      when: ansible_os_family == "Debian"
-
-    - name: Setup Red Hat repositories
-      include_tasks: "{{ role_path }}/tasks/install/setup-redhat-repos.yml"
-      when: ansible_os_family == "RedHat"
+- name: Set up NGINX App Protect repositories
+  include_tasks: "{{ role_path }}/tasks/install/setup-{{ ansible_facts['os_family'] | lower }}.yml"
   when: nginx_app_protect_state != "absent"
 
 - name: Install NGINX App Protect
   package:
     name: "app-protect{{ nginx_app_protect_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
-  notify: (Handler) Start NGINX
+  notify: (Handler) Run NGINX
+
+- name: Install latest NGINX App Protect signatures
+  package:
+    name: app-protect-attack-signatures
+    state: "{{ nginx_app_protect_state }}"
+  when: nginx_app_protect_install_signatures | bool
+  notify: (Handler) Run NGINX
+
+- name: Install latest NGINX App Protect threat campaigns
+  package:
+    name: app-protect-threat-campaigns
+    state: "{{ nginx_app_protect_state }}"
+  when: nginx_app_protect_install_threat_campaigns | bool
+  notify: (Handler) Run NGINX
+
+- name: Modify NGINX Plus service
+  block:
+    - name: Create override for NGINX Plus service
+      file:
+        path: /etc/systemd/system/nginx.service.d
+        state: directory
+        mode: 0755
+
+    - name: Increase timeout for NGINX Plus service
+      template:
+        src: nginx.service.override.conf.j2
+        dest: /etc/systemd/system/nginx.service.d/override.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify: (Handler) Systemd daemon-reload
+  when: nginx_app_protect_timeout is defined

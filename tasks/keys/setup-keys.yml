@@ -1,0 +1,28 @@
+---
+- name: Set up NGINX Plus signing key URL
+  set_fact:
+    keysite: "{{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key['nginx_plus']) }}"
+
+- name: (Debian/Ubuntu) Add NGINX Plus signing key
+  apt_key:
+    url: "{{ keysite }}"
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: (CentOS/RHEL) Add NGINX Plus signing key
+  rpm_key:
+    key: "{{ keysite }}"
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Set up NGINX App Protect security updates signing key URL
+  set_fact:
+    keysite: "{{ nginx_app_protect_signing_key['security_updates'] | default(nginx_app_protect_default_signing_key['security_updates']) }}"
+
+- name: (Debian/Ubuntu) Add NGINX App Protect security updates signing key
+  apt_key:
+    url: "{{ keysite }}"
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: (CentOS/RHEL) Add NGINX App Protect security updates signing key
+  rpm_key:
+    key: "{{ keysite }}"
+  when: ansible_facts['os_family'] == "RedHat"

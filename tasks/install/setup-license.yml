@@ -1,5 +1,5 @@
 ---
-- name: Setup NGINX App Protect license
+- name: Set up NGINX App Protect license
   block:
     - name: Create SSL directory
       file:
@@ -14,5 +14,5 @@
         decrypt: true
         mode: 0444
       with_items:
-        - "{{ nginx_app_protect_license.certificate }}"
-        - "{{ nginx_app_protect_license.key }}"
+        - "{{ nginx_app_protect_license['certificate'] }}"
+        - "{{ nginx_app_protect_license['key'] }}"

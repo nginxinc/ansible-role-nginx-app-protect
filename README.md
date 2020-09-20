@@ -26,8 +26,8 @@ Molecule is used to test the various functionalities of the role. Instructions o
 To run the Molecule tests, you must first add your NGINX repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 
 ``` bash
-export NGINX_CRT=$( cat <path to your certificate file> | base64)
-export NGINX_KEY=$( cat <path to your key file> | base64)
+export NGINX_CRT=$( cat <path to your certificate file> | base64 )
+export NGINX_KEY=$( cat <path to your key file> | base64 )
 molecule test
 ```
 
@@ -83,7 +83,7 @@ Example Playbook
 
 A working functional playbook example can be found in the **`molecule/default`** directory in the following file:
 
--   **[molecule/default/converge.yml](https://github.com/nginxinc/ansible-role-nginx-app_protect/blob/main/molecule/default/converge.yml):** Install and configure NGINX App Protect
+-   **[molecule/default/converge.yml](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/default/converge.yml):** Install and configure NGINX App Protect
 
 Other NGINX Roles
 -----------------

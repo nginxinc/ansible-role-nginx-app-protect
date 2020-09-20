@@ -6,7 +6,7 @@
 - name: Set supported_os when platform and version are in supported platforms dictionary
   set_fact:
     supported_os: true
-  when: ansible_distribution in item.key and ansible_distribution_version | float in item.value
+  when: ansible_facts['distribution'] | lower in item.key and ansible_facts['distribution_version'] | float in item.value
   loop: "{{ query('dict', nginx_app_protect_linux_families) }}"
 
 - name: Set supported_os to false if fact not defined
@@ -25,7 +25,7 @@
 
 - name: Abort if the OS / version combination is not supported
   fail:
-    msg: "NGINX App Protect is not supported on os family {{ ansible_distribution }} version {{ ansible_distribution_version }}"
+    msg: "NGINX App Protect is not supported on os family {{ ansible_facts['distribution'] }} version {{ ansible_facts['distribution_version'] }}"
   when: not supported_os
 
 - name: Install NGINX App Protect
@@ -34,47 +34,30 @@
       include_tasks: "{{ role_path }}/tasks/prerequisites/install-prerequisites.yml"
       tags: nginx_app_protect_prerequisites
 
-    - name: Setup APT signing keys
-      include_tasks: "{{ role_path }}/tasks/keys/apt-key.yml"
-      when:
-        - ansible_os_family == "Debian"
-        - nginx_app_protect_state != "absent"
-          or nginx_app_protect_install_signatures | bool
-          or nginx_app_protect_install_threat_campaigns | bool
-      tags: nginx_app_protect_aptkey
+    - name: Set up signing keys
+      include_tasks: "{{ role_path }}/tasks/keys/setup-keys.yml"
+      when: nginx_app_protect_state != "absent"
+            or nginx_app_protect_install_signatures | bool
+            or nginx_app_protect_install_threat_campaigns | bool
+      tags: nginx_app_protect_key
 
-    - name: Setup RPM signing keys
-      include_tasks: "{{ role_path }}/tasks/keys/rpm-key.yml"
-      when:
-        - ansible_os_family == "RedHat"
-        - nginx_app_protect_state != "absent"
-          or nginx_app_protect_install_signatures | bool
-          or nginx_app_protect_install_threat_campaigns | bool
-      tags: nginx_app_protect_rpmkey
-
-    - name: (All OSs) Setup license
+    - name: Set up license
       include_tasks: "{{ role_path }}/tasks/install/setup-license.yml"
       when:
         - nginx_app_protect_state != "absent"
           or nginx_app_protect_install_signatures | bool
           or nginx_app_protect_install_threat_campaigns | bool
+        - nginx_app_protect_setup_license | bool
       tags: nginx_app_protect_setup_license
 
     - name: Install NGINX App Protect
       include_tasks: "{{ role_path }}/tasks/install/install-app-protect.yml"
       tags: nginx_app_protect_install_app_protect
 
-    - name: Install NGINX App Protect security updates (signatures and threat campaigns)
-      include_tasks: "{{ role_path }}/tasks/install/install-security-updates.yml"
-      when:
-        - nginx_app_protect_install_signatures | bool
-        - nginx_app_protect_install_threat_campaigns | bool
-      tags: nginx_app_protect_install_signatures_threats
-
     - name: Remove NGINX App Protect license
-      include_tasks: "{{ role_path }}/tasks/install/delete-license.yml"
-      when: nginx_app_protect_delete_license | bool
-      tags: nginx_app_protect_delete_license
+      include_tasks: "{{ role_path }}/tasks/install/remove-license.yml"
+      when: nginx_app_protect_remove_license | bool
+      tags: nginx_app_protect_remove_license
 
     - name: Configure NGINX App Protect
       include_tasks: "{{ role_path }}/tasks/config/configure-app-protect.yml"

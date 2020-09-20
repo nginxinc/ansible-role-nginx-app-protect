@@ -1,0 +1,22 @@
+---
+- name: (CentOS/RHEL) Set up NGINX App Protect repository
+  yum_repository:
+    name: nginx-app-protect
+    baseurl: "https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/7.4/$basearch/"
+    description: NGINX App Protect repository
+    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+    sslclientkey: /etc/ssl/nginx/nginx-repo.key
+    enabled: true
+    gpgcheck: true
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+
+- name: (CentOS/RHEL) Set up NGINX App Protect security updates repository
+  yum_repository:
+    name: nginx-app-protect-security-updates
+    baseurl: "https://app-protect-sigs.nginx.com/centos/{{ ansible_facts['distribution_major_version'] }}/$basearch/"
+    description: NGINX App Protect security updates repository
+    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+    sslclientkey: /etc/ssl/nginx/nginx-repo.key
+    enabled: true
+    gpgcheck: true
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
