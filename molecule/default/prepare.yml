@@ -1,40 +1,30 @@
 ---
 - name: Prepare
   hosts: localhost
-  connection: local
   gather_facts: false
-  vars:
-    nginx_license:
-      certificate: "./license/nginx-repo.crt"
-      key: "./license/nginx-repo.key"
-
   tasks:
-    - name: Create license directory
-      file:
-        path: "./license"
-        state: directory
-        mode: 0755
-
     - name: Create ephemeral license certificate file from b64 decoded env var
       copy:
         content: "{{ lookup('env','NGINX_CRT') | b64decode }}"
-        dest: "{{ nginx_license.certificate }}"
+        dest: ../../files/license/nginx-repo.crt
+        force: false
         mode: 0444
 
     - name: Create ephemeral license key file from b64 decoded env var
       copy:
         content: "{{ lookup('env','NGINX_KEY') | b64decode }}"
-        dest: "{{ nginx_license.key }}"
+        dest: ../../files/license/nginx-repo.key
+        force: false
         mode: 0444
 
 - name: Set up rsyslog server for verifying NAP syslog events
   hosts: nap
+  roles:
+    - role: robertdebock.rsyslog
   vars:
     rsyslog_receiver: true
     rsyslog_remote_tcp: true
     rsyslog_remote_port: 514
-  roles:
-    - role: robertdebock.rsyslog
 
 - name: Prepare workload for tests
   hosts: workload

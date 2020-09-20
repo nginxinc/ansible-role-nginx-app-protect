@@ -1,17 +1,17 @@
 ---
-- name: Debug ansible_distribution
+- name: Debug Ansible distribution
   debug:
-    msg: "ansible_distribution {{ ansible_distribution }}"
+    msg: "ansible_distribution {{ ansible_facts['distribution'] }}"
     verbosity: 2
 
-- name: Install Debian and Ubuntu prerequisites
+- name: (Debian/Ubuntu) Install dependencies
   include_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
 
-- name: Install CentOS prerequisites
+- name: (CentOS) Install dependencies
   include_tasks: setup-centos.yml
-  when: ansible_distribution == "CentOS"
+  when: ansible_facts['distribution'] == "CentOS"
 
-- name: Install Red Hat prerequisites
+- name: (RHEL) Install dependencies
   include_tasks: setup-redhat.yml
-  when: ansible_distribution == "RedHat"
+  when: ansible_facts['distribution'] == "RedHat"

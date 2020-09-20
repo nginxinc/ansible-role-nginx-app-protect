@@ -1,5 +1,5 @@
 ---
-- name: Install required CentOS dependencies
+- name: (CentOS) Install dependencies
   yum:
     name:
       - ca-certificates

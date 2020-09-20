@@ -24,7 +24,7 @@
     backup: true
   when: nginx_app_protect_log_policy_template_enable | bool
 
-- name: Backup existing nginx.conf
+- name: (DEPRECATED) Backup existing nginx.conf
   copy:
     src: "{{ nginx_app_protect_conf_template.out_file_location }}{{ nginx_app_protect_conf_template.out_file_name }}"
     dest: "{{ nginx_app_protect_conf_template.out_file_location }}{{ nginx_app_protect_conf_template.out_file_name }}.orig"
@@ -33,7 +33,7 @@
   when: nginx_app_protect_conf_template_enable | bool
   changed_when: false
 
-- name: Dynamically Generate NGINX conf file
+- name: (DEPRECATED) Dynamically generate nginx.conf file
   template:
     src: "{{ nginx_app_protect_conf_template.template_file }}"
     dest: "{{ nginx_app_protect_conf_template.out_file_location }}{{ nginx_app_protect_conf_template.out_file_name }}"
@@ -42,27 +42,25 @@
     - nginx_app_protect_conf_template_enable | bool
     - nginx_app_protect_state != "absent"
 
-- name: Remove NGINX App Protect
+- name: (DEPRECATED) Remove NGINX App Protect
   block:
-    - name: Comment out NGINX App Protect module reference in nginx.conf
+    - name: (DEPRECATED) Comment out NGINX App Protect module reference in nginx.conf
       replace:
         path: /etc/nginx/nginx.conf
         regexp: '^([ \t]*load_module.*ngx_http_app_protect_module.so;)'
         replace: '# \1'
-        mode: preserve
 
-    - name: Comment out NGINX App Protect directives in nginx.conf
+    - name: (DEPRECATED) Comment out NGINX App Protect directives in nginx.conf
       replace:
         path: /etc/nginx/nginx.conf
         regexp: '^([ \t]*app_protect_)'
         replace: '# \1'
-        mode: preserve
   when: nginx_app_protect_state == "absent"
 
 - name: Reload NGINX
   debug:
     msg: Trigger nginx reload if needed
-  notify: (Handler) Restart NGINX
+  notify: (Handler) Run NGINX
   when: nginx_app_protect_security_policy_template_enable | bool
         or nginx_app_protect_log_policy_template_enable | bool
         or nginx_app_protect_conf_template_enable | bool
