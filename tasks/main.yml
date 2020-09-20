@@ -56,8 +56,8 @@
 
     - name: Remove NGINX App Protect license
       include_tasks: "{{ role_path }}/tasks/install/delete-license.yml"
-      when: nginx_app_protect_delete_license | bool
-      tags: nginx_app_protect_delete_license
+      when: nginx_app_protect_remove_license | bool
+      tags: nginx_app_protect_remove_license
 
     - name: Configure NGINX App Protect
       include_tasks: "{{ role_path }}/tasks/config/configure-app-protect.yml"

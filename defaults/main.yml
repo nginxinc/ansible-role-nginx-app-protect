@@ -23,8 +23,8 @@ nginx_app_protect_install_signatures: true
 
 # The installation of NGINX App Protect can include a page of frequently-updated, high-accuracy signatures called "threat campaigns".
 # This option installs the latest NGINX App Protect threat campaigns signatures.
-# Default is false.
-nginx_app_protect_install_threat_campaigns: false
+# Default is true.
+nginx_app_protect_install_threat_campaigns: true
 
 # (Optional) Choose where to fetch the NGINX App Protect and security updates signing keys from.
 # Default settings are the official NGINX signing key hosts.
@@ -38,7 +38,7 @@ nginx_app_protect_setup_license: true
 
 # Removes NGINX App Protect license (cert/key) after installation for security purposes.
 # Default is true.
-nginx_app_protect_delete_license: true
+nginx_app_protect_remove_license: true
 
 # Start/Restart NGINX service when App Protect related changes are complete.
 # Default is true.
