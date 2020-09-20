@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 (Unreleased)
+## 0.3.0 (September 20, 2020)
 
 DEPRECATION WARNING:
 
