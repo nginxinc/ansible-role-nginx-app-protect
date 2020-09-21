@@ -15,6 +15,7 @@
     mode: 0644
     backup: true
   when: nginx_app_protect_security_policy_template_enable | bool
+  notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: Dynamically generate NGINX App Protect log policy file
   template:
@@ -23,6 +24,7 @@
     mode: 0644
     backup: true
   when: nginx_app_protect_log_policy_template_enable | bool
+  notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (DEPRECATED) Backup existing nginx.conf
   copy:
