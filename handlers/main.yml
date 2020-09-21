@@ -1,8 +1,4 @@
 ---
-- name: (Handler - NGINX App Protect) Systemd daemon-reload
-  systemd:
-    daemon_reload: true
-
 - name: (Handler - NGINX App Protect) Check NGINX
   command: nginx -t
   register: config
