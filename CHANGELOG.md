@@ -5,6 +5,7 @@
 BUG FIXES:
 
 *   Rename handlers to use more specific role related naming and prevent namespace collision issues.
+*   Add a `nginx_app_protect_service_modify` variable to revert a breaking change introduced in 0.3.0 where timeouts would not be set by default.
 
 ## 0.3.0 (September 21, 2020)
 
