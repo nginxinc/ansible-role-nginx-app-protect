@@ -1,22 +1,22 @@
 ---
-- name: (Handler) Systemd daemon-reload
+- name: (Handler - NGINX App Protect) Systemd daemon-reload
   systemd:
     daemon_reload: true
 
-- name: (Handler) Check NGINX
+- name: (Handler - NGINX App Protect) Check NGINX
   command: nginx -t
   register: config
   ignore_errors: true
-  listen: (Handler) Run NGINX
+  listen: (Handler - NGINX App Protect) Run NGINX
 
-- name: (Handler) Print NGINX error if syntax check fails
+- name: (Handler - NGINX App Protect) Print NGINX error if syntax check fails
   debug:
     var: config.stderr_lines
   failed_when: config.rc != 0
   when: config.rc != 0
-  listen: (Handler) Run NGINX
+  listen: (Handler - NGINX App Protect) Run NGINX
 
-- name: (Handler) Start/Reload NGINX
+- name: (Handler - NGINX App Protect) Start/reload NGINX
   service:
     name: nginx
     state: reloaded
@@ -24,4 +24,4 @@
   when:
     - nginx_app_protect_start | bool
     - not ansible_check_mode | bool
-  listen: (Handler) Run NGINX
+  listen: (Handler - NGINX App Protect) Run NGINX
