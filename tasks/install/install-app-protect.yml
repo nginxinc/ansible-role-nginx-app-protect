@@ -29,6 +29,7 @@
         owner: root
         group: root
         mode: 0644
+      notify: (Handler - NGINX App Protect) Systemd daemon-reload
   when: nginx_app_protect_service_modify | bool
 
 - name: Set up NGINX App Protect repositories
