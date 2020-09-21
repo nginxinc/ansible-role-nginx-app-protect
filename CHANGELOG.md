@@ -5,6 +5,7 @@
 BUG FIXES:
 
 *   Rename handlers to use more specific role related naming and prevent namespace collision issues.
+*   Set NGINX handler to `state: restasted` to prevent some compatibility issues when NGINX App Protect is installed on an instance already running NGINX beforehand.
 
 ## 0.3.0 (September 21, 2020)
 
