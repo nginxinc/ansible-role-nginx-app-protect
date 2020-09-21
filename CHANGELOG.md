@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 (Unreleased)
+
+BUG FIXES:
+
+*   Rename handlers to use more specific role related naming and prevent namespace collision issues.
+
 ## 0.3.0 (September 21, 2020)
 
 DEPRECATION WARNING:

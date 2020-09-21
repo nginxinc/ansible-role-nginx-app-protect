@@ -41,6 +41,7 @@
   when:
     - nginx_app_protect_conf_template_enable | bool
     - nginx_app_protect_state != "absent"
+  notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (DEPRECATED) Remove NGINX App Protect
   block:
@@ -55,12 +56,5 @@
         path: /etc/nginx/nginx.conf
         regexp: '^([ \t]*app_protect_)'
         replace: '# \1'
+      notify: (Handler - NGINX App Protect) Run NGINX
   when: nginx_app_protect_state == "absent"
-
-- name: Reload NGINX
-  debug:
-    msg: Trigger nginx reload if needed
-  notify: (Handler) Run NGINX
-  when: nginx_app_protect_security_policy_template_enable | bool
-        or nginx_app_protect_log_policy_template_enable | bool
-        or nginx_app_protect_conf_template_enable | bool
