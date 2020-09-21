@@ -19,7 +19,7 @@
 - name: (Handler - NGINX App Protect) Start/reload NGINX
   service:
     name: nginx
-    state: reloaded
+    state: restarted
     enabled: true
   when:
     - nginx_app_protect_start | bool
