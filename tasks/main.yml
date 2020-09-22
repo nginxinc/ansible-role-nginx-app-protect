@@ -65,6 +65,9 @@
       tags: nginx_app_protect_configure
   when: nginx_app_protect_state != "absent"
 
+- name: Ensure NGINX App Protect is running
+  meta: flush_handlers
+
 - name: Remove NGINX App Protect
   block:
     - name: Remove NGINX App Protect package

@@ -4,7 +4,7 @@
     nginx_app_protect_license_status: absent
 
 - name: Delete repository data
-  include_tasks: "{{ role_path }}/tasks/install/setup-{{ ansible_facts['os_family'] | lower }}.yml"
+  include_tasks: "{{ role_path }}/tasks/install/install-{{ ansible_facts['os_family'] | lower }}.yml"
 
 - name: Delete NGINX App Protect license
   file:
