@@ -2,6 +2,12 @@
 
 ## 0.3.1 (September 22, 2020)
 
+FEATURES:
+
+*   Two new variables have been introduced:
+    *   `nginx_app_protect_service_modify` -- Setting this variable to true/false will determine whether the default service timeout value gets modified.
+    *   `nginx_app_protect_log_policy_target` -- This variable is intended as an eventual replacement for `nginx_app_protect_log_policy_syslog_target` and allows using different destinations for NGINX App Protect's log files.
+
 ENHANCEMENTS:
 
 *   Split the default Molecule scenario into a simple and advanced scenario to solve timeout issues encountered in TravisCI.
@@ -9,7 +15,6 @@ ENHANCEMENTS:
 BUG FIXES:
 
 *   Rename handlers to use more specific role related naming and prevent namespace collision issues.
-*   Add a `nginx_app_protect_service_modify` variable to revert a breaking change introduced in 0.3.0 where timeouts would not be set by default.
 *   Set NGINX handler to `state: restarted` to prevent some compatibility issues when NGINX App Protect is installed on an instance already running NGINX beforehand.
 *   Using `update_cache: true` by itself in the `apt` module is not always idempotent. Moved the NGINX App Protect installation task to a corresponding `apt` or `yum` module to avoid this scenario.
 
@@ -18,6 +23,10 @@ BUG FIXES:
 DEPRECATION WARNING:
 
 *   The ability to create an NGINX config including some basic App Protect directives has migrated to the NGINX config role available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX App Protect directives should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX App Protect directives submitted in this repository will not be worked on. The NGINX App Protect directives configuration functionalities included in this role will be removed in an upcoming release.
+
+BREAKING CHANGES:
+
+*   `nginx_app_protect_delete_license` has been renamed to `nginx_app_protect_remove_license`.
 
 FEATURES:
 
