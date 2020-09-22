@@ -16,11 +16,3 @@
         dest: ../../files/license/nginx-repo.key
         force: false
         mode: 0444
-
-- name: Prepare workload for tests
-  hosts: workload
-  gather_facts: false
-  tasks:
-    - name: Start nginx on test workload
-      raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
-      changed_when: false

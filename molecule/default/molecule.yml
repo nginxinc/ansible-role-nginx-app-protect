@@ -6,13 +6,6 @@ lint: |
   yamllint .
   ansible-lint --force-color
 platforms:
-  - name: test-workload
-    groups:
-      - workload
-    image: nginxdemos/hello
-    privileged: true
-    networks:
-      - name: molecule-test
   - name: centos-7
     groups:
       - nap
