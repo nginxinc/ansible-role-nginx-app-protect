@@ -1,0 +1,54 @@
+---
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint --force-color
+platforms:
+  - name: test-workload
+    groups:
+      - workload
+    image: nginxdemos/hello
+    privileged: true
+    networks:
+      - name: molecule-test
+  - name: centos-7
+    groups:
+      - nap
+    image: centos:7
+    dockerfile: ../Dockerfile.j2
+    privileged: true
+    networks:
+      - name: molecule-test
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: ubuntu-bionic
+    groups:
+      - nap
+    image: ubuntu:bionic
+    dockerfile: ../Dockerfile.j2
+    privileged: true
+    networks:
+      - name: molecule-test
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: debian-stretch
+    groups:
+      - nap
+    image: debian:stretch-slim
+    dockerfile: ../Dockerfile.j2
+    privileged: true
+    networks:
+      - name: molecule-test
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      no_target_syslog: true
+  log: false

@@ -17,6 +17,15 @@
         force: false
         mode: 0444
 
+- name: Set up rsyslog server for verifying NAP syslog events
+  hosts: nap
+  roles:
+    - role: robertdebock.rsyslog
+  vars:
+    rsyslog_receiver: true
+    rsyslog_remote_tcp: true
+    rsyslog_remote_port: 514
+
 - name: Prepare workload for tests
   hosts: workload
   gather_facts: false
