@@ -1,6 +1,6 @@
 ---
 - name: Verify
-  hosts: nap
+  hosts: all
   tasks:
     - name: Check if NGINX is installed
       package:
