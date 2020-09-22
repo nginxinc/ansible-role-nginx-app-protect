@@ -11,6 +11,7 @@ BUG FIXES:
 *   Rename handlers to use more specific role related naming and prevent namespace collision issues.
 *   Add a `nginx_app_protect_service_modify` variable to revert a breaking change introduced in 0.3.0 where timeouts would not be set by default.
 *   Set NGINX handler to `state: restarted` to prevent some compatibility issues when NGINX App Protect is installed on an instance already running NGINX beforehand.
+*   Using `update_cache: true` by itself in the `apt` module is not always idempotent. Moved the NGINX App Protect installation task to a corresponding `apt` or `yum` module to avoid this scenario.
 
 ## 0.3.0 (September 21, 2020)
 
