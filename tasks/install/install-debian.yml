@@ -40,6 +40,9 @@
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-- name: (Debian/Ubuntu) Update the apt cache
+- name: (Debian/Ubuntu) Install NGINX App Protect
   apt:
+    name: "app-protect{{ nginx_app_protect_version | default('') }}"
+    state: "{{ nginx_app_protect_state }}"
     update_cache: true
+  notify: (Handler - NGINX App Protect) Run NGINX

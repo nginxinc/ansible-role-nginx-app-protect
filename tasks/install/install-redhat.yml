@@ -20,3 +20,10 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
+
+- name: (CentOS/RHEL) Install NGINX App Protect
+  yum:
+    name: "app-protect{{ nginx_app_protect_version | default('') }}"
+    state: "{{ nginx_app_protect_state }}"
+    update_cache: true
+  notify: (Handler - NGINX App Protect) Run NGINX

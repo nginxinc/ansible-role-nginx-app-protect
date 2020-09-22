@@ -14,15 +14,8 @@
     quiet: true
   when: nginx_plus_version is defined
 
-- name: Set up NGINX App Protect repositories
-  include_tasks: "{{ role_path }}/tasks/install/setup-{{ ansible_facts['os_family'] | lower }}.yml"
-  when: nginx_app_protect_state != "absent"
-
 - name: Install NGINX App Protect
-  package:
-    name: "app-protect{{ nginx_app_protect_version | default('') }}"
-    state: "{{ nginx_app_protect_state }}"
-  notify: (Handler - NGINX App Protect) Run NGINX
+  include_tasks: "{{ role_path }}/tasks/install/install-{{ ansible_facts['os_family'] | lower }}.yml"
 
 - name: Install latest NGINX App Protect signatures
   package:
