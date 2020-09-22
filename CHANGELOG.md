@@ -2,6 +2,10 @@
 
 ## 0.3.1 (Unreleased)
 
+ENHANCEMENTS:
+
+*   Split the default Molecule scenario into a simple and advanced scenario to solve timeout issues encountered in TravisCI.
+
 BUG FIXES:
 
 *   Rename handlers to use more specific role related naming and prevent namespace collision issues.

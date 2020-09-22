@@ -28,7 +28,7 @@ http {
         app_protect_enable on;
         app_protect_policy_file "{{ nginx_app_protect_security_policy_template.out_file_location }}{{ nginx_app_protect_security_policy_template.out_file_name }}";
         app_protect_security_log_enable on;
-        app_protect_security_log "{{ nginx_app_protect_log_policy_template.out_file_location }}{{ nginx_app_protect_log_policy_template.out_file_name }}" syslog:server={{ nginx_app_protect_log_policy_syslog_target }};
+        app_protect_security_log "{{ nginx_app_protect_log_policy_template.out_file_location }}{{ nginx_app_protect_log_policy_template.out_file_name }}" {{ nginx_app_protect_log_policy_target }};
 
         location / {
             client_max_body_size 0;
