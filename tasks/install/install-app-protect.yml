@@ -54,4 +54,4 @@
         group: root
         mode: 0644
       notify: (Handler - NGINX App Protect) Systemd daemon-reload
-  when: nginx_app_protect_timeout is defined
+  when: nginx_app_protect_service_modify | bool
