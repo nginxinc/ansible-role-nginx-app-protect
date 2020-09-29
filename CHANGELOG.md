@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2 (September 29, 2020)
+
+BUG FIXES:
+
+*   Prevent TravisCI from trying to build (and failing) NGINX App Protect images on external PRs.
+
 ## 0.3.1 (September 22, 2020)
 
 FEATURES:
