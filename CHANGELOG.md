@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.2 (September 29, 2020)
+## 0.3.2 (September 30, 2020)
 
 BUG FIXES:
 
