@@ -27,7 +27,7 @@ export NGINX_CRT=$( cat <path to your certificate file> | base64 )
 export NGINX_KEY=$( cat <path to your key file> | base64 )
 molecule test
 ```
-You can alternatively copy your NGINX license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
+  You can alternatively copy your NGINX license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
 
 ## Installation
 
