@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.3 (Unreleased)
+
+ENHANCEMENTS:
+
+*   Add survey to README.
+*   Improve README structure and use tables where relevant.
+
 ## 0.3.2 (September 30, 2020)
 
 BUG FIXES:
