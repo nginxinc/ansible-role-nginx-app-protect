@@ -4,7 +4,7 @@
 
 # 👾 *Help make the NGINX App Protect Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 
-# NGINX App Protect Ansible Role <img src="images/nap-logo.png" width="60">
+# NGINX App Protect Ansible Role <img src="images/nap-logo.png" width="30">
 
 This role installs and configures NGINX App Protect (WAF) for NGINX Plus on your target host.
 
@@ -21,15 +21,12 @@ This role installs and configures NGINX App Protect (WAF) for NGINX Plus on your
 
 *   Molecule `3.x` is used to test the various functionalities of the role.
 *   Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
-
-To run the Molecule tests, you must first add your NGINX repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
-
+*   To run the Molecule tests, you must first add your NGINX repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 ``` bash
 export NGINX_CRT=$( cat <path to your certificate file> | base64 )
 export NGINX_KEY=$( cat <path to your key file> | base64 )
 molecule test
 ```
-
 You can alternatively copy your NGINX license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
 
 ## Installation
