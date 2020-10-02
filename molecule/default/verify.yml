@@ -38,3 +38,15 @@
       check_mode: true
       register: service
       failed_when: (service is changed) or (service is failed)
+
+    - name: Check that the security policy exists
+      stat:
+        path: /etc/nginx/app-protect-security-policy.json
+      register: stat_result
+      failed_when: not stat_result.stat.exists
+
+    - name: Check that the log policy exists
+      stat:
+        path: /etc/nginx/app-protect-log-policy.json
+      register: stat_result
+      failed_when: not stat_result.stat.exists
