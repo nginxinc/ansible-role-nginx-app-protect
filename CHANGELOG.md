@@ -1,11 +1,5 @@
 # Changelog
 
-## 0.3.4 (Unreleased)
-
-ENHANCEMENTS:
-
-*   Ability to deploy static security policy files via the `nginx_app_protect_security_policy_file_enable` and `nginx_app_protect_security_policy_file` variables. NOTE: `nginx_app_protect_configure` must be set to true.
-*   Ability to deploy static log policy files via the `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file` variables. NOTE: `nginx_app_protect_configure` must be set to true.
 
 ## 0.3.3 (Unreleased)
 
@@ -14,6 +8,11 @@ ENHANCEMENTS:
 *   Add survey to README.
 *   Improve README structure and use tables where relevant.
 *   Update Ansible (now Ansible base) to `2.10.2`, Ansible (now Ansible Community Distribution) to `2.10.0`, and yamllint to `1.25.0`.
+*   Ability to deploy static security policy files via the `nginx_app_protect_security_policy_file_enable` and `nginx_app_protect_security_policy_file_*` variables. NOTE: `nginx_app_protect_configure` must be set to true.
+*   Ability to deploy static log policy files via the `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file_*` variables. NOTE: `nginx_app_protect_configure` must be set to true.
+
+DEPRECATION WARNING:
+*   The ability to dynamically create App Protect security and log policies via Jinja2 templates will be removed in a future release, as they weren't used much due to relative inflexibility. The `nginx_app_protect_security_policy_file_enable`, `nginx_app_protect_security_policy_file_*`, `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file_*` variables should be used instead of the `nginx_app_protect_*_policy_template*` variables. These new variables have been introduced in this release.
 
 ## 0.3.2 (September 30, 2020)
 

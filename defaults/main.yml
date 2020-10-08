@@ -52,6 +52,7 @@ nginx_app_protect_timeout: 180
 # Creates basic configuration files and enables NGINX App Protect on the target host
 nginx_app_protect_configure: false
 
+## DEPRECATED -- Use nginx_app_protect_security_policy_enable and nginx_app_protect_security_policy_file_* variables instead
 # Create a basic NGINX App Protect security policy file based on a template
 nginx_app_protect_security_policy_template_enable: true
 nginx_app_protect_security_policy_template:
@@ -61,6 +62,7 @@ nginx_app_protect_security_policy_template:
 # possible values: transparent, blocking
 nginx_app_protect_security_policy_enforcement_mode: transparent
 
+## DEPRECATED -- Use nginx_app_protect_log_policy_file_enable and nginx_app_protect_log_policy_file_* variables instead
 # Create a basic NGINX App Protect log policy file based on a template
 nginx_app_protect_log_policy_template_enable: true
 nginx_app_protect_log_policy_template:
@@ -84,12 +86,10 @@ nginx_app_protect_log_policy_target: "syslog:server={{ nginx_app_protect_log_pol
 
 # Copy local NGINX App Protect security policy to host
 nginx_app_protect_security_policy_file_enable: false
-nginx_app_protect_security_policy:
-  source_file: app-protect-security-policy.json
-  out_file_location: /etc/nginx/
+nginx_app_protect_security_policy_file_src:
+nginx_app_protect_security_policy_file_dest:
 
 # Copy local NGINX App Protect log policy to host
 nginx_app_protect_log_policy_file_enable: false
-nginx_app_protect_log_policy_file:
-  source_file: app-protect-log-policy.json
-  out_file_location: /etc/nginx/
+nginx_app_protect_log_policy_file_src:
+nginx_app_protect_log_policy_file_dest:
