@@ -28,15 +28,18 @@
     msg: "NGINX App Protect is not supported on os family {{ ansible_facts['distribution'] }} version {{ ansible_facts['distribution_version'] }}"
   when: not supported_os
 
-- name: Abort if there are conflicting security policy config arguments
-  fail:
-    msg: "Conflicting arguments: nginx_app_protect_security_policy_template_enable and nginx_app_protect_security_policy_file_enable cannot be truthy in the same play"
-  when: nginx_app_protect_security_policy_template_enable | bool and nginx_app_protect_security_policy_file_enable | bool
+- name: Check for conflicting config variables
+  block:
+    - name: Abort if there are conflicting security policy config variables
+      fail:
+        msg: "Conflicting variables: nginx_app_protect_security_policy_template_enable and nginx_app_protect_security_policy_file_enable cannot be truthy in the same play"
+      when: nginx_app_protect_security_policy_template_enable | bool and nginx_app_protect_security_policy_file_enable | bool
 
-- name: Abort if there are conflicting log policy config arguments
-  fail:
-    msg: "Conflicting arguments: nginx_app_protect_log_policy_template_enable and nginx_app_protect_log_policy_file_enable cannot be truthy in the same play"
-  when: nginx_app_protect_log_policy_template_enable | bool and nginx_app_protect_log_policy_file_enable | bool
+    - name: Abort if there are conflicting log policy config variables
+      fail:
+        msg: "Conflicting variables: nginx_app_protect_log_policy_template_enable and nginx_app_protect_log_policy_file_enable cannot be truthy in the same play"
+      when: nginx_app_protect_log_policy_template_enable | bool and nginx_app_protect_log_policy_file_enable | bool
+  when: nginx_app_protect_configure | bool
 
 - name: Install NGINX App Protect
   block:
