@@ -4,8 +4,8 @@
 
 ENHANCEMENTS:
 
-*   Ability to deploy static security policy files via the `nginx_app_protect_security_policy_file_enable` and `nginx_app_protect_security_policy_file` variables.
-*   Ability to deploy static log policy files via the `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file` variables.
+*   Ability to deploy static security policy files via the `nginx_app_protect_security_policy_file_enable` and `nginx_app_protect_security_policy_file` variables. NOTE: `nginx_app_protect_configure` must be set to true.
+*   Ability to deploy static log policy files via the `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file` variables. NOTE: `nginx_app_protect_configure` must be set to true.
 
 ## 0.3.3 (Unreleased)
 
