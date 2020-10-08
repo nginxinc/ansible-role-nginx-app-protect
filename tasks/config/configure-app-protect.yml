@@ -10,14 +10,14 @@
 
 - name: Copy NGINX App Protect security policy file
   copy:
-    src: nginx_app_protect_security_policy_file.source_file
+    src: "{{ nginx_app_protect_security_policy_file.source_file }}"
     dest: "{{ nginx_app_protect_security_policy.out_file_location }}{{ nginx_app_protect_security_policy_file.source_file | basename }}"
     mode: 0644
   when: nginx_app_protect_security_policy_file_enable | bool
 
 - name: Copy NGINX App Protect log policy file
   copy:
-    src: nginx_app_protect_log_policy_file.source_file
+    src: "{{ nginx_app_protect_log_policy_file.source_file }}"
     dest: "{{ nginx_app_protect_log_policy_file.out_file_location }}{{ nginx_app_protect_log_policy_file.source_file | basename }}"
     mode: 0644
   when: nginx_app_protect_log_policy_file_enable | bool
