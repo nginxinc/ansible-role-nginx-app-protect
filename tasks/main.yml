@@ -55,7 +55,6 @@
         - nginx_app_protect_log_policy_file_src
         - nginx_app_protect_log_policy_file_dst
       when: nginx_app_protect_log_policy_file_enable | bool
-
   when: nginx_app_protect_configure | bool
 
 - name: Install NGINX App Protect

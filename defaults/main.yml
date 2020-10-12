@@ -86,10 +86,10 @@ nginx_app_protect_log_policy_target: "syslog:server={{ nginx_app_protect_log_pol
 
 # Copy local NGINX App Protect security policy to host
 nginx_app_protect_security_policy_file_enable: false
-nginx_app_protect_security_policy_file_src:
-nginx_app_protect_security_policy_file_dest:
+nginx_app_protect_security_policy_file_src: files/config/security-policy.json
+nginx_app_protect_security_policy_file_dest: /etc/nginx/security-policy.json
 
 # Copy local NGINX App Protect log policy to host
 nginx_app_protect_log_policy_file_enable: false
-nginx_app_protect_log_policy_file_src:
-nginx_app_protect_log_policy_file_dest:
+nginx_app_protect_log_policy_file_src: files/config/log-policy.json
+nginx_app_protect_log_policy_file_dest: /etc/nginx/log-policy.json
