@@ -28,6 +28,35 @@
     msg: "NGINX App Protect is not supported on os family {{ ansible_facts['distribution'] }} version {{ ansible_facts['distribution_version'] }}"
   when: not supported_os
 
+- name: Check for conflicting config variables
+  block:
+    - name: Abort if there are conflicting security policy config variables
+      fail:
+        msg: "Conflicting variables: nginx_app_protect_security_policy_template_enable and nginx_app_protect_security_policy_file_enable cannot be truthy in the same play"
+      when: nginx_app_protect_security_policy_template_enable | bool and nginx_app_protect_security_policy_file_enable | bool
+
+    - name: Abort if there are conflicting log policy config variables
+      fail:
+        msg: "Conflicting variables: nginx_app_protect_log_policy_template_enable and nginx_app_protect_log_policy_file_enable cannot be truthy in the same play"
+      when: nginx_app_protect_log_policy_template_enable | bool and nginx_app_protect_log_policy_file_enable | bool
+
+    - name: Fail if variables for nginx_app_protect_security_policy_file_enable are not defined
+      assert:
+        that: ("{{ item }} is defined") and ("{{ item }} | length > 0")
+      loop:
+        - nginx_app_protect_security_policy_file_src
+        - nginx_app_protect_security_policy_file_dst
+      when: nginx_app_protect_security_policy_file_enable | bool
+
+    - name: Fail if variables for nginx_app_protect_log_policy_file_enable are not defined
+      assert:
+        that: ("{{ item }} is defined") and ("{{ item }} | length > 0")
+      loop:
+        - nginx_app_protect_log_policy_file_src
+        - nginx_app_protect_log_policy_file_dst
+      when: nginx_app_protect_log_policy_file_enable | bool
+  when: nginx_app_protect_configure | bool
+
 - name: Install NGINX App Protect
   block:
     - name: Install prerequisites
