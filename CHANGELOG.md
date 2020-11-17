@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1 (Unreleased)
+
+ENHANCEMENTS:
+
+Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Distribution) to `2.10.3`, Ansible Lint to `4.3.7`, and Molecule to `3.1.5`.
+
 ## 0.4.0 (November 16, 2020)
 
 DEPRECATION WARNING:
