@@ -32,6 +32,12 @@ nginx_app_protect_install_threat_campaigns: true
 #   nginx_plus: https://cs.nginx.com/static/keys/nginx_signing.key
 #   security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
 
+# Location of your NGINX App Protect license in your local machine.
+# Default is the files folder within the NGINX Ansible role.
+nginx_app_protect_license:
+  certificate: license/nginx-repo.crt
+  key: license/nginx-repo.key
+
 # Set up NGINX App Protect license (cert/key) before installation.
 # Default is true.
 nginx_app_protect_setup_license: true
