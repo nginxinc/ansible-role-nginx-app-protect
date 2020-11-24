@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.4.1 (Novemeber 17, 2020)
+## 0.4.2 (Unreleased)
+
+BUG FIXES:
+
+Specify default values for the `nginx_app_protect_license` dictionary.
+
+## 0.4.1 (November 17, 2020)
 
 ENHANCEMENTS:
 
