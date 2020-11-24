@@ -1,7 +1,16 @@
 # Changelog
 
+## 0.4.1 (Novemeber 17, 2020)
 
-## 0.3.3 (Unreleased)
+ENHANCEMENTS:
+
+Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Distribution) to `2.10.3`, Ansible Lint to `4.3.7`, and Molecule to `3.1.5`.
+
+## 0.4.0 (November 16, 2020)
+
+DEPRECATION WARNING:
+
+The ability to dynamically create App Protect security and log policies via Jinja2 templates will be removed in a future release, as they weren't used much due to relative inflexibility. The `nginx_app_protect_security_policy_file_enable`, `nginx_app_protect_security_policy_file_*`, `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file_*` variables should be used instead of the `nginx_app_protect_*_policy_template*` variables. These new variables have been introduced in this release.
 
 ENHANCEMENTS:
 
@@ -10,15 +19,13 @@ ENHANCEMENTS:
 *   Update Ansible (now Ansible base) to `2.10.2`, Ansible (now Ansible Community Distribution) to `2.10.0`, and yamllint to `1.25.0`.
 *   Ability to deploy static security policy files via the `nginx_app_protect_security_policy_file_enable` and `nginx_app_protect_security_policy_file_*` variables. NOTE: `nginx_app_protect_configure` must be set to true.
 *   Ability to deploy static log policy files via the `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file_*` variables. NOTE: `nginx_app_protect_configure` must be set to true.
-
-DEPRECATION WARNING:
-*   The ability to dynamically create App Protect security and log policies via Jinja2 templates will be removed in a future release, as they weren't used much due to relative inflexibility. The `nginx_app_protect_security_policy_file_enable`, `nginx_app_protect_security_policy_file_*`, `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file_*` variables should be used instead of the `nginx_app_protect_*_policy_template*` variables. These new variables have been introduced in this release.
+*   Add CentOS/RHEL 7.9 to list of supported platforms.
 
 ## 0.3.2 (September 30, 2020)
 
 BUG FIXES:
 
-*   Prevent TravisCI from trying to build (and failing) NGINX App Protect images on external PRs.
+Prevent TravisCI from trying to build (and failing) NGINX App Protect images on external PRs.
 
 ## 0.3.1 (September 22, 2020)
 
@@ -30,7 +37,7 @@ FEATURES:
 
 ENHANCEMENTS:
 
-*   Split the default Molecule scenario into a simple and advanced scenario to solve timeout issues encountered in TravisCI.
+Split the default Molecule scenario into a simple and advanced scenario to solve timeout issues encountered in TravisCI.
 
 BUG FIXES:
 
@@ -42,16 +49,16 @@ BUG FIXES:
 
 DEPRECATION WARNING:
 
-*   The ability to create an NGINX config including some basic App Protect directives has migrated to the NGINX config role available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX App Protect directives should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX App Protect directives submitted in this repository will not be worked on. The NGINX App Protect directives configuration functionalities included in this role will be removed in an upcoming release.
+The ability to create an NGINX config including some basic App Protect directives has migrated to the NGINX config role available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX App Protect directives should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX App Protect directives submitted in this repository will not be worked on. The NGINX App Protect directives configuration functionalities included in this role will be removed in an upcoming release.
 
 BREAKING CHANGES:
 
-*   `nginx_app_protect_delete_license` has been renamed to `nginx_app_protect_remove_license`.
+`nginx_app_protect_delete_license` has been renamed to `nginx_app_protect_remove_license`.
 
 FEATURES:
 
-*   A new variable has been introduced:
-    *   `nginx_app_protect_setup_license` -- Determine whether you want to use this role to upload your NGINX App Protect license to your target host.
+A new variable has been introduced:
+*   `nginx_app_protect_setup_license` -- Determine whether you want to use this role to upload your NGINX App Protect license to your target host.
 
 ENHANCEMENTS:
 
@@ -66,18 +73,18 @@ ENHANCEMENTS:
 
 ENHANCEMENTS:
 
-*   Added molecule tests and verifications
+Added molecule tests and verifications.
 
 BUG FIXES:
 
-*   Fixed newly appearing linting issues in role
+Fixed newly appearing linting issues in role.
 
 ## 0.2.1 (September 11, 2020)
 
 ENHANCEMENTS:
 
-*   Bring docs up to speed with other NGINX roles
-*   Move some default variables into the vars subfolder
+*   Bring docs up to speed with other NGINX roles.
+*   Move some default variables into the vars subfolder.
 
 ## 0.2.0 (September 10, 2020)
 

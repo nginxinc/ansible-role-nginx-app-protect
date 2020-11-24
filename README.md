@@ -60,7 +60,7 @@ This role has multiple variables. The descriptions and defaults for all these va
 
 |Name|Description|
 |----|-----------|
-|**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/defaults/main.yml):|NGINX App Protect installation and configuration variables|
+|**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/defaults/main.yml)**:|NGINX App Protect installation and configuration variables|
 
 Similarly, descriptions and defaults for preset variables can be found in the **`vars/`** folder in the following files:
 
