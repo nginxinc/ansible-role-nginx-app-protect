@@ -2,6 +2,10 @@
 
 ## 0.4.2 (Unreleased)
 
+ENHANCEMENTS:
+
+Update Molecule to `3.2.0` and Docker Python SDK to `4.4.0`.
+
 BUG FIXES:
 
 Specify default values for the `nginx_app_protect_license` dictionary.
