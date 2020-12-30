@@ -1,28 +1,45 @@
 ---
-- name: Set up NGINX Plus signing key URL
+- name: (ALL) Set up NGINX signing key URL
   set_fact:
-    keysite: "{{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key['nginx_plus']) }}"
+    nginx_app_protect_keysite: "{{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key['nginx_plus']) }}"
 
-- name: (Debian/Ubuntu) Add NGINX Plus signing key
-  apt_key:
-    url: "{{ keysite }}"
+- name: (ALL) Set up NGINX App Protect security updates signing key URL
+  set_fact:
+    nginx_app_protect_security_updates_keysite: "{{ nginx_app_protect_signing_key['security_updates'] | default(nginx_app_protect_default_signing_key['security_updates']) }}"
+
+- name: (Alpine Linux) Set up App Protect and security updates signing keys
+  block:
+    - name: (Alpine Linux) Download NGINX signing key
+      get_url:
+        url: "{{ nginx_app_protect_keysite }}"
+        dest: /etc/apk/keys/nginx_signing.rsa.pub
+        mode: 0400
+
+    - name: (Alpine Linux) Download NGINX App Protect security updates signing key
+      get_url:
+        url: "{{ nginx_app_protect_security_updates_keysite }}"
+        dest: /etc/apk/keys/app-protect-security-updates.rsa.pub
+        mode: 0400
+  when: ansible_facts['os_family'] == "Alpine"
+
+- name: (Debian/Ubuntu) Set up App Protect and security updates signing keys
+  block:
+    - name: (Debian/Ubuntu) Add NGINX Plus signing key
+      apt_key:
+        url: "{{ nginx_app_protect_keysite }}"
+
+    - name: (Debian/Ubuntu) Add NGINX App Protect security updates signing key
+      apt_key:
+        url: "{{ nginx_app_protect_security_updates_keysite }}"
   when: ansible_facts['os_family'] == "Debian"
 
-- name: (CentOS/RHEL) Add NGINX Plus signing key
-  rpm_key:
-    key: "{{ keysite }}"
-  when: ansible_facts['os_family'] == "RedHat"
+- name: (CentOS/RHEL) Set up App Protect and security updates signing keys
+  block:
+    - name: (CentOS/RHEL) Add NGINX Plus signing key
+      rpm_key:
+        key: "{{ nginx_app_protect_keysite }}"
 
-- name: Set up NGINX App Protect security updates signing key URL
-  set_fact:
-    keysite: "{{ nginx_app_protect_signing_key['security_updates'] | default(nginx_app_protect_default_signing_key['security_updates']) }}"
-
-- name: (Debian/Ubuntu) Add NGINX App Protect security updates signing key
-  apt_key:
-    url: "{{ keysite }}"
-  when: ansible_facts['os_family'] == "Debian"
-
-- name: (CentOS/RHEL) Add NGINX App Protect security updates signing key
-  rpm_key:
-    key: "{{ keysite }}"
+    - name: (CentOS/RHEL) Add NGINX App Protect security updates signing key
+      rpm_key:
+        key: "{{ nginx_app_protect_security_updates_keysite }}"
   when: ansible_facts['os_family'] == "RedHat"

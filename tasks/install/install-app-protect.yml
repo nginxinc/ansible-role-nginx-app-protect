@@ -21,14 +21,18 @@
   package:
     name: app-protect-attack-signatures
     state: "{{ nginx_app_protect_state }}"
-  when: nginx_app_protect_install_signatures | bool
+  when:
+    - nginx_app_protect_install_signatures | bool
+    - nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: Install latest NGINX App Protect threat campaigns
   package:
     name: app-protect-threat-campaigns
     state: "{{ nginx_app_protect_state }}"
-  when: nginx_app_protect_install_threat_campaigns | bool
+  when:
+    - nginx_app_protect_install_threat_campaigns | bool
+    - nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: Modify NGINX Plus service

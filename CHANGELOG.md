@@ -6,6 +6,9 @@ ENHANCEMENTS:
 
 *   Update Molecule to `3.2.1` and Docker Python SDK to `4.4.0`.
 *   Replace TravisCI with GitHub actions.
+*   You can now specify an `nginx_app_protect_repository` for NGINX App Protect.
+*   Updated Signatures repository URL.
+*   Supports App Protect 2.3: adds support for Debian 10 (buster) and Alpine 3.10.x.
 
 BUG FIXES:
 

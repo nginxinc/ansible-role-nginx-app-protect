@@ -1,5 +1,5 @@
 ---
-- name: (Debian/Ubuntu) Set up NGINX App Protect license
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect license
   blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
     create: true
@@ -11,7 +11,7 @@
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
     mode: 0444
 
-- name: (Debian/Ubuntu) Set up NGINX App Protect security updates license
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates license
   blockinfile:
     path: /etc/apt/apt.conf.d/90app-protect-security-updates
     create: true
@@ -23,18 +23,17 @@
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
     mode: 0444
 
-- name: (Debian/Ubuntu) Set up NGINX App Protect repository
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
   apt_repository:
-    repo: deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus
+    repo: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_debian) }}"
     filename: nginx-app-protect
     mode: 0644
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-- name: (Debian/Ubuntu) Set up NGINX App Protect security updates repository
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates repository
   apt_repository:
-    repo: "deb [arch=amd64] https://app-protect-security-updates.nginx.com/{{ ansible_facts['distribution'] | lower }}
-          {{ ansible_facts['distribution_release'] }} nginx-plus"
+    repo: "{{ nginx_app_protect_repository | default(nginx_app_protect_security_updates_default_repository_debian) }}"
     filename: app-protect-security-updates
     mode: 0644
     update_cache: false
@@ -45,4 +44,6 @@
     name: "app-protect{{ nginx_app_protect_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
     update_cache: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX

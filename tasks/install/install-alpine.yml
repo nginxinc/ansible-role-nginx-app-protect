@@ -1,0 +1,17 @@
+---
+- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
+  lineinfile:
+    path: /etc/apk/repositories
+    insertafter: EOF
+    line: "{{ nginx_app_protect_repository | default(nginx_plus_default_repository_alpine) }}"
+    state: "{{ nginx_license_status | default ('present') }}"
+
+- name: (Alpine Linux) Install NGINX App Protect
+  apk:
+    name: "app-protect{{ nginx_app_protect_version | default('') }}"
+    repository: "{{ nginx_app_protect_repository | default(nginx_plus_default_repository_alpine) }}"
+    state: "{{ nginx_state }}"
+    update_cache: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_license_status is not defined
+  notify: (Handler) Run NGINX
