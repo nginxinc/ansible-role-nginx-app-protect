@@ -14,6 +14,9 @@ BUG FIXES:
 
 Specify default values for the `nginx_app_protect_license` dictionary.
 
+KNOWN ISSUES:
+*   The Ansible `package_facts` module will not support Alpine (specifically the apk package manager) until Ansible 2.11. Therefore, Alpine support in this role is not functional at this time.
+
 ## 0.4.1 (November 17, 2020)
 
 ENHANCEMENTS:
