@@ -10,12 +10,12 @@
 - name: (RHEL) Set up RHEL repository
   yum_repository:
     name: CentOS-7
-    baseurl: "http://ftp.heanet.ie/pub/centos/{{ ansible_facts['distribution_major_version'] }}/os/$basearch/"
+    baseurl: "http://ftp.heanet.ie/pub/centos/{{ ansible_distribution_major_version }}/os/$basearch/"
     description: NGINX App Protect dependencies
     enabled: true
     gpgcheck: true
-    gpgkey: "http://ftp.heanet.ie/pub/centos/{{ ansible_facts['distribution_major_version'] }}/os/$basearch/\
-            RPM-GPG-KEY-CentOS-{{ ansible_facts['distribution_major_version'] }}"
+    gpgkey: "http://ftp.heanet.ie/pub/centos/{{ ansible_distribution_major_version }}/os/$basearch/\
+            RPM-GPG-KEY-CentOS-{{ ansible_distribution_major_version }}"
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
   when: not nginx_app_protect_use_rhel_subscription_repos | bool
 

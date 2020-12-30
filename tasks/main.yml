@@ -6,7 +6,7 @@
 - name: Set supported_os when platform and version are in supported platforms dictionary
   set_fact:
     supported_os: true
-  when: ansible_facts['distribution'] | lower in item.key and ansible_facts['distribution_version'] | float in item.value
+  when: ansible_distribution | lower in item.key and ansible_distribution_version | float in item.value
   loop: "{{ query('dict', nginx_app_protect_linux_families) }}"
 
 - name: Set supported_os to false if fact not defined
@@ -25,7 +25,7 @@
 
 - name: Abort if the OS / version combination is not supported
   fail:
-    msg: "NGINX App Protect is not supported on os family {{ ansible_facts['distribution'] }} version {{ ansible_facts['distribution_version'] }}"
+    msg: "NGINX App Protect is not supported on os family {{ ansible_distribution }} version {{ ansible_distribution_version }}"
   when: not supported_os
 
 - name: Check for conflicting config variables
