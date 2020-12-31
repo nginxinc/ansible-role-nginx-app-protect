@@ -7,15 +7,16 @@ ENHANCEMENTS:
 *   Update Molecule to `3.2.1` and Docker Python SDK to `4.4.0`.
 *   Replace TravisCI with GitHub actions.
 *   You can now specify an `nginx_app_protect_repository` for NGINX App Protect.
+*   You can now specify Signatures and Threat Campaigns package versions using the `nginx_app_protect_signatures_version` and `nginx_app_protect_threat_campaigns_version` variables.
 *   Updated Signatures repository URL.
-*   Supports App Protect 2.3: adds support for Debian 10 (buster) and Alpine 3.10.x.
+*   Partial support for App Protect 2.3: adds support for Debian 10 (buster). Alpine 3.10.x is not yet supported in the role (see KNOWN ISSUE below).
 
 BUG FIXES:
 
-Specify default values for the `nginx_app_protect_license` dictionary.
+*   Specify default values for the `nginx_app_protect_license` dictionary.
 
 KNOWN ISSUES:
-*   The Ansible `package_facts` module will not support Alpine (specifically the apk package manager) until Ansible 2.11. Therefore, Alpine support in this role is not functional at this time.
+*   The Ansible `package_facts` module will not support Alpine (specifically the apk package manager) until Ansible 2.11. Therefore, Alpine support in this role is not functional at this time. See https://github.com/juju4/ansible/blob/devel/lib/ansible/modules/package_facts.py
 
 ## 0.4.1 (November 17, 2020)
 
