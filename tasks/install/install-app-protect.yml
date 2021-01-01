@@ -14,26 +14,8 @@
     quiet: true
   when: nginx_plus_version is defined
 
-- name: Install NGINX App Protect
+- name: Install NGINX App Protect and security packages
   include_tasks: "{{ role_path }}/tasks/install/install-{{ ansible_os_family | lower }}.yml"
-
-- name: Install NGINX App Protect signatures ({{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, 'latest') }})
-  package:
-    name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
-    state: "{{ nginx_app_protect_state }}"
-  when:
-    - nginx_app_protect_install_signatures | bool
-    - nginx_license_status is not defined
-  notify: (Handler - NGINX App Protect) Run NGINX
-
-- name: Install NGINX App Protect threat campaigns ({{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, 'latest') }})
-  package:
-    name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
-    state: "{{ nginx_app_protect_state }}"
-  when:
-    - nginx_app_protect_install_threat_campaigns | bool
-    - nginx_license_status is not defined
-  notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: Modify NGINX Plus service
   block:

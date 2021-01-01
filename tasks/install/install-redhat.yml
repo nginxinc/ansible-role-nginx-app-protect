@@ -13,13 +13,14 @@
 - name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates repository
   yum_repository:
     name: nginx-app-protect-security-updates
-    baseurl: "{{ nginx_app_protect_repository | default(nginx_app_protect_security_updates_default_repository_redhat) }}"
+    baseurl: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_redhat) }}"
     description: NGINX App Protect security updates repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
+  when: (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
 
 - name: (CentOS/RHEL) Install NGINX App Protect
   yum:
@@ -28,4 +29,28 @@
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
+  notify: (Handler - NGINX App Protect) Run NGINX
+
+- name: (CentOS/RHEL) Install NGINX App Protect signatures ({{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, 'latest') }})
+  yum:
+    name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
+    state: "{{ nginx_app_protect_state }}"
+    update_cache: true
+    dpkg_options: force-downgrade
+  ignore_errors: "{{ ansible_check_mode }}"
+  when:
+    - nginx_app_protect_install_signatures | bool
+    - nginx_license_status is not defined
+  notify: (Handler - NGINX App Protect) Run NGINX
+
+- name: (CentOS/RHEL) Install NGINX App Protect threat campaigns ({{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, 'latest') }})
+  yum:
+    name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
+    state: "{{ nginx_app_protect_state }}"
+    update_cache: true
+    dpkg_options: force-downgrade
+  ignore_errors: "{{ ansible_check_mode }}"
+  when:
+    - nginx_app_protect_install_threat_campaigns | bool
+    - nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX

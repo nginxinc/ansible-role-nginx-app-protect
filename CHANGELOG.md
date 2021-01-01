@@ -7,6 +7,7 @@ ENHANCEMENTS:
 *   Update Molecule to `3.2.1` and Docker Python SDK to `4.4.0`.
 *   Replace TravisCI with GitHub actions.
 *   You can now specify an `nginx_app_protect_repository` for NGINX App Protect.
+*   You can now specify an `nginx_app_protect_security_updates_repository` for NGINX App Protect Signatures and Threat Campaigns packages.
 *   You can now specify Signatures and Threat Campaigns package versions using the `nginx_app_protect_signatures_version` and `nginx_app_protect_threat_campaigns_version` variables.
 *   Updated Signatures repository URL.
 *   Partial support for App Protect 2.3: adds support for Debian 10 (buster). Alpine 3.10.x is not yet supported in the role (see KNOWN ISSUE below).

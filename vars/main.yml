@@ -17,10 +17,6 @@ nginx_app_protect_linux_families:
     3.10,
   ]
 
-# (Optional) Specify repository for NGINX App Protect.
-# Defaults are the official NGINX repositories.
-# nginx_app_protect_repository: deb [arch=amd64] https://plus-pkgs.nginx.com/debian buster nginx-plus
-
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
 # Default settings are the official NGINX signing key hosts.
 nginx_app_protect_default_signing_key:
