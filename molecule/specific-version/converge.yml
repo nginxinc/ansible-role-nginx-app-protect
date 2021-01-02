@@ -1,0 +1,24 @@
+---
+- name: Converge
+  hosts: all
+  vars_files:
+    - scenario-vars.yml
+  tasks:
+    - name: Set app protect version fact
+      set_fact:
+        nginx_app_protect_version: "{{ app_protect_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"
+      when: specify_app_protect_version
+
+    - name: Set signature version fact
+      set_fact:
+        nginx_app_protect_signatures_version: "{{ app_protect_signature_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"
+      when: specify_app_protect_signatures_version
+
+    - name: Set threat campaigns version fact
+      set_fact:
+        nginx_app_protect_threat_campaigns_version: "{{ app_protect_threat_campaigns_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"
+      when: specify_app_protect_threat_campaigns_version
+
+    - name: Install NGINX App Protect
+      import_role:
+        name: ansible-role-nginx-app-protect

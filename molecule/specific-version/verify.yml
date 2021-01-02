@@ -1,0 +1,85 @@
+---
+- name: Verify
+  hosts: all
+  vars_files:
+    - scenario-vars.yml
+  tasks:
+    - name: Check if NGINX is installed
+      package:
+        name: nginx-plus
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect is installed
+      package:
+        name: app-protect
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect Signatures is installed
+      package:
+        name: app-protect-attack-signatures
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect Threat Campaigns is installed
+      package:
+        name: app-protect-threat-campaigns
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX service is running
+      service:
+        name: nginx
+        state: started
+        enabled: true
+      check_mode: true
+      register: service
+      failed_when: (service is changed) or (service is failed)
+
+    - name: Check that the security policy exists
+      stat:
+        path: /etc/nginx/app-protect-security-policy.json
+      register: stat_result
+      failed_when: not stat_result.stat.exists
+
+    - name: Check that the log policy exists
+      stat:
+        path: /etc/nginx/app-protect-log-policy.json
+      register: stat_result
+      failed_when: not stat_result.stat.exists
+
+    - name: Check installed software
+      package_facts:
+        manager: auto
+
+    - name: Get installed NAP version
+      debug:
+        msg: "{{ ansible_distribution }} {{ ansible_distribution_version}} - App Protect version installed: {{ ansible_facts.packages['app-protect'] | map(attribute='version') | first }}"
+      when: nginx_app_protect_state != "absent"
+
+    - name: Get installed NAP signatures version
+      debug:
+        msg: "{{ ansible_distribution }} {{ ansible_distribution_version}} - Signatures version installed: {{ ansible_facts.packages['app-protect-attack-signatures'] | map(attribute='version') | first }}"
+      when: nginx_app_protect_install_signatures
+
+    - name: Get installed NAP threat campaigns version
+      debug:
+        msg: "{{ ansible_distribution }} {{ ansible_distribution_version}} Threat Campaigns version installed: {{ ansible_facts.packages['app-protect-threat-campaigns'] | map(attribute='version') | first }}"
+      when: nginx_app_protect_install_threat_campaigns
+
+    - name: Verify installed NAP version matches requested version
+      assert:
+        that: (ansible_facts.packages['app-protect'] | map(attribute='version') | first) == (app_protect_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, ''))
+
+    - name: Verify installed NAP signatures version matches requested version
+      assert:
+        that: (ansible_facts.packages['app-protect-attack-signatures'] | map(attribute='version') | first) == (app_protect_signature_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, ''))
+
+    - name: Verify installed NAP threat campaigns version matches requested version
+      assert:
+        that: (ansible_facts.packages['app-protect-threat-campaigns'] | map(attribute='version') | first) == (app_protect_threat_campaigns_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, ''))
