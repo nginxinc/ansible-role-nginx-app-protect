@@ -46,7 +46,7 @@
     name: "app-protect{{ nginx_app_protect_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
     update_cache: true
-    dpkg_options: allow-downgrades
+    dpkg_options: "force-confdef,force-confold,allow-downgrades"
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
@@ -56,7 +56,7 @@
     name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
     update_cache: true
-    dpkg_options: allow-downgrades
+    dpkg_options: "force-confdef,force-confold,allow-downgrades"
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - nginx_app_protect_install_signatures | bool
@@ -68,7 +68,7 @@
     name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
     update_cache: true
-    dpkg_options: allow-downgrades
+    dpkg_options: "force-confdef,force-confold,allow-downgrades"
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - nginx_app_protect_install_threat_campaigns | bool
