@@ -41,7 +41,7 @@
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
   when: (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
 
-- name: (Debian/Ubuntu) Install NGINX App Protect
+- name: (Debian/Ubuntu) Install NGINX App Protect {{ nginx_app_protect_version is defined | ternary(nginx_app_protect_version, '') }}
   apt:
     name: "app-protect{{ nginx_app_protect_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
@@ -50,7 +50,7 @@
   when: nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (Debian/Ubuntu) Install NGINX App Protect signatures ({{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, 'latest') }})
+- name: (Debian/Ubuntu) Install NGINX App Protect signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   apt:
     name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
@@ -61,7 +61,7 @@
     - nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (Debian/Ubuntu) Install NGINX App Protect threat campaigns ({{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, 'latest') }})
+- name: (Debian/Ubuntu) Install NGINX App Protect threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
   apt:
     name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
