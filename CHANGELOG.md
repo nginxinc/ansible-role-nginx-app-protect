@@ -4,8 +4,9 @@
 
 ENHANCEMENTS:
 
-*   Update Molecule to `3.2.1` and Docker Python SDK to `4.4.0`.
 *   Replace TravisCI with GitHub actions.
+*   Update Ansible base to `2.10.4`, Ansible to `2.10.5`, Molecule to `3.2.2` and Docker Python SDK to `4.4.1`.
+*   Update copyright notice.
 
 BUG FIXES:
 
