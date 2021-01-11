@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.2 (Unreleased)
+## 0.4.2 (January 11, 2021)
 
 ENHANCEMENTS:
 
