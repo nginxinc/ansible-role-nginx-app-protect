@@ -18,7 +18,7 @@
   apk:
     name: "app-protect{{ nginx_app_protect_version | default('') }}"
     repository: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_alpine) }}"
-    state: "{{ nginx_state }}"
+    state: "{{ nginx_app_protect_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
