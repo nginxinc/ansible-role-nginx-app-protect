@@ -1,12 +1,8 @@
 ---
-- name: Get package facts
-  package_facts:
-    manager: auto
-
-- name: Set supported_os when platform and version are in supported platforms dictionary
+- name: Set supported_os when platform and major/minor version are in supported platforms dictionary
   set_fact:
     supported_os: true
-  when: ansible_distribution | lower in item.key and ansible_distribution_version | float in item.value
+  when: ansible_distribution | lower in item.key and ansible_distribution_version | regex_search('\\d+\\.?\\d+') in item.value
   loop: "{{ query('dict', nginx_app_protect_linux_families) }}"
 
 - name: Set supported_os to false if fact not defined

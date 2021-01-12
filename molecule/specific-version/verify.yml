@@ -59,17 +59,17 @@
 
     - name: Get installed NAP version
       debug:
-        msg: "{{ ansible_distribution }} {{ ansible_distribution_version}} - App Protect version installed: {{ ansible_facts.packages['app-protect'] | map(attribute='version') | first }}"
+        msg: "{{ ansible_distribution }} {{ ansible_distribution_version }} - App Protect version installed: {{ ansible_facts.packages['app-protect'] | map(attribute='version') | first }}"
       when: nginx_app_protect_state != "absent"
 
     - name: Get installed NAP signatures version
       debug:
-        msg: "{{ ansible_distribution }} {{ ansible_distribution_version}} - Signatures version installed: {{ ansible_facts.packages['app-protect-attack-signatures'] | map(attribute='version') | first }}"
+        msg: "{{ ansible_distribution }} {{ ansible_distribution_version }} - Signatures version installed: {{ ansible_facts.packages['app-protect-attack-signatures'] | map(attribute='version') | first }}"
       when: nginx_app_protect_install_signatures
 
     - name: Get installed NAP threat campaigns version
       debug:
-        msg: "{{ ansible_distribution }} {{ ansible_distribution_version}} Threat Campaigns version installed: {{ ansible_facts.packages['app-protect-threat-campaigns'] | map(attribute='version') | first }}"
+        msg: "{{ ansible_distribution }} {{ ansible_distribution_version }} Threat Campaigns version installed: {{ ansible_facts.packages['app-protect-threat-campaigns'] | map(attribute='version') | first }}"
       when: nginx_app_protect_install_threat_campaigns
 
     - name: Verify installed NAP version matches requested version
