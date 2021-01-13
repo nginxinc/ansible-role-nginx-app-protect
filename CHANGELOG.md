@@ -11,10 +11,6 @@ ENHANCEMENTS:
 *   Support for App Protect 2.3: adds support for Debian 10 (buster) and Alpine 3.10.x.
 *   Removed requirement for `package_facts` module when using this role.
 
-BUG FIXES:
-
-*   Specify default values for the `nginx_app_protect_license` dictionary.
-
 ## 0.4.2 (January 11, 2021)
 
 ENHANCEMENTS:

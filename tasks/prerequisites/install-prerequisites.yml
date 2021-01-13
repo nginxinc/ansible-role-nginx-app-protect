@@ -1,9 +1,4 @@
 ---
-- name: Debug Ansible distribution
-  debug:
-    msg: "ansible_distribution {{ ansible_distribution }}"
-    verbosity: 2
-
 - name: (Debian/Ubuntu) Install dependencies
   include_tasks: setup-debian.yml
   when: ansible_os_family == "Debian"

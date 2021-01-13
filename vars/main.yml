@@ -21,7 +21,9 @@ nginx_app_protect_linux_families:
 # Default settings are the official NGINX signing key hosts.
 nginx_app_protect_default_signing_key:
   nginx_plus: https://cs.nginx.com/static/keys/nginx_signing.key
+  nginx_plus_rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
   security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
+  security_updates_rsa_pub: https://cs.nginx.com/static/keys/app-protect-security-updates.rsa.pub
 
 # Default NGINX App Protect repositories
 nginx_app_protect_default_repository_alpine: "https://plus-pkgs.nginx.com/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
