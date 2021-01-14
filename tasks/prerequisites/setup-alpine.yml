@@ -1,5 +1,0 @@
----
-- name: (Alpine Linux) Install dependencies
-  apk:
-    name: coreutils, openssl, pcre
-    update_cache: yes

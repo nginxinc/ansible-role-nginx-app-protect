@@ -56,7 +56,7 @@
 - name: Install NGINX App Protect
   block:
     - name: Install prerequisites
-      include_tasks: "{{ role_path }}/tasks/prerequisites/setup-{{ ansible_distribution | lower }}.yml"
+      include_tasks: "{{ role_path }}/tasks/prerequisites/install-prerequisites.yml"
       tags: nginx_app_protect_prerequisites
 
     - name: Set up signing keys

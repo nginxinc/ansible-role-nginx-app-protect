@@ -1,0 +1,12 @@
+---
+- name: (Debian/Ubuntu) Install dependencies
+  include_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: (CentOS) Install dependencies
+  include_tasks: setup-centos.yml
+  when: ansible_distribution == "CentOS"
+
+- name: (RHEL) Install dependencies
+  include_tasks: setup-redhat.yml
+  when: ansible_distribution == "RedHat"
