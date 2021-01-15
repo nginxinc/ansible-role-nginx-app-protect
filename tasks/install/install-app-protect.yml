@@ -18,4 +18,6 @@
         group: root
         mode: 0644
       notify: (Handler - NGINX App Protect) Systemd daemon-reload
-  when: nginx_app_protect_service_modify | bool
+  when:
+    - ansible_service_mgr == "systemd"
+    - nginx_app_protect_service_modify | bool
