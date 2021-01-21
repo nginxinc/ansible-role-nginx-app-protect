@@ -2,6 +2,10 @@
 
 ## 0.4.2 (January 11, 2021)
 
+FEATURES:
+
+Add support for Dependabot.
+
 ENHANCEMENTS:
 
 *   Replace TravisCI with GitHub actions.
