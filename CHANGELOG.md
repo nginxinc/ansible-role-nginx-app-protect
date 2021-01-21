@@ -1,10 +1,12 @@
 # Changelog
 
-## 0.4.2 (January 11, 2021)
+## 0.4.3 (Unreleased)
 
 FEATURES:
 
 Add support for Dependabot.
+
+## 0.4.2 (January 11, 2021)
 
 ENHANCEMENTS:
 
