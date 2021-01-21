@@ -6,6 +6,10 @@ FEATURES:
 
 Add support for Dependabot.
 
+ENHANCEMENTS:
+
+Update Ansible base to `2.10.5`.
+
 ## 0.4.2 (January 11, 2021)
 
 ENHANCEMENTS:
