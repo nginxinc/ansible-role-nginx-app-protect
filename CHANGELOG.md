@@ -11,6 +11,9 @@ ENHANCEMENTS:
 *   Support for App Protect 2.3: adds support for Debian 10 (buster) and Alpine 3.10.x.
 *   Removed requirement for `package_facts` module when using this role.
 
+KNOWN ISSUES:
+*   Service manager support is not included in NGINX App Protect for Alpine. When using this role to install App Protect on Alpine, you will need to start the App Protect processes then reload NGINX Plus yourself in order for App Protect to function. Use commands similar to what are contained in the `entrypoint.sh` script in the [NGINX App Protect Administration Guide](https://docs.nginx.com/nginx-app-protect/admin-guide/install/#docker-deployment-instructions) to accomplish this.
+
 ## 0.4.2 (January 11, 2021)
 
 ENHANCEMENTS:

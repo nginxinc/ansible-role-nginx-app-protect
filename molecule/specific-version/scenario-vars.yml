@@ -6,12 +6,7 @@ nginx_app_protect_license:
 nginx_app_protect_remove_license: false
 nginx_app_protect_install_signatures: true
 nginx_app_protect_install_threat_campaigns: true
-nginx_app_protect_configure: true
-nginx_app_protect_security_policy_template_enable: true
-nginx_app_protect_security_policy_enforcement_mode: blocking
-nginx_app_protect_log_policy_template_enable: true
-nginx_app_protect_log_policy_filter_request_type: all
-nginx_app_protect_conf_template_enable: false
+nginx_app_protect_configure: false
 nginx_app_protect_state: present
 
 # TEST SCENARIO VARS
@@ -21,9 +16,12 @@ specify_app_protect_threat_campaigns_version: true
 app_protect_version_matrix:
   redhat: "-23+3.281.0"
   debian: "=23+3.281.0-1"
+  alpine: "=23.3.281.0-r1"
 app_protect_signature_version_matrix:
   redhat: "-2019.07.16"
   debian: "=2019.07.16-1"
+  alpine: "=2021.01.20-r1"
 app_protect_threat_campaigns_version_matrix:
   redhat: "-2020.08.20"
   debian: "=2020.08.20-1"
+  alpine: "=2021.01.03-r1"

@@ -4,12 +4,13 @@
   vars_files:
     - scenario-vars.yml
   tasks:
-    - name: Check if NGINX is installed
+    - name: (Debian/Red Hat OSs) Check if NGINX is installed
       package:
         name: nginx-plus
       check_mode: true
       register: install
       failed_when: (install is changed) or (install is failed)
+      when: ansible_facts.os_family != "Alpine"
 
     - name: Check if NGINX App Protect is installed
       package:
@@ -40,18 +41,6 @@
       check_mode: true
       register: service
       failed_when: (service is changed) or (service is failed)
-
-    - name: Check that the security policy exists
-      stat:
-        path: /etc/nginx/app-protect-security-policy.json
-      register: stat_result
-      failed_when: not stat_result.stat.exists
-
-    - name: Check that the log policy exists
-      stat:
-        path: /etc/nginx/app-protect-log-policy.json
-      register: stat_result
-      failed_when: not stat_result.stat.exists
 
     - name: Check installed software
       package_facts:
