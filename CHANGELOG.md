@@ -8,7 +8,7 @@ Add support for Dependabot.
 
 ENHANCEMENTS:
 
-Update Ansible base to `2.10.5`.
+Update Ansible base to `2.10.5` and Ansible to `2.10.6`.
 
 ## 0.4.2 (January 11, 2021)
 
