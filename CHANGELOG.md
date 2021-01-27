@@ -16,7 +16,7 @@ ENHANCEMENTS:
 *   Consolidate dependencies into a single tasks file.
 *   Remove requirement for `package_facts` module when using this role.
 *   Update Signatures repository URL.
-*   Update Ansible base to `2.10.5`.
+*   Update Ansible base to `2.10.5` and Ansible to `2.10.6`.
 
 KNOWN ISSUES:
 
