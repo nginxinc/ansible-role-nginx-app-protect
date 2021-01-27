@@ -9,7 +9,7 @@ nginx_app_protect_state: present
 
 # (Optional) Installs a specific version of NGINX App Protect
 # Default is to install the latest release.
-# nginx_app_protect_version: "-22+3.158.1" # <- Example value for CentOS/RHEL
+# nginx_app_protect_version: "=23+3.281.0-1" # <- Example value for Debian/Ubuntu
 
 # If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
 # Otherwise, it will source packages from CentOS' repositories.
@@ -23,7 +23,7 @@ nginx_app_protect_install_signatures: true
 
 # (Optional) Installs a specific version of the NGINX App Protect attack signatures package
 # Default is to install the latest release.
-# nginx_app_protect_signatures_version: "-2019.07.16" # <- Example value for CentOS/RHEL
+# nginx_app_protect_signatures_version: "=2019.07.16-1" # <- Example value for Debian/Ubuntu
 
 # The installation of NGINX App Protect can include a page of frequently-updated, high-accuracy signatures called "threat campaigns".
 # This option installs the latest NGINX App Protect threat campaigns signatures.
@@ -32,7 +32,7 @@ nginx_app_protect_install_threat_campaigns: true
 
 # (Optional) Installs a specific version of the NGINX App Protect threat campaigns package
 # Default is to install the latest release.
-# nginx_app_protect_threat_campaigns_version: "-2020.06.25" # <- Example value for CentOS/RHEL
+# nginx_app_protect_threat_campaigns_version: "=2020.08.20-1" # <- Example value for Debian/Ubuntu
 
 # (Optional) Choose where to fetch the NGINX App Protect and security updates signing keys from.
 # Default settings are the official NGINX signing key hosts.

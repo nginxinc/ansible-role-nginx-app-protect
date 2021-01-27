@@ -2,7 +2,9 @@
 - name: Set supported_os when platform and major/minor version are in supported platforms dictionary
   set_fact:
     supported_os: true
-  when: ansible_distribution | lower in item.key and ansible_distribution_version | regex_search('\\d+\\.?\\d+') in item.value
+  when:
+    - ansible_distribution | lower in item.key
+    - ansible_distribution_version | regex_search('\\d+\\.?\\d+') in item.value
   loop: "{{ query('dict', nginx_app_protect_linux_families) }}"
 
 - name: Set supported_os to false if fact not defined
@@ -10,43 +12,46 @@
     supported_os: false
   when: supported_os is not defined
 
-- name: Detect whether you are running a supported_os
-  debug:
-    msg: "supported_os {{ supported_os }}"
-    verbosity: 2
-
-- name: Check your desired nginx_app_protect_state
-  debug:
-    msg: "Desired nginx_app_protect_state {{ nginx_app_protect_state }}"
-
 - name: Abort if the OS / version combination is not supported
   fail:
-    msg: "NGINX App Protect is not supported on os family {{ ansible_distribution }} version {{ ansible_distribution_version }}"
+    msg: NGINX App Protect is not supported on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }}
   when: not supported_os
 
 - name: Check for conflicting config variables
   block:
     - name: Abort if there are conflicting security policy config variables
       fail:
-        msg: "Conflicting variables: nginx_app_protect_security_policy_template_enable and nginx_app_protect_security_policy_file_enable cannot be truthy in the same play"
-      when: nginx_app_protect_security_policy_template_enable | bool and nginx_app_protect_security_policy_file_enable | bool
+        msg: >
+          Conflicting variables:
+          'nginx_app_protect_security_policy_template_enable' and 'nginx_app_protect_security_policy_file_enable' cannot be truthy in the same play
+      when:
+        - nginx_app_protect_security_policy_template_enable | bool
+        - nginx_app_protect_security_policy_file_enable | bool
 
     - name: Abort if there are conflicting log policy config variables
       fail:
-        msg: "Conflicting variables: nginx_app_protect_log_policy_template_enable and nginx_app_protect_log_policy_file_enable cannot be truthy in the same play"
-      when: nginx_app_protect_log_policy_template_enable | bool and nginx_app_protect_log_policy_file_enable | bool
+        msg: >
+          Conflicting variables:
+          'nginx_app_protect_log_policy_template_enable' and 'nginx_app_protect_log_policy_file_enable' cannot be truthy in the same play
+      when:
+        - nginx_app_protect_log_policy_template_enable | bool
+        - nginx_app_protect_log_policy_file_enable | bool
 
-    - name: Fail if variables for nginx_app_protect_security_policy_file_enable are not defined
+    - name: Fail if variables for 'nginx_app_protect_security_policy_file_enable' are not defined
       assert:
-        that: ("{{ item }} is defined") and ("{{ item }} | length > 0")
+        that:
+          - "{{ item }} is defined"
+          - "{{ item }} | length > 0"
       loop:
         - nginx_app_protect_security_policy_file_src
         - nginx_app_protect_security_policy_file_dst
       when: nginx_app_protect_security_policy_file_enable | bool
 
-    - name: Fail if variables for nginx_app_protect_log_policy_file_enable are not defined
+    - name: Fail if variables for 'nginx_app_protect_log_policy_file_enable' are not defined
       assert:
-        that: ("{{ item }} is defined") and ("{{ item }} | length > 0")
+        that:
+          - "{{ item }} is defined"
+          - "{{ item }} | length > 0"
       loop:
         - nginx_app_protect_log_policy_file_src
         - nginx_app_protect_log_policy_file_dst
@@ -56,7 +61,7 @@
 - name: Install NGINX App Protect
   block:
     - name: Install prerequisites
-      include_tasks: "{{ role_path }}/tasks/prerequisites/install-prerequisites.yml"
+      include_tasks: "{{ role_path }}/tasks/prerequisites/install-dependencies.yml"
       tags: nginx_app_protect_prerequisites
 
     - name: Set up signing keys

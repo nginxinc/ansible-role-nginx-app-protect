@@ -8,7 +8,8 @@ nginx_app_protect_linux_families:
     "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
   ]
   debian: [
-    "9.0", "9.1", "9.2", "9.3", "9.4", "9.5", "9.6", "9.7", "9.8", "9.9", "9.10", "9.11", "9.12", "9.13", "10",
+    "9.0", "9.1", "9.2", "9.3", "9.4", "9.5", "9.6", "9.7", "9.8", "9.9", "9.10", "9.11", "9.12", "9.13",
+    "10",
   ]
   ubuntu: [
     "18.04",
@@ -17,13 +18,27 @@ nginx_app_protect_linux_families:
     "3.10",
   ]
 
+# Debian dependencies
+nginx_app_protect_debian_dependencies: [
+  "apt-transport-https", "ca-certificates", "dirmngr",
+]
+
+# CentOS dependencies
+nginx_app_protect_centos_dependencies: [
+  "ca-certificates", "epel-release", "openssl",
+]
+
+# RHEL dependencies
+nginx_app_protect_rhel_dependencies: [
+  "ca-certificates", "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm", "openssl",
+]
+
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
 # Default settings are the official NGINX signing key hosts.
-nginx_app_protect_default_signing_key:
-  nginx_plus: https://cs.nginx.com/static/keys/nginx_signing.key
-  nginx_plus_rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
-  security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
-  security_updates_rsa_pub: https://cs.nginx.com/static/keys/app-protect-security-updates.rsa.pub
+nginx_app_protect_default_signing_key_pgp: https://cs.nginx.com/static/keys/nginx_signing.key
+nginx_app_protect_default_signing_key_rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
+nginx_app_protect_security_updates_default_signing_key_pgp: https://cs.nginx.com/static/keys/app-protect-security-updates.key
+nginx_app_protect_security_updates_default_signing_key_rsa_pub: https://cs.nginx.com/static/keys/app-protect-security-updates.rsa.pub
 
 # Default NGINX App Protect repositories
 nginx_app_protect_default_repository_alpine: "https://plus-pkgs.nginx.com/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"

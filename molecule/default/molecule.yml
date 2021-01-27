@@ -7,7 +7,7 @@ lint: |
   ansible-lint --force-color
 platforms:
   - name: alpine-3.10
-    image: python:alpine3.10
+    image: alpine:3.10
     dockerfile: ../Dockerfile.j2
     privileged: true
     volumes:

@@ -22,7 +22,8 @@
       Acquire::https::app-protect-security-updates.nginx.com::SslKey      "/etc/ssl/nginx/nginx-repo.key";
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
     mode: 0444
-  when: (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
+  when: nginx_app_protect_install_signatures | bool
+        or nginx_app_protect_install_threat_campaigns | bool
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
   apt_repository:
@@ -39,7 +40,8 @@
     mode: 0644
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
-  when: (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
+  when: nginx_app_protect_install_signatures | bool
+        or nginx_app_protect_install_threat_campaigns | bool
 
 - name: (Debian/Ubuntu) Install NGINX App Protect {{ nginx_app_protect_version is defined | ternary(nginx_app_protect_version, '') }}
   apt:

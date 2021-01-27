@@ -12,7 +12,8 @@
     insertafter: EOF
     line: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_alpine) }}"
     state: "{{ nginx_license_status | default ('present') }}"
-  when: (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
+  when: nginx_app_protect_install_signatures | bool
+        or nginx_app_protect_install_threat_campaigns | bool
 
 - name: (Alpine Linux) Install NGINX App Protect {{ nginx_app_protect_version is defined | ternary(nginx_app_protect_version, '') }}
   apk:
@@ -21,6 +22,7 @@
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
+  notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Alpine Linux) Install NGINX App Protect signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   apk:
@@ -31,6 +33,7 @@
   when:
     - nginx_app_protect_install_signatures | bool
     - nginx_license_status is not defined
+  notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Alpine Linux) Install NGINX App Protect threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
   apk:
@@ -41,3 +44,4 @@
   when:
     - nginx_app_protect_install_threat_campaigns | bool
     - nginx_license_status is not defined
+  notify: (Handler - NGINX App Protect) Run NGINX
