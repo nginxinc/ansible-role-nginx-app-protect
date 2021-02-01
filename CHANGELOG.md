@@ -17,6 +17,7 @@ ENHANCEMENTS:
 *   Remove requirement for `package_facts` module when using this role.
 *   Update Signatures repository URL.
 *   Update Ansible base to `2.10.5` and Ansible to `2.10.6`.
+*   Update Ansible base to `2.10.5`, Ansible to `2.10.6`, Molecule to `3.2.3` and yamllint to `1.26.0`.
 
 KNOWN ISSUES:
 
