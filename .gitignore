@@ -1,38 +1,41 @@
-# OSX leaves these everywhere on SMB shares
-._*
+# Any private crt and keys #
+############################
+*.crt
+*.key
+*.pem
+*~
+\#*
 
-# OSX trash
-.DS_Store
-
-# Eclipse files
+# Editor specific #
+###################
+.idea
+.vscode
 .classpath
 .project
 .settings/**
-
-# Emacs save files
+## Emac
 *~
 \#*\#
 .\#*
-
-# Vim-related files
+## Vim
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~
 Session.vim
 .netrwhist
 
-# NGINX Plus license files
-*.crt
-*.key
-
-# Visual Studio Code settings
-.vscode
-
-# Default certificate and key
-default.pem
-
-# IntelliJ IDEA
-.idea
-
-# Scratch Directory
+# OS Specific #
+###############
+Thumbs.db
+.DS_Store
+._*
 scratch/
+
+# Ansible specific #
+####################
+.cache
+*.retry
+
+# Python specific #
+###################
+__pycache__
