@@ -4,11 +4,14 @@
 
 FEATURES:
 
-Add support for Dependabot.
+*   Replace Ansible community distribution with Ansible base and add the necessary extra collections as a dependency requirement. For reference, these are:
+    *   `community.general`
+    *   `ansible.posix`
+*   Add support for Dependabot.
 
 ENHANCEMENTS:
 
-*   Update Ansible base to `2.10.5`, Ansible to `2.10.6`, Molecule to `3.2.3` and yamllint to `1.26.0`.
+*   Update Ansible base to `2.10.5`, Molecule to `3.2.3` and yamllint to `1.26.0`.
 *   Specify GitHub actions Ubuntu release.
 *   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
