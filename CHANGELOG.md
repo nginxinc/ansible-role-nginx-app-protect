@@ -11,7 +11,7 @@ FEATURES:
 
 ENHANCEMENTS:
 
-*   Update Ansible base to `2.10.5`, Molecule to `3.2.3`, yamllint to `1.26.0` and Docker Python SDK to `4.4.2`.
+*   Update Ansible base to `2.10.5`, Molecule to `3.2.3`, yamllint to `1.26.0` and Docker Python SDK to `4.4.3`.
 *   Specify GitHub actions Ubuntu release.
 *   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
