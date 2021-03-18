@@ -15,9 +15,9 @@
   when: nginx_app_protect_install_signatures | bool
         or nginx_app_protect_install_threat_campaigns | bool
 
-- name: (Alpine Linux) Install NGINX App Protect {{ nginx_app_protect_version is defined | ternary(nginx_app_protect_version, '') }}
+- name: (Alpine Linux) Install NGINX App Protect
   apk:
-    name: "app-protect{{ nginx_app_protect_version | default('') }}"
+    name: "app-protect"
     state: "{{ nginx_app_protect_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"

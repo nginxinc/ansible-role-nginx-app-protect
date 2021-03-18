@@ -23,9 +23,9 @@
   when: nginx_app_protect_install_signatures | bool
         or nginx_app_protect_install_threat_campaigns | bool
 
-- name: (CentOS/RHEL) Install NGINX App Protect {{ nginx_app_protect_version is defined | ternary(nginx_app_protect_version, '') }}
+- name: (CentOS/RHEL) Install NGINX App Protect
   yum:
-    name: "app-protect{{ nginx_app_protect_version | default('') }}"
+    name: "app-protect"
     state: "{{ nginx_app_protect_state }}"
     update_cache: true
     allow_downgrade: true

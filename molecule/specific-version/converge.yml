@@ -4,11 +4,6 @@
   vars_files:
     - scenario-vars.yml
   tasks:
-    - name: Set NGINX App Protect version fact
-      set_fact:
-        nginx_app_protect_version: "{{ app_protect_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"
-      when: specify_app_protect_version | bool
-
     - name: Set NGINX App Protect signature version fact
       set_fact:
         nginx_app_protect_signatures_version: "{{ app_protect_signature_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"

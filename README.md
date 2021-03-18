@@ -79,9 +79,7 @@ Similarly, descriptions and defaults for preset variables can be found in the **
 
 ## Dependencies
 
-*   If NGINX Plus is *not* already installed on the system, this role will install the version of NGINX Plus that is dependent on the version of NGINX App Protect set with the `nginx_app_protect_version` variable. If none is specified, the latest version of NGINX Plus and NGINX App Protect will be installed.
-
-*   When using the `nginx_app_protect_version` variable, a specific version of NGINX Plus must already be installed on the target system.
+*   If NGINX Plus is *not* already installed on the system, this role will install the version of NGINX Plus that is dependent on the version of NGINX App Protect that is being installed.
 
 ## Example Playbook
 

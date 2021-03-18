@@ -24,6 +24,10 @@ ENHANCEMENTS:
 *   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
 
+BREAKING CHANGES:
+
+The `nginx_app_protect_version` variable has been removed, as it cannot be implemented fully on all platforms.
+
 KNOWN ISSUES:
 
 Service manager support is not included in NGINX App Protect for Alpine. When using this role to install NGINX App Protect on Alpine, you will need to start the NGINX App Protect processes then reload NGINX Plus yourself in order for App Protect to function. You can use commands similar to what are contained in the `entrypoint.sh` script in the [NGINX App Protect Administration Guide](https://docs.nginx.com/nginx-app-protect/admin-guide/install/#docker-deployment-instructions) to accomplish this.

@@ -43,9 +43,9 @@
   when: nginx_app_protect_install_signatures | bool
         or nginx_app_protect_install_threat_campaigns | bool
 
-- name: (Debian/Ubuntu) Install NGINX App Protect {{ nginx_app_protect_version is defined | ternary(nginx_app_protect_version, '') }}
+- name: (Debian/Ubuntu) Install NGINX App Protect
   apt:
-    name: "app-protect{{ nginx_app_protect_version | default('') }}"
+    name: "app-protect"
     state: "{{ nginx_app_protect_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"

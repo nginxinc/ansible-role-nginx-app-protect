@@ -68,10 +68,6 @@
             msg: "{{ ansible_distribution }} {{ ansible_distribution_version }} Threat Campaigns version installed: {{ ansible_facts.packages['app-protect-threat-campaigns'] | map(attribute='version') | first }}"
           when: nginx_app_protect_install_threat_campaigns
 
-        - name: Verify installed NAP version matches requested version
-          assert:
-            that: (ansible_facts.packages['app-protect'] | map(attribute='version') | first) == (app_protect_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, ''))
-
         - name: Verify installed NAP signatures version matches requested version
           assert:
             that: (ansible_facts.packages['app-protect-attack-signatures'] | map(attribute='version') | first) == (app_protect_signature_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, ''))
