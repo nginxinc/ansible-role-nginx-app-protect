@@ -8,6 +8,7 @@ FEATURES:
     *   `community.general`
     *   `ansible.posix`
 *   Add support for Dependabot.
+*   Add support for Ubuntu 20.04 available starting with App Protect 3.1 
 
 ENHANCEMENTS:
 

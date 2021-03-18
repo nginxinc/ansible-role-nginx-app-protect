@@ -61,6 +61,7 @@ Debian:
   - 9
 Ubuntu:
   - 18.04
+  - 20.04
 ```
 
 ## Role Variables
