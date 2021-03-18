@@ -5,6 +5,9 @@
 FEATURES:
 
 *   Add support for Dependabot.
+*   Replace Ansible community distribution with Ansible base and add the necessary extra collections as a dependency requirement. For reference, these are:
+    *   `community.general`
+    *   `ansible.posix`
 *   You can now specify an `nginx_app_protect_repository` for NGINX App Protect.
 *   You can now specify an `nginx_app_protect_security_updates_repository` for NGINX App Protect signatures and threat campaigns packages.
 *   You can now specify NGINX App Protect signatures and threat campaigns package versions using the `nginx_app_protect_signatures_version` and `nginx_app_protect_threat_campaigns_version` variables.
@@ -16,8 +19,10 @@ ENHANCEMENTS:
 *   Consolidate dependencies into a single tasks file.
 *   Remove requirement for `package_facts` module when using this role.
 *   Update Signatures repository URL.
-*   Update Ansible base to `2.10.5` and Ansible to `2.10.6`.
-*   Update Ansible base to `2.10.5`, Ansible to `2.10.6`, Molecule to `3.2.3` and yamllint to `1.26.0`.
+*   Update Ansible base to `2.10.6`, Ansible to `2.10.6`, Molecule to `3.2.3`, yamllint to `1.26.0` and Docker Python SDK to `4.4.4`.
+*   Specify GitHub actions Ubuntu release.
+*   Minor GitHub template tweaks, including the creation of a SECURITY doc.
+*   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
 
 KNOWN ISSUES:
 
