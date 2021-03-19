@@ -11,6 +11,7 @@
   when:
     - nginx_app_protect_start | bool
     - not ansible_check_mode | bool
+    - ansible_os_family != "Alpine"
   listen: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Handler - NGINX App Protect) Check NGINX
@@ -24,5 +25,7 @@
   debug:
     var: config.stderr_lines
   failed_when: config.rc != 0
-  when: config.rc != 0
+  when:
+    - config.rc is defined
+    - config.rc != 0
   listen: (Handler - NGINX App Protect) Run NGINX

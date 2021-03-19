@@ -1,15 +1,10 @@
 ---
 # Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
-# Can be used with `nginx_app_protect_version` to achieve fine grained control on which version of NGINX App Protect is installed/used on each playbook execution.
-# Using 'present' will install the latest version (or 'nginx_app_protect_version') of NGINX App Protect on a fresh install.
-# Using 'latest' will upgrade NGINX App Protect to the latest version (that matches your 'nginx_app_protect_version') of NGINX App Protect on every playbook execution.
+# Using 'present' will install the latest version of NGINX App Protect on a fresh install.
+# Using 'latest' will upgrade NGINX App Protect to the latest version on every playbook execution.
 # Using 'absent' will remove NGINX App Protect from your system.
 # Default is present.
 nginx_app_protect_state: present
-
-# (Optional) Installs a specific version of NGINX App Protect
-# Default is to install the latest release.
-# nginx_app_protect_version: 22
 
 # If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
 # Otherwise, it will source packages from CentOS' repositories.
@@ -21,16 +16,32 @@ nginx_app_protect_use_rhel_subscription_repos: false
 # Default is true.
 nginx_app_protect_install_signatures: true
 
+# (Optional) Installs a specific version of the NGINX App Protect attack signatures package
+# Default is to install the latest release.
+# nginx_app_protect_signatures_version: "=2019.07.16-1" # <- Example value for Debian/Ubuntu
+
 # The installation of NGINX App Protect can include a page of frequently-updated, high-accuracy signatures called "threat campaigns".
 # This option installs the latest NGINX App Protect threat campaigns signatures.
 # Default is true.
 nginx_app_protect_install_threat_campaigns: true
+
+# (Optional) Installs a specific version of the NGINX App Protect threat campaigns package
+# Default is to install the latest release.
+# nginx_app_protect_threat_campaigns_version: "=2020.08.20-1" # <- Example value for Debian/Ubuntu
 
 # (Optional) Choose where to fetch the NGINX App Protect and security updates signing keys from.
 # Default settings are the official NGINX signing key hosts.
 # nginx_app_protect_signing_key:
 #   nginx_plus: https://cs.nginx.com/static/keys/nginx_signing.key
 #   security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
+
+# (Optional) Specify repository for NGINX App Protect.
+# Defaults are the official NGINX repositories.
+# nginx_app_protect_repository: deb [arch=amd64] https://plus-pkgs.nginx.com/debian buster nginx-plus
+
+# (Optional) Specify repository for NGINX App Protect security updates.
+# Defaults are the official NGINX repositories.
+# nginx_app_protect_security_updates_repository: deb [arch=amd64] https://app-protect-security-updates.nginx.com/debian buster nginx-plus
 
 # Location of your NGINX App Protect license in your local machine.
 # Default is the files folder within the NGINX Ansible role.

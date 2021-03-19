@@ -10,12 +10,16 @@ galaxy_info:
   min_ansible_version: 2.10
 
   platforms:
+    - name: Alpine
+      versions:
+        - any
     - name: EL
       versions:
         - 7
     - name: Debian
       versions:
         - stretch
+        - buster
     - name: Ubuntu
       versions:
         - bionic
