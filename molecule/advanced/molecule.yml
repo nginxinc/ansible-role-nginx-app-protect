@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
   options:
-    role-file: requirements.yml
+    role-file: molecule/advanced/requirements.yml
 driver:
   name: docker
 lint: |
@@ -78,3 +78,7 @@ provisioner:
     defaults:
       no_target_syslog: true
   log: false
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+    verify: verify.yml
