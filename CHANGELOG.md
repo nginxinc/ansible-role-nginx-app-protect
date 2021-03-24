@@ -19,7 +19,7 @@ ENHANCEMENTS:
 *   Consolidate dependencies into a single tasks file.
 *   Remove requirement for `package_facts` module when using this role.
 *   Update Signatures repository URL.
-*   Update Ansible base to `2.10.7`, Ansible Lint to `5.0.4`, Molecule to `3.3.0`, yamllint to `1.26.0` and Docker Python SDK to `4.4.4`.
+*   Update Ansible base to `2.10.7`, Ansible Lint to `5.0.5`, Molecule to `3.3.0`, yamllint to `1.26.0` and Docker Python SDK to `4.4.4`.
 *   Specify GitHub actions Ubuntu release.
 *   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
