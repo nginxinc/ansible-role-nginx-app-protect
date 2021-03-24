@@ -3,6 +3,7 @@ galaxy_info:
   author: Daniel Edgar
   description: Official Ansible role for NGINX App Protect
   role_name: nginx_app_protect
+  namespace: nginxinc
   company: F5 Networks, Inc.
 
   license: Apache License, Version 2.0
