@@ -14,6 +14,7 @@ FEATURES:
       - name: ansible.posix
         version: 1.2.0
     ```
+*   Explicitly list Jinja2 `2.11.3` as a requirement, as well as detail the minimum supported version (`2.11.x`).
 *   You can now specify an `nginx_app_protect_repository` for NGINX App Protect.
 *   You can now specify an `nginx_app_protect_security_updates_repository` for NGINX App Protect signatures and threat campaigns packages.
 *   You can now specify NGINX App Protect signatures and threat campaigns package versions using the `nginx_app_protect_signatures_version` and `nginx_app_protect_threat_campaigns_version` variables.
