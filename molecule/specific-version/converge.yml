@@ -1,8 +1,17 @@
 ---
 - name: Converge
   hosts: all
-  vars_files:
-    - scenario-vars.yml
+  vars:
+    specify_app_protect_signatures_version: true
+    specify_app_protect_threat_campaigns_version: true
+    app_protect_signature_version_matrix:
+      alpine: "=2021.01.20-r1"
+      debian: "=2019.07.16-1"
+      redhat: "-2019.07.16"
+    app_protect_threat_campaigns_version_matrix:
+      alpine: "=2021.01.03-r1"
+      debian: "=2020.08.20-1"
+      redhat: "-2020.08.20"
   tasks:
     - name: Set NGINX App Protect signature version fact
       set_fact:
@@ -17,3 +26,12 @@
     - name: Install NGINX App Protect
       include_role:
         name: ansible-role-nginx-app-protect
+      vars:
+        nginx_app_protect_license:
+          certificate: license/nginx-repo.crt
+          key: license/nginx-repo.key
+        nginx_app_protect_remove_license: false
+        nginx_app_protect_install_signatures: true
+        nginx_app_protect_install_threat_campaigns: true
+        nginx_app_protect_configure: false
+        nginx_app_protect_state: present

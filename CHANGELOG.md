@@ -6,8 +6,15 @@ FEATURES:
 
 *   Add support for Dependabot.
 *   Replace Ansible community distribution with Ansible base and add the necessary extra collections as a dependency requirement. For reference, these are:
-    *   `community.general`
-    *   `ansible.posix`
+    ```yaml
+    ---
+    collections:
+      - name: community.general
+        version: 2.3.0
+      - name: ansible.posix
+        version: 1.2.0
+    ```
+*   Explicitly list Jinja2 `2.11.3` as a requirement, as well as detail the minimum supported version (`2.11.x`).
 *   You can now specify an `nginx_app_protect_repository` for NGINX App Protect.
 *   You can now specify an `nginx_app_protect_security_updates_repository` for NGINX App Protect signatures and threat campaigns packages.
 *   You can now specify NGINX App Protect signatures and threat campaigns package versions using the `nginx_app_protect_signatures_version` and `nginx_app_protect_threat_campaigns_version` variables.
@@ -20,7 +27,7 @@ ENHANCEMENTS:
 *   Consolidate dependencies into a single tasks file.
 *   Remove requirement for `package_facts` module when using this role.
 *   Update Signatures repository URL.
-*   Update Ansible base to `2.10.7`, Molecule to `3.2.4`, yamllint to `1.26.0` and Docker Python SDK to `4.4.4`.
+*   Update Ansible base to `2.10.7`, Ansible Lint to `5.0.6`, Molecule to `3.3.0`, yamllint to `1.26.0` and Docker Python SDK to `4.4.4`.
 *   Specify GitHub actions Ubuntu release.
 *   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
