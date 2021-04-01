@@ -50,3 +50,7 @@ platforms:
     command: "/sbin/init"
 provisioner:
   name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+    verify: verify.yml
