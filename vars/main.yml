@@ -12,7 +12,7 @@ nginx_app_protect_linux_families:
     "10",
   ]
   ubuntu: [
-    "18.04",
+    "18.04", "20.04",
   ]
   alpine: [
     "3.10",

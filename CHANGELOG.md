@@ -18,6 +18,7 @@ FEATURES:
 *   You can now specify an `nginx_app_protect_repository` for NGINX App Protect.
 *   You can now specify an `nginx_app_protect_security_updates_repository` for NGINX App Protect signatures and threat campaigns packages.
 *   You can now specify NGINX App Protect signatures and threat campaigns package versions using the `nginx_app_protect_signatures_version` and `nginx_app_protect_threat_campaigns_version` variables.
+*   Add support for Ubuntu 20.04 available starting with App Protect 3.1.
 
 ENHANCEMENTS:
 
