@@ -50,8 +50,8 @@ platforms:
       - nap
     networks:
       - name: molecule-test
-  - name: debian-stretch
-    image: debian:stretch-slim
+  - name: ubuntu-focal
+    image: ubuntu:focal
     dockerfile: ../Dockerfile.j2
     privileged: true
     volumes:
