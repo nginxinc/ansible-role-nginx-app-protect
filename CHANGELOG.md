@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.3 (Unreleased)
+## 0.4.3 (April 6, 2020)
 
 FEATURES:
 
@@ -18,11 +18,10 @@ FEATURES:
 *   You can now specify an `nginx_app_protect_repository` for NGINX App Protect.
 *   You can now specify an `nginx_app_protect_security_updates_repository` for NGINX App Protect signatures and threat campaigns packages.
 *   You can now specify NGINX App Protect signatures and threat campaigns package versions using the `nginx_app_protect_signatures_version` and `nginx_app_protect_threat_campaigns_version` variables.
-*   Add support for Ubuntu 20.04 available starting with App Protect 3.1.
 
 ENHANCEMENTS:
 
-*   Support for App Protect 2.3 -- Adds support for Debian 10 (buster) and Alpine 3.10.x.
+*   Support for NGINX App Protect 3.1 -- Adds support for Debian 10, Ubuntu 20.04 and Alpine 3.10.
 *   Add test coverage for new platforms and testing scenario.
 *   Consolidate dependencies into a single tasks file.
 *   Remove requirement for `package_facts` module when using this role.
