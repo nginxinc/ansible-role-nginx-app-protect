@@ -4,7 +4,7 @@
 
 ENHANCEMENTS:
 
-Update yamllint to `1.26.1`.
+Update Ansible Lint to `5.0.7` and yamllint to `1.26.1`.
 
 ## 0.4.3 (April 6, 2020)
 
