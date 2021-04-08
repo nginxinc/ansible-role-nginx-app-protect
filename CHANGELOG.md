@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.4 (Unreleased)
+
+ENHANCEMENTS:
+
+Update Docker Python SDK to `5.0.0`.
+
 ## 0.4.3 (April 6, 2020)
 
 FEATURES:
