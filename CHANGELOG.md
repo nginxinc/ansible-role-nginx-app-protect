@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.4 (Unreleased)
+
+ENHANCEMENTS:
+
+Update Ansible Lint to `5.0.7`.
+
 ## 0.4.3 (April 6, 2020)
 
 FEATURES:
