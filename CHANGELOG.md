@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.4 (Unreleased)
+
+ENHANCEMENTS:
+
+Update yamllint to `1.26.1`.
+
 ## 0.4.3 (April 6, 2020)
 
 FEATURES:
