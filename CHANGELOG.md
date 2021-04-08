@@ -4,7 +4,7 @@
 
 ENHANCEMENTS:
 
-Update yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
+Update Ansible Lint to `5.0.7`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
 
 ## 0.4.3 (April 6, 2020)
 
