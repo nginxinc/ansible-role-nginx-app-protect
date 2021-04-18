@@ -75,7 +75,7 @@ nginx_app_protect_security_policy_template_enable: true
 nginx_app_protect_security_policy_template:
   template_file: app-protect-security-policy.j2
   out_file_name: app-protect-security-policy.json
-  out_file_location: /etc/nginx/
+  out_file_location: /etc/app_protect/conf/
 # possible values: transparent, blocking
 nginx_app_protect_security_policy_enforcement_mode: transparent
 
@@ -85,7 +85,7 @@ nginx_app_protect_log_policy_template_enable: true
 nginx_app_protect_log_policy_template:
   template_file: app-protect-log-policy.j2
   out_file_name: app-protect-log-policy.json
-  out_file_location: /etc/nginx/
+  out_file_location: /etc/app_protect/conf/
 # possible values: all, illegal, blocked
 nginx_app_protect_log_policy_filter_request_type: all
 
@@ -95,7 +95,7 @@ nginx_app_protect_conf_template_enable: false
 nginx_app_protect_conf_template:
   template_file: nginx.conf.j2
   out_file_name: nginx.conf
-  out_file_location: /etc/nginx/
+  out_file_location: /etc/app_protect/conf/
 nginx_app_protect_demo_workload_protocol: http://
 nginx_app_protect_demo_workload_host: 10.1.1.1:8080
 nginx_app_protect_log_policy_syslog_target: 127.0.0.1:514  # DEPRECATED -- use nginx_app_protect_log_policy_target instead
@@ -104,9 +104,9 @@ nginx_app_protect_log_policy_target: "syslog:server={{ nginx_app_protect_log_pol
 # Copy local NGINX App Protect security policy to host
 nginx_app_protect_security_policy_file_enable: false
 nginx_app_protect_security_policy_file_src: files/config/security-policy.json
-nginx_app_protect_security_policy_file_dest: /etc/nginx/security-policy.json
+nginx_app_protect_security_policy_file_dest: /etc/app_protect/conf/security-policy.json
 
 # Copy local NGINX App Protect log policy to host
 nginx_app_protect_log_policy_file_enable: false
 nginx_app_protect_log_policy_file_src: files/config/log-policy.json
-nginx_app_protect_log_policy_file_dest: /etc/nginx/log-policy.json
+nginx_app_protect_log_policy_file_dest: /etc/app_protect/conf/log-policy.json

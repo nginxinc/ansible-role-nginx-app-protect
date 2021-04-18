@@ -6,6 +6,10 @@ ENHANCEMENTS:
 
 Update Ansible Lint to `5.0.7`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
 
+BREAKING CHANGES:
+
+Changing the default policy directory from `/etc/nginx` to `/etc/app_protect/conf` to align with this change introduced in App Protect 3.2.
+
 ## 0.4.3 (April 6, 2020)
 
 FEATURES:
