@@ -40,10 +40,6 @@ jobs:
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 
-      - name: Uninstall Ansible community distribution (temporary)
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: pip3 uninstall -y ansible
-
       - name: Run Molecule tests
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: molecule test -s ${{ matrix.scenario }}
