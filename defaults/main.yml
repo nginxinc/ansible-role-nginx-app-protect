@@ -95,7 +95,7 @@ nginx_app_protect_conf_template_enable: false
 nginx_app_protect_conf_template:
   template_file: nginx.conf.j2
   out_file_name: nginx.conf
-  out_file_location: /etc/app_protect/conf/
+  out_file_location: /etc/nginx/
 nginx_app_protect_demo_workload_protocol: http://
 nginx_app_protect_demo_workload_host: 10.1.1.1:8080
 nginx_app_protect_log_policy_syslog_target: 127.0.0.1:514  # DEPRECATED -- use nginx_app_protect_log_policy_target instead
