@@ -26,7 +26,7 @@ FEATURES:
     ---
     collections:
       - name: community.general
-        version: 2.3.0
+        version: 3.0.0
       - name: ansible.posix
         version: 1.2.0
     ```
