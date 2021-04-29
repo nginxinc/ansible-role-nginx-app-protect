@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.4.4 (Unreleased)
+## 0.5.0 (Unreleased)
+
+FEATURES:
+
+Implement Release Drafter.
 
 ENHANCEMENTS:
 
@@ -9,6 +13,10 @@ ENHANCEMENTS:
 *   Update the Ansible `community.general` collection to `2.5.1` and `community.docker` collection to `1.5.0`.
 
 ## 0.4.3 (April 6, 2020)
+
+BREAKING CHANGES:
+
+The `nginx_app_protect_version` variable has been removed, as it cannot be implemented fully on all platforms.
 
 FEATURES:
 
@@ -39,10 +47,6 @@ ENHANCEMENTS:
 *   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
 
-BREAKING CHANGES:
-
-The `nginx_app_protect_version` variable has been removed, as it cannot be implemented fully on all platforms.
-
 KNOWN ISSUES:
 
 Service manager support is not included in NGINX App Protect for Alpine. When using this role to install NGINX App Protect on Alpine, you will need to start the NGINX App Protect processes then reload NGINX Plus yourself in order for App Protect to function. You can use commands similar to what are contained in the `entrypoint.sh` script in the [NGINX App Protect Administration Guide](https://docs.nginx.com/nginx-app-protect/admin-guide/install/#docker-deployment-instructions) to accomplish this.
@@ -67,7 +71,7 @@ Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Di
 
 ## 0.4.0 (November 16, 2020)
 
-DEPRECATION WARNING:
+DEPRECATION WARNINGS:
 
 The ability to dynamically create App Protect security and log policies via Jinja2 templates will be removed in a future release, as they weren't used much due to relative inflexibility. The `nginx_app_protect_security_policy_file_enable`, `nginx_app_protect_security_policy_file_*`, `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file_*` variables should be used instead of the `nginx_app_protect_*_policy_template*` variables. These new variables have been introduced in this release.
 
