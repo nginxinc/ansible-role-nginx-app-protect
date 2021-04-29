@@ -22,17 +22,18 @@ Don't know how something works? Curious if the role can achieve your desired fun
 
 ## Getting Started
 
-Follow our [Installation Guide](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/README.md#Installation) to install Ansible and Molecule and get ready to use the NGINX Ansible role.
+Follow our [Installation Guide](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/README.md#Installation) to install Ansible and Molecule and get ready to use the NGINX App Protect Ansible role.
 
 ### Project Structure
 
-*   The NGINX Ansible role is written in `yaml` and supports NGINX App Protect.
+*   The NGINX App Protect Ansible role is written in `yaml` and supports NGINX App Protect.
 *   The project follows the standard [Ansible role directory structure](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
-    *   The main code is found in `tasks/`
-    *   The main variables can be found in `defaults/main.yml`
-    *   Configuration templates for NGINX Plus and NGINX App Protect can be found in `templates/`
-    *   [Molecule](https://molecule.readthedocs.io/) tests can be found in `molecule/`.
-    *   CI/CD is done via Travis using `.travis.yml` deployment yaml files
+    *   The main code is found in [`tasks/`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/tasks/).
+    *   Variables can be found in [`defaults/main/`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/defaults/main/).
+    *   "Constant" variables can be found in [`vars/main.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/vars/main.yml).
+    *   Configuration templates for NGINX can be found in [`templates/`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/templates/).
+    *   [Molecule](https://molecule.readthedocs.io/) tests can be found in [`molecule/`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/).
+    *   CI/CD is done via GitHub actions using the workflow files found in [`.github/workflows/`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/.github/workflows/).
 
 ## Contributing
 
@@ -46,8 +47,8 @@ To suggest an enhancement, please create an issue on GitHub with the label `enha
 
 ### Open a Pull Request
 
-*   Fork the repo, create a branch, submit a PR when your changes are **tested** (ideally using Molecule) and ready for review
-*   Fill in [our pull request template](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/.github/PULL_REQUEST_TEMPLATE.md)
+*   Fork the repo, create a branch, implement your changes, add any relevant Molecule tests, submit a PR when your changes are **tested** (using Molecule) and ready for review.
+*   Fill in [our pull request template](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/.github/pull_request_template.md).
 
 Note: if you’d like to implement a new feature, please consider creating a feature request issue first to start a discussion about the feature.
 
@@ -56,7 +57,7 @@ Note: if you’d like to implement a new feature, please consider creating a fea
 ### Ansible Guidelines
 
 *   Run `molecule lint` over your code to automatically resolve a lot of `yaml` and Ansible style issues.
-*   Run `molecule test --all` on your code before you submit a PR to catch any potential issues.
+*   Run `molecule test` on your code before you submit a PR to catch any potential issues. If you are testing a specific molecule scenario, run `molecule test -s <scenario>`. You will need to procure an NGINX App Protect license (check out the [NGINX Plus developer license FAQ](https://www.nginx.com/developer-license-faqs/) to find out how to request one).
 *   Follow these guides on some good practices for Ansible:
     *   <https://www.ansible.com/blog/ansible-best-practices-essentials>
     *   <https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html>
