@@ -12,11 +12,18 @@ ENHANCEMENTS:
 *   Update Ansible base to `2.10.8`, Ansible Lint to `5.0.7`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
 *   Update the Ansible `community.general` collection to `2.5.1` and `community.docker` collection to `1.5.0`.
 
+BREAKING CHANGES:
+
+*   The ability to create an NGINX config including some basic App Protect directives will be removed in the 0.6.0 release. Please instead use the [NGINX config role](https://github.com/nginxinc/ansible-role-nginx-config) for this (and much more) functionality. This will include the removal of the following variables: `nginx_app_protect_conf_template_enable`, `nginx_app_protect_conf_template`, `nginx_app_protect_demo_workload_protocol`, `nginx_app_protect_demo_workload_host`, `nginx_app_protect_log_policy_syslog_target`, `nginx_app_protect_log_policy_target`.
+
+*   The ability to dynamically create App Protect security and log policies via Jinja2 templates will be removed in the 0.6.0 release due to relative inflexibility. The `nginx_app_protect_security_policy_file_enable`, `nginx_app_protect_security_policy_file_*`, `nginx_app_protect_log_policy_file_enable` and `nginx_app_protect_log_policy_file_*` variables should be used instead of the following variables which are to be removed: `nginx_app_protect_security_policy_template_enable`, `nginx_app_protect_security_policy_template`, `nginx_app_protect_security_policy_enforcement_mode`, `nginx_app_protect_log_policy_template_enable`, `nginx_app_protect_log_policy_template`, `nginx_app_protect_log_policy_filter_request_type`.
+
 ## 0.4.3 (April 6, 2020)
 
 BREAKING CHANGES:
 
 The `nginx_app_protect_version` variable has been removed, as it cannot be implemented fully on all platforms.
+
 
 FEATURES:
 
