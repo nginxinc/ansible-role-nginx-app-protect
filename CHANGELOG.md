@@ -2,7 +2,7 @@
 
 ## 0.5.0 (Unreleased)
 
-BREAKING CHANGES:
+DEPRECATION WARNINGS:
 
 *   **The ability to create an NGINX config including some basic App Protect directives will be removed in the upcoming `0.6.0` release at some stage after June 2021.** Please instead use the [NGINX config role](https://github.com/nginxinc/ansible-role-nginx-config) for this (and much more) functionality. This will include the removal of the following variables: `nginx_app_protect_conf_template_enable`, `nginx_app_protect_conf_template`, `nginx_app_protect_demo_workload_protocol`, `nginx_app_protect_demo_workload_host`, `nginx_app_protect_log_policy_syslog_target`, `nginx_app_protect_log_policy_target`.
 
