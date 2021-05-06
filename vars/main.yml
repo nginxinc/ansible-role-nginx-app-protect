@@ -41,11 +41,11 @@ nginx_app_protect_security_updates_default_signing_key_pgp: https://cs.nginx.com
 nginx_app_protect_security_updates_default_signing_key_rsa_pub: https://cs.nginx.com/static/keys/app-protect-security-updates.rsa.pub
 
 # Default NGINX App Protect repositories
-nginx_app_protect_default_repository_alpine: "https://plus-pkgs.nginx.com/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
-nginx_app_protect_default_repository_debian: "deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
-nginx_app_protect_default_repository_redhat: "https://plus-pkgs.nginx.com/centos/{{ ansible_distribution_major_version }}/$basearch/"
+nginx_app_protect_default_repository_alpine: "https://pkgs.nginx.com/app-protect/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
+nginx_app_protect_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/app-protect/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
+nginx_app_protect_default_repository_redhat: "https://pkgs.nginx.com/app-protect/centos/{{ ansible_distribution_major_version }}/$basearch/"
 
 # Default NGINX App Protect Security Updates repositories
-nginx_app_protect_security_updates_default_repository_alpine: "https://app-protect-security-updates.nginx.com/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
-nginx_app_protect_security_updates_default_repository_debian: "deb [arch=amd64] https://app-protect-security-updates.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
-nginx_app_protect_security_updates_default_repository_redhat: "https://app-protect-security-updates.nginx.com/centos/{{ ansible_distribution_major_version }}/$basearch/"
+nginx_app_protect_security_updates_default_repository_alpine: "https://pkgs.nginx.com/app-protect-security-updates/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
+nginx_app_protect_security_updates_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/app-protect-security-updates/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
+nginx_app_protect_security_updates_default_repository_redhat: "https://pkgs.nginx.com/app-protect-security-updates/centos/{{ ansible_distribution_major_version }}/$basearch/"
