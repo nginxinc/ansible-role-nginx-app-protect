@@ -1,7 +1,20 @@
 ---
-- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect license
+
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license
   blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
+    create: yes
+    block: |
+      Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Peer "true";
+      Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Host "true";
+      Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
+      Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
+    state: "{{ nginx_license_status | default ('present') }}"
+    mode: 0444
+
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect license
+  blockinfile:
+    path: /etc/apt/apt.conf.d/90app-protect
     create: true
     block: |
       Acquire::https::{{ (nginx_app_protect_repository | default(nginx_app_protect_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Peer "true";
@@ -24,6 +37,14 @@
     mode: 0444
   when: nginx_app_protect_install_signatures | bool
         or nginx_app_protect_install_threat_campaigns | bool
+
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
+  apt_repository:
+    repo: "{{ nginx_plus_repository | default(nginx_plus_default_repository_debian) }}"
+    filename: nginx-plus
+    mode: 0644
+    update_cache: false
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
   apt_repository:
