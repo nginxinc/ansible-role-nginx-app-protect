@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.0 (Unreleased)
+## 0.5.0 (May 12, 2020)
 
 BREAKING CHANGES:
 
