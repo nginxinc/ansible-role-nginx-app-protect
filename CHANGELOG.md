@@ -4,7 +4,7 @@
 
 BREAKING CHANGES:
 
-*   The NGINX App Protect repository has been updated. This might cause some issues when running the role on an instance that already has NGINX Plus or NGINX App Protect installed. **Starting with NGINX Plus R25, you will need to install NGINX Plus using release `0.5.0`. If you are trying to install R23, please use release `0.4.3`. NGINX Plus R24 should work with both release `0.4.3` and `0.5.0`.**
+The NGINX App Protect repository has been updated. This might cause some issues when running the role on an instance that already has NGINX Plus or NGINX App Protect installed. **Starting with NGINX Plus R25, you will need to install NGINX Plus using release `0.5.0`. If you are trying to install R23, please use release `0.4.3`. NGINX Plus R24 should work with both release `0.4.3` and `0.5.0`.**
 
 DEPRECATION WARNINGS:
 
@@ -20,7 +20,7 @@ ENHANCEMENTS:
 
 *   Changing the default policy directory from `/etc/nginx` to `/etc/app_protect/conf` to align with this change introduced in App Protect 3.2.
 *   Update Ansible base to `2.10.8`, Ansible Lint to `5.0.7`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
-*   Update the Ansible `community.general` collection to `2.5.1` and `community.docker` collection to `1.5.0`.
+*   Update the Ansible `community.general` collection to `3.0.2` and `community.docker` collection to `1.6.0`.
 
 ## 0.4.3 (April 6, 2020)
 
