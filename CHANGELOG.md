@@ -2,6 +2,10 @@
 
 ## 0.5.0 (Unreleased)
 
+BREAKING CHANGES:
+
+*   The NGINX App Protect repository has been updated. This might cause some issues when running the role on an instance that already has NGINX Plus or NGINX App Protect installed. **Starting with NGINX Plus R25, you will need to install NGINX Plus using release `0.5.0`. If you are trying to install R23, please use release `0.4.3`. NGINX Plus R24 should work with both release `0.4.3` and `0.5.0`.**
+
 DEPRECATION WARNINGS:
 
 *   **The ability to create an NGINX config including some basic App Protect directives will be removed in the upcoming `0.6.0` release at some stage after June 2021.** Please instead use the [NGINX config role](https://github.com/nginxinc/ansible-role-nginx-config) for this (and much more) functionality. This will include the removal of the following variables: `nginx_app_protect_conf_template_enable`, `nginx_app_protect_conf_template`, `nginx_app_protect_demo_workload_protocol`, `nginx_app_protect_demo_workload_host`, `nginx_app_protect_log_policy_syslog_target`, `nginx_app_protect_log_policy_target`.

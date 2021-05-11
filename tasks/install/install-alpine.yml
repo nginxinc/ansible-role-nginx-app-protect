@@ -1,4 +1,11 @@
 ---
+- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
+  lineinfile:
+    path: /etc/apk/repositories
+    insertafter: EOF
+    line: "{{ nginx_plus_repository | default(nginx_plus_default_repository_alpine) }}"
+    state: "{{ nginx_license_status | default ('present') }}"
+
 - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
   lineinfile:
     path: /etc/apk/repositories
