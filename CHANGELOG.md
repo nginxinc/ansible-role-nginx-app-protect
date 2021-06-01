@@ -14,20 +14,22 @@ DEPRECATION WARNINGS:
 
 FEATURES:
 
-Implement Release Drafter.
+*   Implement Release Drafter.
+*   Add warning re having to install NGINX Plus beforehand on Alpine distros if NGINX Plus releases a security patch.
 
 ENHANCEMENTS:
 
 *   Changing the default policy directory from `/etc/nginx` to `/etc/app_protect/conf` to align with this change introduced in App Protect 3.2.
 *   Update Ansible base to `2.10.8`, Ansible Lint to `5.0.7`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
 *   Update the Ansible `community.general` collection to `3.0.2` and `community.docker` collection to `1.6.0`.
+*   Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
+*   Update GitHub actions to add a workflow dispatch option.
 
 ## 0.4.3 (April 6, 2020)
 
 BREAKING CHANGES:
 
 The `nginx_app_protect_version` variable has been removed, as it cannot be implemented fully on all platforms.
-
 
 FEATURES:
 

@@ -14,7 +14,7 @@ This role installs and configures NGINX App Protect (WAF) for NGINX Plus on your
 
 ### Ansible
 
-*   This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible base (bigger than `2.10`) and Ansible (bigger than `2.9.10`).
+*   This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.11`) and Ansible (above `2.9.10`).
 *   When using Ansible base, you will also need to install the following collections:
     ```yaml
     ---
@@ -69,6 +69,8 @@ Ubuntu:
   - 18.04
   - 20.04
 ```
+
+**Note:** Due to a packaging limitation in NGINX App Protect on Alpine, it may be required to explicitly install NGINX Plus on the instance **before** using the NGINX App Protect role if a hotfix version of NGINX Plus has been published. It is recommended to use the [NGINX Core](https://galaxy.ansible.com/nginxinc/nginx_core) Ansible role for this purpose.
 
 ## Role Variables
 
