@@ -3,7 +3,7 @@
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license
   blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
-    create: yes
+    create: true
     block: |
       Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Peer "true";
       Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Host "true";
