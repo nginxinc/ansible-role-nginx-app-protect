@@ -6,6 +6,7 @@ ENHANCEMENTS:
 
 *   Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
 *   Update GitHub actions to add a workflow dispatch option.
+*   Update the Ansible `community.general` collection to `3.1.0` and `community.docker` collection to `1.6.1`.
 
 ## 0.5.0 (May 12, 2020)
 
