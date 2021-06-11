@@ -45,6 +45,7 @@
     mode: 0644
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
+  when: nginx_app_protect_manage_repo | bool
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
   apt_repository:
@@ -53,6 +54,7 @@
     mode: 0644
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
+  when: nginx_app_protect_manage_repo | bool
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates repository
   apt_repository:
@@ -61,8 +63,9 @@
     mode: 0644
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
-  when: nginx_app_protect_install_signatures | bool
-        or nginx_app_protect_install_threat_campaigns | bool
+  when:
+    - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
+    - nginx_app_protect_manage_repo | bool
 
 - name: (Debian/Ubuntu) Install NGINX App Protect
   apt:
