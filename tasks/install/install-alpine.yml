@@ -5,6 +5,7 @@
     insertafter: EOF
     line: "{{ nginx_plus_repository | default(nginx_plus_default_repository_alpine) }}"
     state: "{{ nginx_license_status | default ('present') }}"
+  when: nginx_app_protect_manage_repo | bool
 
 - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
   lineinfile:
@@ -12,6 +13,7 @@
     insertafter: EOF
     line: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_alpine) }}"
     state: "{{ nginx_license_status | default ('present') }}"
+  when: nginx_app_protect_manage_repo | bool
 
 - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates repository
   lineinfile:
@@ -19,8 +21,9 @@
     insertafter: EOF
     line: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_alpine) }}"
     state: "{{ nginx_license_status | default ('present') }}"
-  when: nginx_app_protect_install_signatures | bool
-        or nginx_app_protect_install_threat_campaigns | bool
+  when:
+    - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
+    - nginx_app_protect_manage_repo | bool
 
 - name: (Alpine Linux) Install NGINX App Protect
   apk:

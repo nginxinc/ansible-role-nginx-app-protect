@@ -2,6 +2,10 @@
 
 ## 0.5.1 (Unreleased)
 
+FEATURES:
+
+Add a `nginx_app_protect_manage_repo` feature flag which can be used to disable NGINX App Protect repo management by this role.
+
 ENHANCEMENTS:
 
 *   Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.

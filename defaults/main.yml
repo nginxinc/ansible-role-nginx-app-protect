@@ -35,6 +35,12 @@ nginx_app_protect_install_threat_campaigns: true
 #   nginx_plus: https://cs.nginx.com/static/keys/nginx_signing.key
 #   security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
 
+# Specify whether or not you want to manage the NGINX App Protect repositories.
+# Using 'true' will manage NGINX App Protect repositories.
+# Using 'false' will not manage the NGINX App Protect repositories, allowing them to be managed through other means.
+# Default is true
+nginx_app_protect_manage_repo: true
+
 # (Optional) Specify repository for NGINX Plus.
 # Defaults are the official NGINX repositories.
 # nginx_plus_repository: deb [arch=amd64] https://pkgs.nginx.com/plus/debian buster nginx-plus
