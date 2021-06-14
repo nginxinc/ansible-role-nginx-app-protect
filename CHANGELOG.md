@@ -6,6 +6,19 @@ FEATURES:
 
 *   Add support for NGINX App Protect DoS (Denial of Service) product
 
+## 0.5.1 (Unreleased)
+
+FEATURES:
+
+Add a `nginx_app_protect_manage_repo` feature flag which can be used to disable NGINX App Protect repo management by this role.
+
+ENHANCEMENTS:
+
+*   Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
+*   Update GitHub actions to add a workflow dispatch option.
+*   Update the Ansible `community.general` collection to `3.1.0` and `community.docker` collection to `1.6.1`.
+*   Replace "yes"/"no" boolean values with "true"/"false" to comply with YAML spec `1.2`.
+*   Update `nginx` role requirement in Molecule tests to `0.20.0`.
 
 ## 0.5.0 (May 12, 2020)
 
@@ -27,10 +40,8 @@ FEATURES:
 ENHANCEMENTS:
 
 *   Changing the default policy directory from `/etc/nginx` to `/etc/app_protect/conf` to align with this change introduced in App Protect 3.2.
-*   Update Ansible base to `2.10.8`, Ansible Lint to `5.0.7`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
+*   Update Ansible base to `2.10.9`, Ansible Lint to `5.0.8`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
 *   Update the Ansible `community.general` collection to `3.0.2` and `community.docker` collection to `1.6.0`.
-*   Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
-*   Update GitHub actions to add a workflow dispatch option.
 
 ## 0.4.3 (April 6, 2020)
 

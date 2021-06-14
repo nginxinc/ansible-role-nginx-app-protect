@@ -20,6 +20,7 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
+  when: nginx_app_protect_manage_repo | bool
 
 - name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
   yum_repository:
@@ -31,8 +32,9 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
-  when: nginx_app_protect_install_signatures | bool
-        or nginx_app_protect_install_threat_campaigns | bool
+  when:
+    - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
+    - nginx_app_protect_manage_repo | bool
 
 - name: (CentOS/RHEL) Install NGINX App Protect WAF
   yum:
