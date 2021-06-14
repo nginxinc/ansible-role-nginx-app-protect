@@ -1,0 +1,30 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if NGINX Plus is installed
+      package:
+        name: nginx-plus
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+      when: ansible_os_family != "Alpine"
+
+    - name: Check if NGINX App Protect DoS is installed
+      package:
+        name: app-protect-dos
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX service is running
+      service:
+        name: nginx
+        state: started
+        enabled: true
+      check_mode: true
+      register: service
+      failed_when: (service is changed) or (service is failed)
+      when: ansible_os_family != "Alpine"

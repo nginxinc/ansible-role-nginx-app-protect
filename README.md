@@ -4,9 +4,9 @@
 
 # 👾 *Help make the NGINX App Protect Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 
-# NGINX App Protect Ansible Role <img src="images/nap-logo.png" width="30">
+# NGINX App Protect WAF and DoS Ansible Role <img src="images/nap-logo.png" width="30">
 
-This role installs and configures NGINX App Protect (WAF) for NGINX Plus on your target host.
+This role installs and configures NGINX App Protect WAF or DoS for NGINX Plus on your target host.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
@@ -65,6 +65,7 @@ RHEL:
   - 7.4+
 Debian:
   - 9
+  - 10
 Ubuntu:
   - 18.04
   - 20.04
@@ -100,7 +101,7 @@ A working functional playbook example can be found in the **`molecule/default/`*
 
 ## Other NGINX Ansible Collections and Roles
 
-You can find the Ansible NGINX Core collection of roles to install and configure NGINX Open Source, NGINX Plus, and NGINX App Protect [here](https://github.com/nginxinc/ansible-collection-nginx).
+You can find the Ansible NGINX Core collection of roles to install and configure NGINX Open Source, NGINX Plus, and NGINX App Protect WAF and DoS products [here](https://github.com/nginxinc/ansible-collection-nginx).
 
 You can find the Ansible NGINX role to install NGINX [here](https://github.com/nginxinc/ansible-role-nginx).
 

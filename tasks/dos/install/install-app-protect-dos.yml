@@ -1,6 +1,6 @@
 ---
-- name: Install NGINX App Protect and security packages
-  include_tasks: "{{ role_path }}/tasks/install/install-{{ ansible_os_family | lower }}.yml"
+- name: Install NGINX App Protect DoS
+  include_tasks: "{{ role_path }}/tasks/dos/install/install-{{ ansible_os_family | lower }}.yml"
 
 - name: Modify NGINX Plus service
   block:

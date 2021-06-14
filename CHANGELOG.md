@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0 (Unreleased)
+
+FEATURES:
+
+*   Add support for NGINX App Protect DoS (Denial of Service) product
+
+
 ## 0.5.0 (May 12, 2020)
 
 BREAKING CHANGES:

@@ -10,7 +10,7 @@
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-- name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
+- name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
   yum_repository:
     name: nginx-app-protect
     baseurl: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_redhat) }}"
@@ -21,7 +21,7 @@
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-- name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates repository
+- name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
   yum_repository:
     name: nginx-app-protect-security-updates
     baseurl: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_redhat) }}"
@@ -34,7 +34,7 @@
   when: nginx_app_protect_install_signatures | bool
         or nginx_app_protect_install_threat_campaigns | bool
 
-- name: (CentOS/RHEL) Install NGINX App Protect
+- name: (CentOS/RHEL) Install NGINX App Protect WAF
   yum:
     name: "app-protect"
     state: "{{ nginx_app_protect_state }}"
@@ -44,7 +44,7 @@
   when: nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (CentOS/RHEL) Install NGINX App Protect signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
+- name: (CentOS/RHEL) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   yum:
     name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
@@ -56,7 +56,7 @@
     - nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (CentOS/RHEL) Install NGINX App Protect threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
+- name: (CentOS/RHEL) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
   yum:
     name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"

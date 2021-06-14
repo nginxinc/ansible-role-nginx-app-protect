@@ -34,5 +34,6 @@ galaxy_info:
     - web
     - server
     - development
+    - dos
 
 dependencies: []

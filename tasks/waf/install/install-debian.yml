@@ -12,7 +12,7 @@
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0444
 
-- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect license
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF license
   blockinfile:
     path: /etc/apt/apt.conf.d/90app-protect
     create: true
@@ -24,7 +24,7 @@
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
     mode: 0444
 
-- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates license
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates license
   blockinfile:
     path: /etc/apt/apt.conf.d/90app-protect-security-updates
     create: true
@@ -46,7 +46,7 @@
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
   apt_repository:
     repo: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_debian) }}"
     filename: nginx-app-protect
@@ -54,7 +54,7 @@
     update_cache: false
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates repository
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
   apt_repository:
     repo: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_debian) }}"
     filename: app-protect-security-updates
@@ -64,7 +64,7 @@
   when: nginx_app_protect_install_signatures | bool
         or nginx_app_protect_install_threat_campaigns | bool
 
-- name: (Debian/Ubuntu) Install NGINX App Protect
+- name: (Debian/Ubuntu) Install NGINX App Protect WAF
   apt:
     name: "app-protect"
     state: "{{ nginx_app_protect_state }}"
@@ -73,7 +73,7 @@
   when: nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (Debian/Ubuntu) Install NGINX App Protect signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
+- name: (Debian/Ubuntu) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   apt:
     name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
@@ -84,7 +84,7 @@
     - nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (Debian/Ubuntu) Install NGINX App Protect threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
+- name: (Debian/Ubuntu) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
   apt:
     name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"

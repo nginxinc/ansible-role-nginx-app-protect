@@ -6,14 +6,14 @@
     line: "{{ nginx_plus_repository | default(nginx_plus_default_repository_alpine) }}"
     state: "{{ nginx_license_status | default ('present') }}"
 
-- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect repository
+- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
   lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF
     line: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_alpine) }}"
     state: "{{ nginx_license_status | default ('present') }}"
 
-- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect security updates repository
+- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
   lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF
@@ -31,7 +31,7 @@
   when: nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (Alpine Linux) Install NGINX App Protect signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
+- name: (Alpine Linux) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   apk:
     name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"
@@ -42,7 +42,7 @@
     - nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (Alpine Linux) Install NGINX App Protect threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
+- name: (Alpine Linux) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
   apk:
     name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
     state: "{{ nginx_app_protect_state }}"

@@ -45,12 +45,16 @@ nginx_plus_default_repository_alpine: "https://pkgs.nginx.com/plus/alpine/v{{ an
 nginx_plus_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
 nginx_plus_default_repository_redhat: "https://pkgs.nginx.com/plus/centos/{{ ansible_distribution_major_version }}/$basearch/"
 
-# Default NGINX App Protect repositories
+# Default NGINX App Protect WAF repositories
 nginx_app_protect_default_repository_alpine: "https://pkgs.nginx.com/app-protect/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
 nginx_app_protect_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/app-protect/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
 nginx_app_protect_default_repository_redhat: "https://pkgs.nginx.com/app-protect/centos/{{ ansible_distribution_major_version }}/$basearch/"
 
-# Default NGINX App Protect Security Updates repositories
+# Default NGINX App Protect WAF Security Updates repositories
 nginx_app_protect_security_updates_default_repository_alpine: "https://pkgs.nginx.com/app-protect-security-updates/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
 nginx_app_protect_security_updates_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/app-protect-security-updates/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
 nginx_app_protect_security_updates_default_repository_redhat: "https://pkgs.nginx.com/app-protect-security-updates/centos/{{ ansible_distribution_major_version }}/$basearch/"
+
+# Default NGINX App Protect DoS repositories
+nginx_app_protect_dos_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/app-protect-dos/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
+nginx_app_protect_dos_default_repository_redhat: "https://pkgs.nginx.com/app-protect-dos/centos/{{ ansible_distribution_major_version }}/$basearch/"
