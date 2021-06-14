@@ -9,7 +9,7 @@ ENHANCEMENTS:
 *   Update the Ansible `community.general` collection to `3.1.0` and `community.docker` collection to `1.6.1`.
 *   Replace "yes"/"no" boolean values with "true"/"false" to comply with YAML spec `1.2`.
 *   Update `nginx` role requirement in Molecule tests to `0.20.0`.
-*   Add a `nginx_app_protect_manage_repo` feature flag which can be used to disable Nginx App Protect repo management by this role.
+*   Add a `nginx_app_protect_manage_repo` feature flag which can be used to disable NGINX App Protect repo management by this role.
 
 ## 0.5.0 (May 12, 2020)
 
