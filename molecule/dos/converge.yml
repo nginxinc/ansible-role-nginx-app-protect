@@ -10,5 +10,4 @@
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
         nginx_app_protect_remove_license: false
-        nginx_app_protect_dos_default_repository_debian: "deb [arch=amd64] https://pkgs-test.nginx.com/nap-preview/napdos/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
-        nginx_app_protect_dos_default_repository_redhat: "https://pkgs-test.nginx.com/nap-preview/napdos/centos/{{ ansible_distribution_major_version }}/$basearch/"
+        nginx_app_protect_dos_repository: "deb [arch=amd64] https://pkgs-test.nginx.com/nap-preview/napdos/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
