@@ -1,4 +1,10 @@
 ---
+# Specify whether or not this role should install the NGINX App Protect WAF product.
+nginx_app_protect_waf_enable: true
+
+# Specify whether or not this role should install the NGINX App Protect DoS product.
+nginx_app_protect_dos_enable: false
+
 # Specify whether you want to maintain your version of NGINX App Protect WAF, upgrade to the latest version, or remove NGINX App Protect WAF.
 # Using 'present' will install the latest version of NGINX App Protect WAF on a fresh install.
 # Using 'latest' will upgrade NGINX App Protect WAF to the latest version on every playbook execution.

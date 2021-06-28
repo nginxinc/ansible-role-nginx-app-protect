@@ -82,10 +82,12 @@
 
     - name: Install NGINX App Protect WAF
       include_tasks: "{{ role_path }}/tasks/waf/install/install-app-protect-waf.yml"
+      when: nginx_app_protect_waf_enable | bool
       tags: nginx_app_protect_install_app_protect
 
     - name: Install NGINX App Protect DoS
       include_tasks: "{{ role_path }}/tasks/dos/install/install-app-protect-dos.yml"
+      when: nginx_app_protect_dos_enable | bool
       tags: nginx_app_protect_install_app_protect
 
     - name: Remove NGINX App Protect license

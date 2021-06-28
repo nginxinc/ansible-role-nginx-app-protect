@@ -11,7 +11,7 @@
       failed_when: (install is changed) or (install is failed)
       when: ansible_os_family != "Alpine"
 
-    - name: Check if NGINX App Protect is installed
+    - name: Check if NGINX App Protect WAF is installed
       package:
         name: app-protect
         state: present
@@ -19,7 +19,7 @@
       register: install
       failed_when: (install is changed) or (install is failed)
 
-    - name: Check if NGINX App Protect signatures is installed
+    - name: Check if NGINX App Protect WAF signatures is installed
       package:
         name: app-protect-attack-signatures
         state: present
@@ -27,7 +27,7 @@
       register: install
       failed_when: (install is changed) or (install is failed)
 
-    - name: Check if NGINX App Protect threat campaigns is installed
+    - name: Check if NGINX App Protect WAF threat campaigns is installed
       package:
         name: app-protect-threat-campaigns
         state: present
