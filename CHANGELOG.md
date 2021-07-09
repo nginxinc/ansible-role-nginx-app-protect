@@ -4,7 +4,7 @@
 
 FEATURES:
 
-*   Add support for NGINX App Protect DoS (Denial of Service) product
+*   Add support for NGINX App Protect DoS (Denial of Service) product. The `nginx_app_protect_dos_enable` variable must be set to `true` in order to install NGINX App Protect DoS.
 
 ## 0.5.1 (Unreleased)
 

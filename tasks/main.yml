@@ -1,23 +1,9 @@
 ---
-- name: Set supported_os when platform and major/minor version are in supported platforms dictionary
-  set_fact:
-    supported_os: true
-  when:
-    - ansible_distribution | lower in item.key
-    - ansible_distribution_version | regex_search('\\d+\\.?\\d+') in item.value
-  loop: "{{ query('dict', nginx_app_protect_linux_families) }}"
+- name: Check if OS is supported for NGINX App Protect WAF or DoS install
+  include_tasks: "{{ role_path }}/tasks/common/prerequisites/validate-supported-os.yml"
+  when: nginx_app_protect_state != "absent" or nginx_app_protect_dos_state != "absent"
 
-- name: Set supported_os to false if fact not defined
-  set_fact:
-    supported_os: false
-  when: supported_os is not defined
-
-- name: Abort if the OS / version combination is not supported
-  fail:
-    msg: NGINX App Protect is not supported on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }}
-  when: not supported_os
-
-- name: Check for conflicting config variables
+- name: Check for conflicting WAF config variables
   block:
     - name: Abort if there are conflicting security policy config variables
       fail:
@@ -83,12 +69,12 @@
     - name: Install NGINX App Protect WAF
       include_tasks: "{{ role_path }}/tasks/waf/install/install-app-protect-waf.yml"
       when: nginx_app_protect_waf_enable | bool
-      tags: nginx_app_protect_install_app_protect
+      tags: nginx_app_protect_install_app_protect_waf
 
     - name: Install NGINX App Protect DoS
       include_tasks: "{{ role_path }}/tasks/dos/install/install-app-protect-dos.yml"
       when: nginx_app_protect_dos_enable | bool
-      tags: nginx_app_protect_install_app_protect
+      tags: nginx_app_protect_install_app_protect_dos
 
     - name: Remove NGINX App Protect license
       include_tasks: "{{ role_path }}/tasks/common/install/remove-license.yml"

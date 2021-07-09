@@ -8,6 +8,8 @@
 
 This role installs and configures NGINX App Protect WAF or DoS for NGINX Plus on your target host.
 
+**Note:** By default, this role will install NGINX App Protect WAF. To install NGINX App Protect DoS, you need to set the `nginx_app_protect_dos_enable` variable to `true`.
+
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
 ## Requirements
@@ -56,7 +58,9 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx-app-protect.git` t
 
 ## Platforms
 
-The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list:
+### App Protect WAF
+
+The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect WAF:
 
 ```yaml
 CentOS:
@@ -72,6 +76,21 @@ Ubuntu:
 ```
 
 **Note:** Due to a packaging limitation in NGINX App Protect on Alpine, it may be required to explicitly install NGINX Plus on the instance **before** using the NGINX App Protect role if a hotfix version of NGINX Plus has been published. It is recommended to use the [NGINX Core](https://galaxy.ansible.com/nginxinc/nginx_core) Ansible role for this purpose.
+
+
+### App Protect DoS
+
+The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect DoS:
+
+```yaml
+CentOS:
+  - 7.4+
+Debian:
+  - 10
+Ubuntu:
+  - 18.04
+  - 20.04
+```
 
 ## Role Variables
 
