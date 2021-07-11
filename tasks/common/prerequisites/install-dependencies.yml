@@ -1,18 +1,26 @@
 ---
-- name: (Debian/Ubuntu) Install dependencies
+
+- name: (Alpine Linux) Install package dependencies
+  apk:
+    name: "{{ nginx_app_protect_alpine_dependencies }}"
+    update_cache: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: ansible_os_family == "Alpine"
+
+- name: (Debian/Ubuntu) Install package dependencies
   apt:
     name: "{{ nginx_app_protect_debian_dependencies }}"
     update_cache: true
   when: ansible_os_family == "Debian"
 
-- name: (CentOS) Install dependencies
+- name: (CentOS) Install package dependencies
   yum:
     name: "{{ nginx_app_protect_centos_dependencies }}"
   when: ansible_distribution == "CentOS"
 
 - name: (RHEL) Install dependencies
   block:
-    - name: (RHEL) Install packages
+    - name: (RHEL) Install package dependencies
       yum:
         name: "{{ nginx_app_protect_rhel_dependencies }}"
 
@@ -28,10 +36,28 @@
         state: "{{ nginx_app_protect_license_status | default ('present') }}"
       when: not nginx_app_protect_use_rhel_subscription_repos | bool
 
-    - name: (RHEL) Install dependencies from your RHEL subscription
+    - name: (RHEL) Install package dependencies from your RHEL subscription
       yum:
         name:
           - rhel-7-server-optional-rpms
           - rhel-7-server-rpms
       when: nginx_app_protect_use_rhel_subscription_repos | bool
   when: ansible_distribution == "RedHat"
+
+- name: (Amazon Linux) Install dependencies
+  block:
+    - name: (Amazon Linux) Enable amazon-linux-extras packages
+      command: "amazon-linux-extras enable {{ item }}"
+      changed_when: false
+      loop: "{{ nginx_app_protect_amazon_extras_packages }}"
+
+    - name: (Amazon Linux) Clean Yum Metadata
+      command: yum clean metadata
+      changed_when: false
+      args:
+        warn: false
+
+    - name: (Amazon Linux) Install package dependencies
+      yum:
+        name: "{{ nginx_app_protect_amazon_dependencies }}"
+  when: ansible_distribution == "Amazon"

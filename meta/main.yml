@@ -14,6 +14,9 @@ galaxy_info:
     - name: Alpine
       versions:
         - any
+    - name: Amazon
+      versions:
+        - any
     - name: EL
       versions:
         - 7
