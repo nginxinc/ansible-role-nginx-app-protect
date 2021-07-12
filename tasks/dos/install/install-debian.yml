@@ -1,0 +1,49 @@
+---
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license
+  blockinfile:
+    path: /etc/apt/apt.conf.d/90nginx
+    create: true
+    block: |
+      Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Peer "true";
+      Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Host "true";
+      Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
+      Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
+    state: "{{ nginx_license_status | default ('present') }}"
+    mode: 0444
+
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS license
+  blockinfile:
+    path: /etc/apt/apt.conf.d/90app-protect-dos
+    create: true
+    block: |
+      Acquire::https::{{ (nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Peer "true";
+      Acquire::https::{{ (nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Host "true";
+      Acquire::https::{{ (nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
+      Acquire::https::{{ (nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+    mode: 0444
+
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
+  apt_repository:
+    repo: "{{ nginx_plus_repository | default(nginx_plus_default_repository_debian) }}"
+    filename: nginx-plus
+    mode: 0644
+    update_cache: false
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS repository
+  apt_repository:
+    repo: "{{ nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian) }}"
+    filename: nginx-app-protect-dos
+    mode: 0644
+    update_cache: false
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
+
+- name: (Debian/Ubuntu) Install NGINX App Protect DoS
+  apt:
+    name: "app-protect-dos"
+    state: "{{ nginx_app_protect_dos_state }}"
+    update_cache: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_license_status is not defined
+  notify: (Handler - NGINX App Protect) Run NGINX

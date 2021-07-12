@@ -1,0 +1,6 @@
+---
+- name: Install NGINX App Protect WAF and security packages
+  include_tasks: "{{ role_path }}/tasks/waf/install/install-{{ ansible_os_family | lower }}.yml"
+
+- name: Modify NGINX Plus service
+  include_tasks: "{{ role_path }}/tasks/common/install/service-modification.yml"

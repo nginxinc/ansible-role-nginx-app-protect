@@ -8,21 +8,21 @@
         or nginx_app_protect_log_policy_template_enable | bool
         or nginx_app_protect_conf_template_enable | bool
 
-- name: Copy NGINX App Protect security policy file
+- name: Copy NGINX App Protect WAF security policy file
   copy:
     src: "{{ nginx_app_protect_security_policy_file_src }}"
     dest: "{{ nginx_app_protect_security_policy_file_dst }}"
     mode: 0644
   when: nginx_app_protect_security_policy_file_enable | bool
 
-- name: Copy NGINX App Protect log policy file
+- name: Copy NGINX App Protect WAF log policy file
   copy:
     src: "{{ nginx_app_protect_log_policy_file_src }}"
     dest: "{{ nginx_app_protect_log_policy_file_dst }}"
     mode: 0644
   when: nginx_app_protect_log_policy_file_enable | bool
 
-- name: Dynamically generate NGINX App Protect security policy file
+- name: Dynamically generate NGINX App Protect WAF security policy file
   template:
     src: "{{ nginx_app_protect_security_policy_template.template_file }}"
     dest: "{{ nginx_app_protect_security_policy_template.out_file_location }}{{ nginx_app_protect_security_policy_template.out_file_name }}"
@@ -31,7 +31,7 @@
   when: nginx_app_protect_security_policy_template_enable | bool
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: Dynamically generate NGINX App Protect log policy file
+- name: Dynamically generate NGINX App Protect WAF log policy file
   template:
     src: "{{ nginx_app_protect_log_policy_template.template_file }}"
     dest: "{{ nginx_app_protect_log_policy_template.out_file_location }}{{ nginx_app_protect_log_policy_template.out_file_name }}"
@@ -56,10 +56,10 @@
     mode: 0644
   when:
     - nginx_app_protect_conf_template_enable | bool
-    - nginx_app_protect_state != "absent"
+    - nginx_app_protect_waf_state != "absent"
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (DEPRECATED) Remove NGINX App Protect
+- name: (DEPRECATED) Remove NGINX App Protect WAF
   block:
     - name: (DEPRECATED) Comment out NGINX App Protect module reference in nginx.conf
       replace:
@@ -67,10 +67,10 @@
         regexp: '^([ \t]*load_module.*ngx_http_app_protect_module.so;)'
         replace: '# \1'
 
-    - name: (DEPRECATED) Comment out NGINX App Protect directives in nginx.conf
+    - name: (DEPRECATED) Comment out NGINX App Protect WAF directives in nginx.conf
       replace:
         path: /etc/nginx/nginx.conf
         regexp: '^([ \t]*app_protect_)'
         replace: '# \1'
       notify: (Handler - NGINX App Protect) Run NGINX
-  when: nginx_app_protect_state == "absent"
+  when: nginx_app_protect_waf_state == "absent"

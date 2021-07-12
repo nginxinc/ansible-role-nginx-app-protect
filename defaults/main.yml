@@ -1,31 +1,44 @@
 ---
-# Specify whether you want to maintain your version of NGINX App Protect, upgrade to the latest version, or remove NGINX App Protect.
-# Using 'present' will install the latest version of NGINX App Protect on a fresh install.
-# Using 'latest' will upgrade NGINX App Protect to the latest version on every playbook execution.
-# Using 'absent' will remove NGINX App Protect from your system.
-# Default is present.
-nginx_app_protect_state: present
+# Specify whether or not this role should install the NGINX App Protect WAF product.
+nginx_app_protect_waf_enable: true
 
-# If you have a RHEL subscription, NGINX App Protect's dependencies will use subscription repos.
+# Specify whether or not this role should install the NGINX App Protect DoS product.
+nginx_app_protect_dos_enable: false
+
+# Specify whether you want to maintain your version of NGINX App Protect WAF, upgrade to the latest version, or remove NGINX App Protect WAF.
+# Using 'present' will install the latest version of NGINX App Protect WAF on a fresh install.
+# Using 'latest' will upgrade NGINX App Protect WAF to the latest version on every playbook execution.
+# Using 'absent' will remove NGINX App Protect WAF from your system.
+# Default is present.
+nginx_app_protect_waf_state: present
+
+# Specify whether you want to maintain your version of NGINX App Protect DoS, upgrade to the latest version, or remove NGINX App Protect DoS.
+# Using 'present' will install the latest version of NGINX App Protect DoS on a fresh install.
+# Using 'latest' will upgrade NGINX App Protect DoS to the latest version on every playbook execution.
+# Using 'absent' will remove NGINX App Protect DoS from your system.
+# Default is present.
+nginx_app_protect_dos_state: present
+
+# If you have a RHEL subscription, NGINX App Protect WAF's dependencies will use subscription repos.
 # Otherwise, it will source packages from CentOS' repositories.
 # Default is false.
 nginx_app_protect_use_rhel_subscription_repos: false
 
-# The installation of NGINX App Protect includes a base signature set, which may be out of date.
+# The installation of NGINX App Protect WAF includes a base signature set, which may be out of date.
 # This option installs the latest NGINX App Protect signatures.
 # Default is true.
 nginx_app_protect_install_signatures: true
 
-# (Optional) Installs a specific version of the NGINX App Protect attack signatures package
+# (Optional) Installs a specific version of the NGINX App Protect WAF attack signatures package
 # Default is to install the latest release.
 # nginx_app_protect_signatures_version: "=2019.07.16-1" # <- Example value for Debian/Ubuntu
 
-# The installation of NGINX App Protect can include a page of frequently-updated, high-accuracy signatures called "threat campaigns".
-# This option installs the latest NGINX App Protect threat campaigns signatures.
+# The installation of NGINX App Protect WAF can include a page of frequently-updated, high-accuracy signatures called "threat campaigns".
+# This option installs the latest NGINX App Protect WAF threat campaigns signatures.
 # Default is true.
 nginx_app_protect_install_threat_campaigns: true
 
-# (Optional) Installs a specific version of the NGINX App Protect threat campaigns package
+# (Optional) Installs a specific version of the NGINX App Protect WAF threat campaigns package
 # Default is to install the latest release.
 # nginx_app_protect_threat_campaigns_version: "=2020.08.20-1" # <- Example value for Debian/Ubuntu
 
@@ -76,11 +89,11 @@ nginx_app_protect_start: true
 nginx_app_protect_service_modify: true
 nginx_app_protect_timeout: 180
 
-# Creates basic configuration files and enables NGINX App Protect on the target host
+# Creates basic configuration files and enables NGINX App Protect WAF on the target host
 nginx_app_protect_configure: false
 
 ## DEPRECATED -- Use nginx_app_protect_security_policy_enable and nginx_app_protect_security_policy_file_* variables instead
-# Create a basic NGINX App Protect security policy file based on a template
+# Create a basic NGINX App Protect WAF security policy file based on a template
 nginx_app_protect_security_policy_template_enable: true
 nginx_app_protect_security_policy_template:
   template_file: app-protect-security-policy.j2
@@ -90,7 +103,7 @@ nginx_app_protect_security_policy_template:
 nginx_app_protect_security_policy_enforcement_mode: transparent
 
 ## DEPRECATED -- Use nginx_app_protect_log_policy_file_enable and nginx_app_protect_log_policy_file_* variables instead
-# Create a basic NGINX App Protect log policy file based on a template
+# Create a basic NGINX App Protect WAF log policy file based on a template
 nginx_app_protect_log_policy_template_enable: true
 nginx_app_protect_log_policy_template:
   template_file: app-protect-log-policy.j2
@@ -100,7 +113,7 @@ nginx_app_protect_log_policy_template:
 nginx_app_protect_log_policy_filter_request_type: all
 
 ## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
-# Create a basic NGINX App Protect config file
+# Create a basic NGINX App Protect WAF config file
 nginx_app_protect_conf_template_enable: false
 nginx_app_protect_conf_template:
   template_file: nginx.conf.j2
@@ -111,12 +124,12 @@ nginx_app_protect_demo_workload_host: 10.1.1.1:8080
 nginx_app_protect_log_policy_syslog_target: 127.0.0.1:514  # DEPRECATED -- use nginx_app_protect_log_policy_target instead
 nginx_app_protect_log_policy_target: "syslog:server={{ nginx_app_protect_log_policy_syslog_target }}"
 
-# Copy local NGINX App Protect security policy to host
+# Copy local NGINX App Protect WAF security policy to host
 nginx_app_protect_security_policy_file_enable: false
 nginx_app_protect_security_policy_file_src: files/config/security-policy.json
 nginx_app_protect_security_policy_file_dest: /etc/app_protect/conf/security-policy.json
 
-# Copy local NGINX App Protect log policy to host
+# Copy local NGINX App Protect WAF log policy to host
 nginx_app_protect_log_policy_file_enable: false
 nginx_app_protect_log_policy_file_src: files/config/log-policy.json
 nginx_app_protect_log_policy_file_dest: /etc/app_protect/conf/log-policy.json

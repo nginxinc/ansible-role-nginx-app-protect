@@ -1,0 +1,14 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install NGINX App Protect DoS
+      include_role:
+        name: ansible-role-nginx-app-protect
+      vars:
+        nginx_app_protect_waf_enable: false
+        nginx_app_protect_dos_enable: true
+        nginx_app_protect_license:
+          certificate: license/nginx-repo.crt
+          key: license/nginx-repo.key
+        nginx_app_protect_remove_license: false
