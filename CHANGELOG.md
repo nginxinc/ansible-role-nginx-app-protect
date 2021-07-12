@@ -12,7 +12,7 @@ ENHANCEMENTS:
 
 *   Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
 *   Update GitHub actions to add a workflow dispatch option.
-*   Update the Ansible `community.general` collection to `3.1.0` and `community.docker` collection to `1.6.1`.
+*   Update the Ansible `community.general` collection to `3.3.2` and `community.docker` collection to `1.8.0`.
 *   Replace "yes"/"no" boolean values with "true"/"false" to comply with YAML spec `1.2`.
 *   Update `nginx` role requirement in Molecule tests to `0.20.0`.
 
