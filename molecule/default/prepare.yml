@@ -16,3 +16,19 @@
         dest: ../../files/license/nginx-repo.key
         force: false
         mode: 0444
+
+- name: Install NGINX Plus on Alpine
+  hosts: all
+  tasks:
+    - name: Set up NGINX Plus on Alpine for NAP 3.2/3.3 issue workaround (remove in versions > 3.3)
+      include_role:
+        name: nginxinc.nginx
+      vars:
+        nginx_enable: true
+        nginx_start: true
+        nginx_type: plus
+        nginx_remove_license: false
+        nginx_license:
+          certificate: ../../files/license/nginx-repo.crt
+          key: ../../files/license/nginx-repo.key
+      when: ansible_os_family == "Alpine"
