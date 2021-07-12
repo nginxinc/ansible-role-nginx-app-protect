@@ -1,10 +1,4 @@
 ---
-<<<<<<< HEAD:tasks/dos/install/install-app-protect-dos.yml
-- name: Install NGINX App Protect DoS
-  include_tasks: "{{ role_path }}/tasks/dos/install/install-{{ ansible_os_family | lower }}.yml"
-
-=======
->>>>>>> main:tasks/common/install/service-modification.yml
 - name: Modify NGINX Plus service
   block:
     - name: Create override for NGINX Plus service
