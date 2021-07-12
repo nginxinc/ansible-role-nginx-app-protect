@@ -10,7 +10,7 @@ nginx_app_protect_dos_enable: false
 # Using 'latest' will upgrade NGINX App Protect WAF to the latest version on every playbook execution.
 # Using 'absent' will remove NGINX App Protect WAF from your system.
 # Default is present.
-nginx_app_protect_state: present
+nginx_app_protect_waf_state: present
 
 # Specify whether you want to maintain your version of NGINX App Protect DoS, upgrade to the latest version, or remove NGINX App Protect DoS.
 # Using 'present' will install the latest version of NGINX App Protect DoS on a fresh install.

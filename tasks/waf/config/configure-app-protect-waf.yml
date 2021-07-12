@@ -56,7 +56,7 @@
     mode: 0644
   when:
     - nginx_app_protect_conf_template_enable | bool
-    - nginx_app_protect_state != "absent"
+    - nginx_app_protect_waf_state != "absent"
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (DEPRECATED) Remove NGINX App Protect WAF
@@ -73,4 +73,4 @@
         regexp: '^([ \t]*app_protect_)'
         replace: '# \1'
       notify: (Handler - NGINX App Protect) Run NGINX
-  when: nginx_app_protect_state == "absent"
+  when: nginx_app_protect_waf_state == "absent"

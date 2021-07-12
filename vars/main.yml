@@ -1,5 +1,5 @@
 ---
-# WAF platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
+# NGINX App Protect WAF platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
 nginx_app_protect_waf_linux_families:
   centos: [
     "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
@@ -37,6 +37,18 @@ nginx_app_protect_dos_linux_families:
 nginx_app_protect_alpine_dependencies: [
   "python3",
 ]
+
+# NGINX App Protect DoS platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
+nginx_app_protect_dos_linux_families:
+  centos: [
+    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
+  ]
+  debian: [
+    "10",
+  ]
+  ubuntu: [
+    "18.04", "20.04",
+  ]
 
 # Debian dependencies
 nginx_app_protect_debian_dependencies: [

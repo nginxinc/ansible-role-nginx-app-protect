@@ -6,12 +6,7 @@ FEATURES:
 
 *   Add support for NGINX App Protect DoS (Denial of Service) product. The `nginx_app_protect_dos_enable` variable must be set to `true` in order to install NGINX App Protect DoS.
 *   Add support for NGINX App Protect WAF on Amazon Linux 2 (requires NGINX App Protect 3.3).
-
-## 0.5.1 (Unreleased)
-
-FEATURES:
-
-Add a `nginx_app_protect_manage_repo` feature flag which can be used to disable NGINX App Protect repo management by this role.
+*   Add a `nginx_app_protect_manage_repo` feature flag which can be used to disable NGINX App Protect repo management by this role.
 
 ENHANCEMENTS:
 
