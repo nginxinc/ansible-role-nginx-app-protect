@@ -65,7 +65,7 @@ The NGINX App Protect Ansible role supports all platforms supported by [NGINX Pl
 ```yaml
 Alpine:
   - 3.10
-name: Amazon Linux 2
+Amazon Linux 2:
   - any
 CentOS:
   - 7.4+

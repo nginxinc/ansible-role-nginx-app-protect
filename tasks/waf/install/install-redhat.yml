@@ -1,8 +1,9 @@
 ---
-- name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
+- name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   yum_repository:
     name: nginx-plus
-    baseurl: "{{ nginx_plus_repository | default(nginx_plus_default_repository_redhat) }}"
+    baseurl: "{{ nginx_plus_repository |
+              default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     description: NGINX Plus repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
@@ -11,10 +12,11 @@
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
   when: nginx_app_protect_manage_repo | bool
 
-- name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
+- name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
   yum_repository:
     name: nginx-app-protect
-    baseurl: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_redhat) }}"
+    baseurl: "{{ nginx_app_protect_repository |
+              default(lookup('vars', 'nginx_app_protect_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     description: NGINX App Protect repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
@@ -23,10 +25,11 @@
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
   when: nginx_app_protect_manage_repo | bool
 
-- name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
+- name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
   yum_repository:
     name: nginx-app-protect-security-updates
-    baseurl: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_redhat) }}"
+    baseurl: "{{ nginx_app_protect_security_updates_repository |
+              default(lookup('vars', 'nginx_app_protect_security_updates_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     description: NGINX App Protect security updates repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
@@ -37,7 +40,7 @@
     - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
     - nginx_app_protect_manage_repo | bool
 
-- name: (CentOS/RHEL) Install NGINX App Protect WAF
+- name: (Amazon Linux/CentOS/RHEL) Install NGINX App Protect WAF
   yum:
     name: "app-protect"
     state: "{{ nginx_app_protect_waf_state }}"
@@ -47,7 +50,7 @@
   when: nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (CentOS/RHEL) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
+- name: (Amazon Linux/CentOS/RHEL) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   yum:
     name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
     state: "{{ nginx_app_protect_waf_state }}"
@@ -59,7 +62,7 @@
     - nginx_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (CentOS/RHEL) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
+- name: (Amazon Linux/CentOS/RHEL) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
   yum:
     name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
     state: "{{ nginx_app_protect_waf_state }}"

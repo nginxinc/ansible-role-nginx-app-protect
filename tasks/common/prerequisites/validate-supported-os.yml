@@ -6,7 +6,7 @@
         supported_os_waf: true
       when:
         - ansible_distribution | lower in item.key
-        - ansible_distribution_version | regex_search('\\d+\\.?\\d+') in item.value
+        - ansible_distribution_version | regex_search('\\d+\\.?\\d*') in item.value
       loop: "{{ query('dict', nginx_app_protect_waf_linux_families) }}"
 
     - name: (WAF) Set supported_os_waf to false if fact not defined

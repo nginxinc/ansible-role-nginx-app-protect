@@ -20,7 +20,7 @@
 - name: Install NGINX Plus on Alpine
   hosts: all
   tasks:
-    - name: Set up NGINX Plus on Alpine for NAP 3.2 issue workaround (remove in versions > 3.2)
+    - name: Set up NGINX Plus on Alpine for NAP 3.2/3.3 issue workaround (remove in versions > 3.3)
       include_role:
         name: nginxinc.nginx
       vars:

@@ -1,21 +1,24 @@
 ---
 # NGINX App Protect WAF platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
 nginx_app_protect_waf_linux_families:
+  alpine: [
+    "3.10",
+  ]
+  amazon: [
+    "2",
+  ]
+  debian: [
+    "9.0", "9.1", "9.2", "9.3", "9.4", "9.5", "9.6", "9.7", "9.8", "9.9", "9.10", "9.11", "9.12", "9.13",
+    "10",
+  ]
   centos: [
     "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
   ]
   redhat: [
     "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
   ]
-  debian: [
-    "9.0", "9.1", "9.2", "9.3", "9.4", "9.5", "9.6", "9.7", "9.8", "9.9", "9.10", "9.11", "9.12", "9.13",
-    "10",
-  ]
   ubuntu: [
     "18.04", "20.04",
-  ]
-  alpine: [
-    "3.10",
   ]
 
 # NGINX App Protect DoS platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
@@ -29,6 +32,11 @@ nginx_app_protect_dos_linux_families:
   ubuntu: [
     "18.04", "20.04",
   ]
+
+# Alpine Linux dependencies
+nginx_app_protect_alpine_dependencies: [
+  "python3",
+]
 
 # Debian dependencies
 nginx_app_protect_debian_dependencies: [
@@ -45,6 +53,16 @@ nginx_app_protect_rhel_dependencies: [
   "ca-certificates", "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm", "openssl",
 ]
 
+# Amazon Linux 2 dependencies
+nginx_app_protect_amazon_dependencies: [
+  "ca-certificates", "epel-release",
+]
+
+# Amazon Linux 2 extras
+nginx_app_protect_amazon_extras_packages: [
+  "epel", "selinux-ng",
+]
+
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
 # Default settings are the official NGINX signing key hosts.
 nginx_app_protect_default_signing_key_pgp: https://cs.nginx.com/static/keys/nginx_signing.key
@@ -56,16 +74,19 @@ nginx_app_protect_security_updates_default_signing_key_rsa_pub: https://cs.nginx
 nginx_plus_default_repository_alpine: "https://pkgs.nginx.com/plus/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
 nginx_plus_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
 nginx_plus_default_repository_redhat: "https://pkgs.nginx.com/plus/centos/{{ ansible_distribution_major_version }}/$basearch/"
+nginx_plus_default_repository_amazon: "https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch"
 
 # Default NGINX App Protect WAF repositories
 nginx_app_protect_default_repository_alpine: "https://pkgs.nginx.com/app-protect/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
 nginx_app_protect_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/app-protect/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
 nginx_app_protect_default_repository_redhat: "https://pkgs.nginx.com/app-protect/centos/{{ ansible_distribution_major_version }}/$basearch/"
+nginx_app_protect_default_repository_amazon: "https://pkgs.nginx.com/app-protect/centos/7/$basearch/"
 
 # Default NGINX App Protect WAF Security Updates repositories
 nginx_app_protect_security_updates_default_repository_alpine: "https://pkgs.nginx.com/app-protect-security-updates/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
 nginx_app_protect_security_updates_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/app-protect-security-updates/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
 nginx_app_protect_security_updates_default_repository_redhat: "https://pkgs.nginx.com/app-protect-security-updates/centos/{{ ansible_distribution_major_version }}/$basearch/"
+nginx_app_protect_security_updates_default_repository_amazon: "https://pkgs.nginx.com/app-protect-security-updates/centos/7/$basearch/"
 
 # Default NGINX App Protect DoS repositories
 nginx_app_protect_dos_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/app-protect-dos/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
