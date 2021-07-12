@@ -60,12 +60,10 @@ nginx_app_protect_centos_dependencies: [
   "ca-certificates", "epel-release", "openssl",
 ]
 
-
 # RHEL dependencies
 nginx_app_protect_rhel_dependencies: [
   "ca-certificates", "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm", "openssl",
 ]
-
 
 # Amazon Linux 2 dependencies
 nginx_app_protect_amazon_dependencies: [
