@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Daniel Edgar
-  description: Official Ansible role for NGINX App Protect
+  description: Official Ansible role for NGINX App Protect WAF and DoS
   role_name: nginx_app_protect
   namespace: nginxinc
   company: F5 Networks, Inc.
