@@ -58,11 +58,15 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx-app-protect.git` t
 
 ## Platforms
 
-### App Protect WAF
+### NGINX App Protect WAF
 
 The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect WAF:
 
 ```yaml
+Alpine:
+  - 3.10
+name: Amazon Linux 2
+  - any
 CentOS:
   - 7.4+
 RHEL:
@@ -78,7 +82,7 @@ Ubuntu:
 **Note:** Due to a packaging limitation in NGINX App Protect on Alpine, it may be required to explicitly install NGINX Plus on the instance **before** using the NGINX App Protect role if a hotfix version of NGINX Plus has been published. It is recommended to use the [NGINX Core](https://galaxy.ansible.com/nginxinc/nginx_core) Ansible role for this purpose.
 
 
-### App Protect DoS
+### NGINX App Protect DoS
 
 The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect DoS:
 

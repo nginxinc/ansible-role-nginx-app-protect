@@ -28,7 +28,7 @@
 - name: (Alpine Linux) Install NGINX App Protect
   apk:
     name: "app-protect"
-    state: "{{ nginx_app_protect_state }}"
+    state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
@@ -37,7 +37,7 @@
 - name: (Alpine Linux) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   apk:
     name: "app-protect-attack-signatures{{ nginx_app_protect_signatures_version | default('') }}"
-    state: "{{ nginx_app_protect_state }}"
+    state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   when:
@@ -48,7 +48,7 @@
 - name: (Alpine Linux) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
   apk:
     name: "app-protect-threat-campaigns{{ nginx_app_protect_threat_campaigns_version | default('') }}"
-    state: "{{ nginx_app_protect_state }}"
+    state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   when:

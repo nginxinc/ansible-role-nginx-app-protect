@@ -18,7 +18,7 @@
       fail:
         msg: NGINX App Protect WAF is not supported on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }}
       when: not supported_os_waf
-  when: nginx_app_protect_waf_enable | bool and nginx_app_protect_state != "absent"
+  when: nginx_app_protect_waf_enable | bool and nginx_app_protect_waf_state != "absent"
 
 - name: (DoS) Set supported_os_dos when platform and major/minor version are in the DoS supported platforms dictionary
   block:
