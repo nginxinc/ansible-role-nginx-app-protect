@@ -1,5 +1,4 @@
 ---
-
 - name: (Alpine Linux) Install package dependencies
   apk:
     name: "{{ nginx_app_protect_alpine_dependencies }}"
