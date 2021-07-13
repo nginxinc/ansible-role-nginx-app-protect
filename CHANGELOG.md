@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.0 (Unreleased)
+## 0.6.0 (July 13, 2021)
 
 BREAKING CHANGES:
 
@@ -20,7 +20,7 @@ ENHANCEMENTS:
 *   Replace "yes"/"no" boolean values with "true"/"false" to comply with YAML spec `1.2`.
 *   Update `nginx` role requirement in Molecule tests to `0.20.0`.
 
-## 0.5.0 (May 12, 2020)
+## 0.5.0 (May 12, 2021)
 
 BREAKING CHANGES:
 
@@ -43,7 +43,7 @@ ENHANCEMENTS:
 *   Update Ansible base to `2.10.9`, Ansible Lint to `5.0.8`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
 *   Update the Ansible `community.general` collection to `3.0.2` and `community.docker` collection to `1.6.0`.
 
-## 0.4.3 (April 6, 2020)
+## 0.4.3 (April 6, 2021)
 
 BREAKING CHANGES:
 
