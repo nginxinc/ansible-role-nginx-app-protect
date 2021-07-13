@@ -1,5 +1,4 @@
 ---
-
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license
   blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
