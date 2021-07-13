@@ -1,13 +1,4 @@
 ---
-- name: Ensure NGINX main directory exists
-  file:
-    path: "{{ nginx_app_protect_conf_template.out_file_location }}"
-    state: directory
-    mode: 0755
-  when: nginx_app_protect_security_policy_template_enable | bool
-        or nginx_app_protect_log_policy_template_enable | bool
-        or nginx_app_protect_conf_template_enable | bool
-
 - name: Copy NGINX App Protect WAF security policy file
   copy:
     src: "{{ nginx_app_protect_security_policy_file_src }}"
