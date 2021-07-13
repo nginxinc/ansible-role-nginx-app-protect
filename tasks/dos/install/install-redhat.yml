@@ -21,7 +21,6 @@
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-
 - name: (CentOS/RHEL) Install NGINX App Protect DoS
   yum:
     name: "app-protect-dos"

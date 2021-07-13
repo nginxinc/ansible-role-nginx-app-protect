@@ -43,15 +43,3 @@
       register: service
       failed_when: (service is changed) or (service is failed)
       when: ansible_os_family != "Alpine"
-
-    - name: Check that the security policy exists
-      stat:
-        path: /etc/app_protect/conf/app-protect-security-policy.json
-      register: stat_result
-      failed_when: not stat_result.stat.exists
-
-    - name: Check that the log policy exists
-      stat:
-        path: /etc/app_protect/conf/app-protect-log-policy.json
-      register: stat_result
-      failed_when: not stat_result.stat.exists

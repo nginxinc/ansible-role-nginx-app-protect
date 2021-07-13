@@ -92,38 +92,6 @@ nginx_app_protect_timeout: 180
 # Creates basic configuration files and enables NGINX App Protect WAF on the target host
 nginx_app_protect_configure: false
 
-## DEPRECATED -- Use nginx_app_protect_security_policy_enable and nginx_app_protect_security_policy_file_* variables instead
-# Create a basic NGINX App Protect WAF security policy file based on a template
-nginx_app_protect_security_policy_template_enable: true
-nginx_app_protect_security_policy_template:
-  template_file: app-protect-security-policy.j2
-  out_file_name: app-protect-security-policy.json
-  out_file_location: /etc/app_protect/conf/
-# possible values: transparent, blocking
-nginx_app_protect_security_policy_enforcement_mode: transparent
-
-## DEPRECATED -- Use nginx_app_protect_log_policy_file_enable and nginx_app_protect_log_policy_file_* variables instead
-# Create a basic NGINX App Protect WAF log policy file based on a template
-nginx_app_protect_log_policy_template_enable: true
-nginx_app_protect_log_policy_template:
-  template_file: app-protect-log-policy.j2
-  out_file_name: app-protect-log-policy.json
-  out_file_location: /etc/app_protect/conf/
-# possible values: all, illegal, blocked
-nginx_app_protect_log_policy_filter_request_type: all
-
-## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
-# Create a basic NGINX App Protect WAF config file
-nginx_app_protect_conf_template_enable: false
-nginx_app_protect_conf_template:
-  template_file: nginx.conf.j2
-  out_file_name: nginx.conf
-  out_file_location: /etc/nginx/
-nginx_app_protect_demo_workload_protocol: http://
-nginx_app_protect_demo_workload_host: 10.1.1.1:8080
-nginx_app_protect_log_policy_syslog_target: 127.0.0.1:514  # DEPRECATED -- use nginx_app_protect_log_policy_target instead
-nginx_app_protect_log_policy_target: "syslog:server={{ nginx_app_protect_log_policy_syslog_target }}"
-
 # Copy local NGINX App Protect WAF security policy to host
 nginx_app_protect_security_policy_file_enable: false
 nginx_app_protect_security_policy_file_src: files/config/security-policy.json
