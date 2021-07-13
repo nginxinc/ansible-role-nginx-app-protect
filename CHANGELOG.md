@@ -4,7 +4,7 @@
 
 BREAKING CHANGES:
 
-Remove depecrated variables mentioned in the `0.5.0` release. These involve templating variables for both NGINX App Protect configs and policy/security files. Please instead use the [NGINX config role](https://github.com/nginxinc/ansible-role-nginx-config) for this (and much more) functionality.
+Remove deprecated variables mentioned in the `0.5.0` release. These involve templating variables for both NGINX App Protect configs and policy/security files. Please instead use the [NGINX config role](https://github.com/nginxinc/ansible-role-nginx-config) for this (and much more) functionality.
 
 FEATURES:
 
