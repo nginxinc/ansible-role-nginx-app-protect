@@ -22,7 +22,7 @@ This role installs and configures NGINX App Protect WAF or DoS for NGINX Plus on
     ---
     collections:
       - name: community.general
-        version: 3.1.0
+        version: 3.3.2
       - name: ansible.posix
         version: 1.2.0
     ```
