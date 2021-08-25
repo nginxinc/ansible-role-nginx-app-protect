@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1 (Unreleased)
+
+BUG FIXES:
+
+Role was failing at license and repo removal step when using the default of `nginx_app_protect_remove_license: true`.
+
 ## 0.6.0 (July 13, 2021)
 
 BREAKING CHANGES:
