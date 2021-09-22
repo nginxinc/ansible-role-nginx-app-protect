@@ -22,9 +22,9 @@ This role installs and configures NGINX App Protect WAF or DoS for NGINX Plus on
     ---
     collections:
       - name: community.general
-        version: 3.3.2
+        version: 3.7.0
       - name: ansible.posix
-        version: 1.2.0
+        version: 1.3.0
     ```
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
 *   Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).
