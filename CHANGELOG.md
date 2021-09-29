@@ -2,6 +2,10 @@
 
 ## 0.6.1 (Unreleased)
 
+KNOWN ISSUES:
+
+As of the latest NGINX Plus release, R25, NGINX App Protect will no longer. The only workaround at this time is to install NGINX Plus R24 before attempting to install NGINX App Protect WAF/DoS. A fix is planned in NGINX App Protect 3.6, planned for release mid-October.
+
 ENHANCEMENTS:
 
 Update the Ansible `community.general` collection to `3.7.0`, `ansible.posix` collection to `1.3.0` and `community.docker` collection to `1.9.1`.
