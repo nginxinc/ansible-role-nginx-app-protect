@@ -60,4 +60,3 @@
         nginx_license:
           certificate: ../../files/license/nginx-repo.crt
           key: ../../files/license/nginx-repo.key
-
