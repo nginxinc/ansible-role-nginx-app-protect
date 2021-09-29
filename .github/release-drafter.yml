@@ -95,6 +95,6 @@ template: |
   ## Resources
 
   *   Functional configuration examples (check `converge.yml` under each `molecule` scenario) -- [github.com/nginxinc/ansible-role-nginx-app-protect/tree/$RESOLVED_VERSION/molecule](https://github.com/nginxinc/ansible-role-nginx-app-protect/tree/$RESOLVED_VERSION/molecule).
-  *   Ansible Galaxy repository -- [galaxy.ansible.com/nginxinc/nginx](https://galaxy.ansible.com/nginxinc/nginx_app_protect).
+  *   Ansible Galaxy repository -- [galaxy.ansible.com/nginxinc/nginx_app_protect](https://galaxy.ansible.com/nginxinc/nginx_app_protect).
   *   NGINX Ansible role & collection introductory blog -- [nginx.com/blog/announcing-nginx-core-collection-ansible](https://www.nginx.com/blog/announcing-nginx-core-collection-ansible).
   *   NGINX: Better with Ansible demo -- [github.com/alessfg/nginx-ansible-demo](https://github.com/alessfg/nginx-ansible-demo).
