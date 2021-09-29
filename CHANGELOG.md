@@ -4,7 +4,7 @@
 
 KNOWN ISSUES:
 
-As of the latest NGINX Plus release, R25, NGINX App Protect will no longer. The only workaround at this time is to install NGINX Plus R24 before attempting to install NGINX App Protect WAF/DoS. A fix is planned in NGINX App Protect 3.6, planned for release mid-October.
+As of the latest NGINX Plus release, R25, NGINX App Protect will no longer install or work. The only workaround at this time is to install NGINX Plus R24 before attempting to install NGINX App Protect WAF/DoS. A fix is planned in NGINX App Protect 3.6, planned for release mid-October.
 
 ENHANCEMENTS:
 
