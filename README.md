@@ -8,6 +8,8 @@
 
 This role installs and configures NGINX App Protect WAF or DoS for NGINX Plus on your target host.
 
+**Warning:** As of the latest NGINX Plus release, R25, NGINX App Protect will no longer install or work. The only workaround at this time is to install NGINX Plus R24 before attempting to install NGINX App Protect WAF/DoS. A fix is planned in NGINX App Protect 3.6, planned for release mid-October.
+
 **Note:** By default, this role will install NGINX App Protect WAF. To install NGINX App Protect DoS, you need to set the `nginx_app_protect_dos_enable` variable to `true`.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
