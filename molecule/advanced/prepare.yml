@@ -37,7 +37,7 @@
       changed_when: false
 
 - name: Install NGINX Plus R24 to avoid dependency issues
-  hosts: all
+  hosts: nap
   tasks:
     - name: Set repo if Alpine
       set_fact:
