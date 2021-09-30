@@ -8,7 +8,8 @@ As of the latest NGINX Plus release, R25, NGINX App Protect will no longer insta
 
 ENHANCEMENTS:
 
-Update the Ansible `community.general` collection to `3.7.0`, `ansible.posix` collection to `1.3.0` and `community.docker` collection to `1.9.1`.
+* Remove Debian Stretch from the list of supported platforms for NAP (and from Molecule).
+* Update the Ansible `community.general` collection to `3.7.0`, `ansible.posix` collection to `1.3.0` and `community.docker` collection to `1.9.1`.
 
 BUG FIXES:
 
