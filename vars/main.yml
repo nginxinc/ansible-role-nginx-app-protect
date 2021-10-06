@@ -33,23 +33,21 @@ nginx_app_protect_dos_linux_families:
   ]
 
 # Alpine Linux dependencies
-nginx_app_protect_alpine_dependencies: [
-  "python3",
-]
+nginx_app_protect_alpine_dependencies: []
 
 # Debian dependencies
 nginx_app_protect_debian_dependencies: [
-  "apt-transport-https", "ca-certificates", "dirmngr",
+  "apt-transport-https", "ca-certificates",
 ]
 
 # CentOS dependencies
 nginx_app_protect_centos_dependencies: [
-  "ca-certificates", "epel-release", "openssl",
+  "ca-certificates", "epel-release",
 ]
 
 # RHEL dependencies
 nginx_app_protect_rhel_dependencies: [
-  "ca-certificates", "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm", "openssl",
+  "ca-certificates", "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
 ]
 
 # Amazon Linux 2 dependencies
