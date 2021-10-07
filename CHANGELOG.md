@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.2 (Unreleased)
+
+ENHANCEMENTS:
+
+Move non NGINX App Protect specific dependencies from the role into the Molecule Dockerfile.
+
+BUG FIXES:
+
+Always update NGINX App Protect dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
+
 ## 0.6.1 (September 30, 2021)
 
 KNOWN ISSUES:
