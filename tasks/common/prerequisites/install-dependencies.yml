@@ -13,37 +13,39 @@
     state: latest  # noqa package-latest
   when: ansible_os_family == "Debian"
 
-- name: (Amazon Linux/CentOS/RHEL) Install dependencies
-  block:
-    - name: (Amazon Linux/CentOS/RHEL) Install dependencies
-      yum:
-        name: "{{ nginx_app_protect_redhat_dependencies }}"
-        update_cache: true
-        state: latest  # noqa package-latest
+- name: (Amazon Linux/CentOS/RHEL) Install main dependencies
+  yum:
+    name: "{{ nginx_app_protect_redhat_dependencies }}"
+    update_cache: true
+    state: latest  # noqa package-latest
+  when: ansible_os_family == "RedHat"
 
-    - name: (Amazon Linux/CentOS/RHEL) Set up dependencies repository
+- name: (RHEL) Set up RHEL repository
+  block:
+    - name: (RHEL) Install package dependencies from CentOS repositories
       yum_repository:
-        name: dependencies
-        baseurl: "https://pkgs.nginx.com/epel/7/$basearch/"
+        name: CentOS-7
+        baseurl: "http://ftp.heanet.ie/pub/centos/{{ ansible_distribution_major_version }}/os/$basearch/"
         description: NGINX App Protect dependencies
         enabled: true
-        gpgcheck: false
-        sslclientcert: /etc/ssl/nginx/nginx-repo.crt
-        sslclientkey: /etc/ssl/nginx/nginx-repo.key
+        gpgcheck: true
+        gpgkey: "http://ftp.heanet.ie/pub/centos/{{ ansible_distribution_major_version }}/os/$basearch/\
+                RPM-GPG-KEY-CentOS-{{ ansible_distribution_major_version }}"
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
       when: not nginx_app_protect_use_rhel_subscription_repos | bool
 
     - name: (RHEL) Install package dependencies from your RHEL subscription
-      yum:
+      rhsm_repository:
         name:
+          - rhui-REGION-rhel-server-optional
+          - rhui-REGION-rhel-server-releases
           - rhel-7-server-optional-rpms
-          - rhel-7-server-rpms
-        update_cache: true
         state: latest  # noqa package-latest
       when: nginx_app_protect_use_rhel_subscription_repos | bool
+  when: ansible_distribution == "RedHat"
 
-    - name: (Amazon Linux) Enable Amazon Linux Extras dependencies
-      command: "amazon-linux-extras enable {{ item }}"
-      changed_when: false
-      loop: "{{ nginx_app_protect_amazon_extras }}"
-      when: ansible_distribution == "Amazon"
-  when: ansible_os_family == "RedHat"
+- name: (Amazon Linux) Enable Amazon Linux Extras dependencies
+  command: "amazon-linux-extras enable {{ item }}"
+  changed_when: false
+  loop: "{{ nginx_app_protect_amazon_extras }}"
+  when: ansible_distribution == "Amazon"
