@@ -33,31 +33,23 @@ nginx_app_protect_dos_linux_families:
   ]
 
 # Alpine Linux dependencies
-nginx_app_protect_alpine_dependencies: []
+nginx_app_protect_alpine_dependencies: [
+  "ca-certificates",
+]
 
 # Debian dependencies
 nginx_app_protect_debian_dependencies: [
   "apt-transport-https", "ca-certificates",
 ]
 
-# CentOS dependencies
-nginx_app_protect_centos_dependencies: [
-  "ca-certificates", "epel-release",
-]
-
-# RHEL dependencies
-nginx_app_protect_rhel_dependencies: [
-  "ca-certificates", "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
-]
-
-# Amazon Linux 2 dependencies
-nginx_app_protect_amazon_dependencies: [
-  "ca-certificates", "epel-release",
+# Red Hat dependencies
+nginx_app_protect_redhat_dependencies: [
+  "ca-certificates",
 ]
 
 # Amazon Linux 2 extras
-nginx_app_protect_amazon_extras_packages: [
-  "epel", "selinux-ng",
+nginx_app_protect_amazon_extras: [
+  "selinux-ng",
 ]
 
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.

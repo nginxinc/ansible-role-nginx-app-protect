@@ -4,7 +4,6 @@
     name: "{{ nginx_app_protect_alpine_dependencies }}"
     update_cache: true
     state: latest  # noqa package-latest
-  ignore_errors: "{{ ansible_check_mode }}"
   when: ansible_os_family == "Alpine"
 
 - name: (Debian/Ubuntu) Install package dependencies
@@ -14,31 +13,23 @@
     state: latest  # noqa package-latest
   when: ansible_os_family == "Debian"
 
-- name: (CentOS) Install package dependencies
-  yum:
-    name: "{{ nginx_app_protect_centos_dependencies }}"
-    update_cache: true
-    state: latest  # noqa package-latest
-  when: ansible_distribution == "CentOS"
-
-- name: (RHEL) Install dependencies
+- name: (Amazon Linux/CentOS/RHEL) Install dependencies
   block:
-    - name: (RHEL) Install package dependencies
+    - name: (Amazon Linux/CentOS/RHEL) Install dependencies
       yum:
-        name: "{{ nginx_app_protect_rhel_dependencies }}"
+        name: "{{ nginx_app_protect_redhat_dependencies }}"
         update_cache: true
         state: latest  # noqa package-latest
 
-    - name: (RHEL) Set up RHEL repository
+    - name: (Amazon Linux/CentOS/RHEL) Set up dependencies repository
       yum_repository:
-        name: CentOS-7
-        baseurl: "http://ftp.heanet.ie/pub/centos/{{ ansible_distribution_major_version }}/os/$basearch/"
+        name: dependencies
+        baseurl: "https://pkgs.nginx.com/epel/7/$basearch/"
         description: NGINX App Protect dependencies
         enabled: true
-        gpgcheck: true
-        gpgkey: "http://ftp.heanet.ie/pub/centos/{{ ansible_distribution_major_version }}/os/$basearch/\
-                RPM-GPG-KEY-CentOS-{{ ansible_distribution_major_version }}"
-        state: "{{ nginx_app_protect_license_status | default ('present') }}"
+        gpgcheck: false
+        sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+        sslclientkey: /etc/ssl/nginx/nginx-repo.key
       when: not nginx_app_protect_use_rhel_subscription_repos | bool
 
     - name: (RHEL) Install package dependencies from your RHEL subscription
@@ -46,23 +37,13 @@
         name:
           - rhel-7-server-optional-rpms
           - rhel-7-server-rpms
+        update_cache: true
+        state: latest  # noqa package-latest
       when: nginx_app_protect_use_rhel_subscription_repos | bool
-  when: ansible_distribution == "RedHat"
 
-- name: (Amazon Linux) Install dependencies
-  block:
-    - name: (Amazon Linux) Enable amazon-linux-extras packages
+    - name: (Amazon Linux) Enable Amazon Linux Extras dependencies
       command: "amazon-linux-extras enable {{ item }}"
       changed_when: false
-      loop: "{{ nginx_app_protect_amazon_extras_packages }}"
-
-    - name: (Amazon Linux) Clean Yum Metadata
-      command: yum clean metadata
-      changed_when: false
-      args:
-        warn: false
-
-    - name: (Amazon Linux) Install package dependencies
-      yum:
-        name: "{{ nginx_app_protect_amazon_dependencies }}"
-  when: ansible_distribution == "Amazon"
+      loop: "{{ nginx_app_protect_amazon_extras }}"
+      when: ansible_distribution == "Amazon"
+  when: ansible_os_family == "RedHat"
