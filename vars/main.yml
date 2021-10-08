@@ -2,64 +2,54 @@
 # NGINX App Protect WAF platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
 nginx_app_protect_waf_linux_families:
   alpine: [
-    "3.10",
+    '3.10',
   ]
   amazon: [
-    "2",
+    '2',
   ]
   debian: [
-    "10",
+    '10',
   ]
   centos: [
-    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
+    '7.4', '7.5', '7.6', '7.7', '7.8', '7.9',
   ]
   redhat: [
-    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
+    '7.4', '7.5', '7.6', '7.7', '7.8', '7.9',
   ]
   ubuntu: [
-    "18.04", "20.04",
+    '18.04', '20.04',
   ]
 
 # NGINX App Protect DoS platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
 nginx_app_protect_dos_linux_families:
   centos: [
-    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
+    '7.4', '7.5', '7.6', '7.7', '7.8', '7.9',
   ]
   debian: [
-    "10",
+    '10',
   ]
   ubuntu: [
-    "18.04", "20.04",
+    '18.04', '20.04',
   ]
 
 # Alpine Linux dependencies
 nginx_app_protect_alpine_dependencies: [
-  "python3",
+  'ca-certificates',
 ]
 
 # Debian dependencies
 nginx_app_protect_debian_dependencies: [
-  "apt-transport-https", "ca-certificates", "dirmngr",
+  'apt-transport-https', 'ca-certificates',
 ]
 
-# CentOS dependencies
-nginx_app_protect_centos_dependencies: [
-  "ca-certificates", "epel-release", "openssl",
-]
-
-# RHEL dependencies
-nginx_app_protect_rhel_dependencies: [
-  "ca-certificates", "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm", "openssl",
-]
-
-# Amazon Linux 2 dependencies
-nginx_app_protect_amazon_dependencies: [
-  "ca-certificates", "epel-release",
+# Red Hat dependencies
+nginx_app_protect_redhat_dependencies: [
+  'ca-certificates', 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
 ]
 
 # Amazon Linux 2 extras
-nginx_app_protect_amazon_extras_packages: [
-  "epel", "selinux-ng",
+nginx_app_protect_amazon_extras: [
+  'selinux-ng',
 ]
 
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.

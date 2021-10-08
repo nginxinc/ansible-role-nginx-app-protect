@@ -4,12 +4,17 @@
 
 BREAKING CHANGES:
 
-The `nginx_app_protect_remove_config` tag has been changed to `nginx_app_protect_waf_remove_config` to aid in disambiguation.
-The `nginx_app_protect_remove` tag has been changed to `nginx_app_protect_waf_remove` to aid in disambiguation.
+* The `nginx_app_protect_remove_config` tag has been changed to `nginx_app_protect_waf_remove_config` to aid in disambiguation.
+* The `nginx_app_protect_remove` tag has been changed to `nginx_app_protect_waf_remove` to aid in disambiguation.
+
+ENHANCEMENTS:
+
+* Move non NGINX App Protect specific dependencies from the role into the Molecule Dockerfile.
 
 BUG FIXES:
 
-Role was failing to uninstall App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
+* Role was failing to uninstall App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
+* Always update NGINX App Protect dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
 
 ## 0.6.1 (September 30, 2021)
 
