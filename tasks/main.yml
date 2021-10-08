@@ -5,24 +5,6 @@
 
 - name: Check for conflicting WAF config variables
   block:
-    - name: Abort if there are conflicting security policy config variables
-      fail:
-        msg: >
-          Conflicting variables:
-          'nginx_app_protect_security_policy_template_enable' and 'nginx_app_protect_security_policy_file_enable' cannot be truthy in the same play
-      when:
-        - nginx_app_protect_security_policy_template_enable | bool
-        - nginx_app_protect_security_policy_file_enable | bool
-
-    - name: Abort if there are conflicting log policy config variables
-      fail:
-        msg: >
-          Conflicting variables:
-          'nginx_app_protect_log_policy_template_enable' and 'nginx_app_protect_log_policy_file_enable' cannot be truthy in the same play
-      when:
-        - nginx_app_protect_log_policy_template_enable | bool
-        - nginx_app_protect_log_policy_file_enable | bool
-
     - name: Fail if variables for 'nginx_app_protect_security_policy_file_enable' are not defined
       assert:
         that:
@@ -90,14 +72,19 @@
 - name: Ensure NGINX App Protect is running
   meta: flush_handlers
 
-- name: Remove NGINX App Protect
+- name: Remove NGINX App Protect WAF
   block:
-    - name: Remove NGINX App Protect package
+    - name: Remove NGINX App Protect WAF package
       include_tasks: "{{ role_path }}/tasks/waf/install/install-app-protect-waf.yml"
-      tags: nginx_app_protect_remove
+      tags: nginx_app_protect_waf_remove
 
     - name: Disable NGINX App Protect config
       include_tasks: "{{ role_path }}/tasks/waf/config/configure-app-protect-waf.yml"
       when: nginx_app_protect_configure | bool
-      tags: nginx_app_protect_remove_config
+      tags: nginx_app_protect_waf_remove_config
   when: nginx_app_protect_waf_state == "absent"
+
+- name: Remove NGINX App Protect DoS package
+  include_tasks: "{{ role_path }}/tasks/dos/install/install-app-protect-waf.yml"
+  tags: nginx_app_protect_dos_remove
+  when: nginx_app_protect_dos_state == "absent"

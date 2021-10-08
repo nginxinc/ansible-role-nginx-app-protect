@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.2 (Unreleased)
+
+BREAKING CHANGES:
+
+The `nginx_app_protect_remove_config` tag has been changed to `nginx_app_protect_waf_remove_config` to aid in disambiguation.
+The `nginx_app_protect_remove` tag has been changed to `nginx_app_protect_waf_remove` to aid in disambiguation.
+
+BUG FIXES:
+
+Role was failing to uninstall App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
+
 ## 0.6.1 (September 30, 2021)
 
 KNOWN ISSUES:
