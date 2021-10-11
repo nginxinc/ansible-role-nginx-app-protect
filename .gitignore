@@ -2,34 +2,16 @@
 ############################
 *.crt
 *.key
-*.pem
 *~
 \#*
-
-# Editor specific #
-###################
-.idea
-.vscode
-.classpath
-.project
-.settings/**
-## Emac
-*~
-\#*\#
-.\#*
-## Vim
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
-*.un~
-Session.vim
-.netrwhist
+!molecule.crt
+!molecule.key
 
 # OS Specific #
 ###############
 Thumbs.db
 .DS_Store
-._*
-scratch/
+.vscode
 
 # Ansible specific #
 ####################
