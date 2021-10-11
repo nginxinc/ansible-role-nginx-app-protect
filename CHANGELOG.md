@@ -4,7 +4,9 @@
 
 ENHANCEMENTS:
 
-Move non NGINX App Protect specific dependencies from the role into the Molecule Dockerfile.
+* Move non NGINX App Protect specific dependencies from the role into the Molecule Dockerfile.
+* Change Dependabot frequency from daily to weekly.
+* Minor touch-up of GitHub actions workflows.
 
 BUG FIXES:
 
