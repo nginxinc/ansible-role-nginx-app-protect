@@ -4,19 +4,21 @@
 
 ENHANCEMENTS:
 
+* Remove Alpine 3.10 from the list of supported platform for NAP (and from Molecule).
 * Move non NGINX App Protect specific dependencies from the role into the Molecule Dockerfile.
 * Change Dependabot frequency from daily to weekly.
 * Minor touch-up of GitHub actions workflows.
 
 BUG FIXES:
 
-Always update NGINX App Protect dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
+* NGINX App Protect WAF 3.6 has been released and with it comes support for NGINX Plus R25. Per last release's KNOWN ISSUES, NGINX App Protect DoS will still only work with NGINX Plus R24.
+* Always update NGINX App Protect dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
 
 ## 0.6.1 (September 30, 2021)
 
 KNOWN ISSUES:
 
-As of the latest NGINX Plus release, R25, NGINX App Protect will no longer install or work on R25 platforms. The only workaround at this time is to install NGINX Plus R24 before attempting to install NGINX App Protect WAF/DoS. This issue will be fixed in NGINX App Protect 3.6, planned for release mid-October.
+As of the latest NGINX Plus release, R25, NGINX App Protect WAF/DoS will no longer install or work on R25 platforms. The only workaround at this time is to install NGINX Plus R24 before attempting to install NGINX App Protect WAF/DoS. This issue will be fixed in NGINX App Protect WAF 3.6, planned for release mid-October, and in the next release of NGINX App Protect DoS, also planned for release mid-October.
 
 ENHANCEMENTS:
 

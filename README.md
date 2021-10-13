@@ -73,14 +73,11 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx-app-protect.git` t
 The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect WAF:
 
 ```yaml
-Alpine:
-  - 3.10
 Amazon Linux 2:
   - any
 CentOS:
   - 7.4+
 Debian:
-  - stretch (9)
   - buster (10)
 RHEL:
   - 7.4+
