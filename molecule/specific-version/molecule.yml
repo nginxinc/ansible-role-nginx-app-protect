@@ -1,8 +1,4 @@
 ---
-dependency:
-  name: galaxy
-  options:
-    role-file: molecule/specific-version/requirements.yml
 driver:
   name: docker
 lint: |
