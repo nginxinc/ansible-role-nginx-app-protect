@@ -16,10 +16,14 @@ This role installs and configures NGINX App Protect WAF or DoS for NGINX Plus on
 
 ## Requirements
 
+### NGINX App Protect
+
+If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this role, you will need to obtain the corresponding NGINX App Protect license beforehand.
+
 ### Ansible
 
-* This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.11`) and Ansible (above `2.9.10`).
-* When using Ansible base, you will also need to install the following collections:
+* This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.11`).
+* When using Ansible core, you will also need to install the following collections:
 
     ```yaml
     ---
@@ -35,22 +39,22 @@ This role installs and configures NGINX App Protect WAF or DoS for NGINX Plus on
 
 ### Jinja2
 
-* This role uses Jinja2 templates. Ansible base installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum version of Jinja2 required for the role to properly function is `2.11`.
+* This role uses Jinja2 templates. Ansible core installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum version of Jinja2 required for the role to properly function is `2.11`.
 * Instructions on how to install Jinja2 can be found in the [Jinja2 website](https://jinja.palletsprojects.com/en/2.11.x/intro/#installation).
 
-### Molecule
+### Molecule (Optional)
 
 * Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `3.3`.
-* Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
-* To run the Molecule tests, you must first add your NGINX repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
+* Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). _You will also need to install the Molecule Docker driver._
+* To run the Molecule tests, you must copy your NGINX App Protect license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
 
-    ``` bash
-    export NGINX_CRT=$( cat <path to your certificate file> | base64 )
-    export NGINX_KEY=$( cat <path to your key file> | base64 )
-    molecule test
-    ```
+You can alternatively add your NGINX App Protect repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 
-    You can alternatively copy your NGINX license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
+```bash
+export NGINX_CRT=$( cat <path to your certificate file> | base64 )
+export NGINX_KEY=$( cat <path to your key file> | base64 )
+molecule test
+```
 
 ## Installation
 
@@ -69,20 +73,17 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx-app-protect.git` t
 The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect WAF:
 
 ```yaml
-Alpine:
-  - 3.10
 Amazon Linux 2:
   - any
 CentOS:
   - 7.4+
+Debian:
+  - buster (10)
 RHEL:
   - 7.4+
-Debian:
-  - 9
-  - 10
 Ubuntu:
-  - 18.04
-  - 20.04
+  - bionic (18.04)
+  - focal (20.04)
 ```
 
 **Note:** Due to a packaging limitation in NGINX App Protect on Alpine, it may be required to explicitly install NGINX Plus on the instance **before** using the NGINX App Protect role if a hotfix version of NGINX Plus has been published. It is recommended to use the [NGINX Core](https://galaxy.ansible.com/nginxinc/nginx_core) Ansible role for this purpose.
@@ -95,25 +96,25 @@ The NGINX App Protect Ansible role supports all platforms supported by [NGINX Pl
 CentOS:
   - 7.4+
 Debian:
-  - 10
+  - buster (10)
 Ubuntu:
-  - 18.04
-  - 20.04
+  - bionic (18.04)
+  - focal (20.04)
 ```
 
 ## Role Variables
 
 This role has multiple variables. The descriptions and defaults for all these variables can be found in the **[`defaults/`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/defaults/)** folder in the following files:
 
-|Name|Description|
-|----|-----------|
-|**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/defaults/main.yml)**:|NGINX App Protect installation and configuration variables|
+| Name | Description |
+| ---- | ----------- |
+| **[`main.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/defaults/main.yml)** | NGINX App Protect installation and configuration variables |
 
 Similarly, descriptions and defaults for preset variables can be found in the **`vars/`** folder in the following files:
 
-|Name|Description|
-|----|-----------|
-|**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/vars/main.yml)**|List of supported NGINX App Protect platforms|
+| Name | Description |
+| ---- | ----------- |
+| **[`main.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/vars/main.yml)** | List of supported NGINX App Protect platforms |
 
 ## Dependencies
 
@@ -123,15 +124,15 @@ Similarly, descriptions and defaults for preset variables can be found in the **
 
 A working functional playbook example can be found in the **`molecule/default/`** folder in the following file:
 
-|Name|Description|
-|----|-----------|
-|**[`molecule/default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/default/converge.yml)**|Install and configure NGINX App Protect|
+| Name | Description |
+| ---- | ----------- |
+| **[`molecule/default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/default/converge.yml)** | Install and configure NGINX App Protect |
 
 ## Other NGINX Ansible Collections and Roles
 
 You can find the Ansible NGINX Core collection of roles to install and configure NGINX Open Source, NGINX Plus, and NGINX App Protect WAF and DoS products [here](https://github.com/nginxinc/ansible-collection-nginx).
 
-You can find the Ansible NGINX role to install NGINX [here](https://github.com/nginxinc/ansible-role-nginx).
+You can find the Ansible NGINX role to install NGINX OSS and NGINX Plus [here](https://github.com/nginxinc/ansible-role-nginx).
 
 You can find the Ansible NGINX configuration role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config).
 

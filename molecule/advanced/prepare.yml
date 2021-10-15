@@ -35,28 +35,3 @@
     - name: Start nginx on test workload
       raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
       changed_when: false
-
-- name: Install NGINX Plus R24 to avoid dependency issues
-  hosts: nap
-  tasks:
-    - name: Set repo if Alpine
-      set_fact:
-        version: "=24-r2"
-      when: ansible_facts['os_family'] == "Alpine"
-    - name: Set repo if Debian
-      set_fact:
-        version: "=24-2~{{ ansible_facts['distribution_release'] }}"
-      when: ansible_facts['os_family'] == "Debian"
-    - name: Set repo if Red Hat
-      set_fact:
-        version: "-24-2.{{ (ansible_facts['distribution']=='Amazon') | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx"
-      when: ansible_facts['os_family'] == "RedHat"
-    - name: Install NGINX Plus R24 to avoid dependency issues
-      include_role:
-        name: nginxinc.nginx
-      vars:
-        nginx_type: plus
-        nginx_version: "{{ version }}"
-        nginx_license:
-          certificate: ../../files/license/nginx-repo.crt
-          key: ../../files/license/nginx-repo.key

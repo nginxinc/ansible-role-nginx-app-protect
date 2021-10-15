@@ -17,17 +17,6 @@ platforms:
       - workload
     networks:
       - name: molecule-test
-  - name: alpine-3.10
-    image: alpine:3.10
-    dockerfile: ../Dockerfile.j2
-    privileged: true
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
-    groups:
-      - nap
-    networks:
-      - name: molecule-test
   - name: centos-7
     image: centos:7
     dockerfile: ../Dockerfile.j2
