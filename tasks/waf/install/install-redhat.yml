@@ -1,44 +1,47 @@
 ---
-- name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
-  yum_repository:
-    name: nginx-plus
-    baseurl: "{{ nginx_plus_repository |
-              default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
-    description: NGINX Plus repository
-    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
-    sslclientkey: /etc/ssl/nginx/nginx-repo.key
-    enabled: true
-    gpgcheck: true
-    state: "{{ nginx_app_protect_license_status | default ('present') }}"
-  when: nginx_app_protect_manage_repo | bool
+- name: (Amazon Linux/CentOS/RHEL) Create Repositories
+  block:
+    - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
+      yum_repository:
+        name: nginx-plus
+        baseurl: "{{ nginx_plus_repository |
+                  default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+        description: NGINX Plus repository
+        sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+        sslclientkey: /etc/ssl/nginx/nginx-repo.key
+        enabled: true
+        gpgcheck: true
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
+      when: nginx_app_protect_manage_repo | bool
 
-- name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
-  yum_repository:
-    name: nginx-app-protect
-    baseurl: "{{ nginx_app_protect_repository |
-              default(lookup('vars', 'nginx_app_protect_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
-    description: NGINX App Protect repository
-    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
-    sslclientkey: /etc/ssl/nginx/nginx-repo.key
-    enabled: true
-    gpgcheck: true
-    state: "{{ nginx_app_protect_license_status | default ('present') }}"
-  when: nginx_app_protect_manage_repo | bool
+    - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
+      yum_repository:
+        name: nginx-app-protect
+        baseurl: "{{ nginx_app_protect_repository |
+                  default(lookup('vars', 'nginx_app_protect_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+        description: NGINX App Protect repository
+        sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+        sslclientkey: /etc/ssl/nginx/nginx-repo.key
+        enabled: true
+        gpgcheck: true
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
+      when: nginx_app_protect_manage_repo | bool
 
-- name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
-  yum_repository:
-    name: nginx-app-protect-security-updates
-    baseurl: "{{ nginx_app_protect_security_updates_repository |
-              default(lookup('vars', 'nginx_app_protect_security_updates_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
-    description: NGINX App Protect security updates repository
-    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
-    sslclientkey: /etc/ssl/nginx/nginx-repo.key
-    enabled: true
-    gpgcheck: true
-    state: "{{ nginx_app_protect_license_status | default ('present') }}"
-  when:
-    - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
-    - nginx_app_protect_manage_repo | bool
+    - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
+      yum_repository:
+        name: nginx-app-protect-security-updates
+        baseurl: "{{ nginx_app_protect_security_updates_repository |
+                  default(lookup('vars', 'nginx_app_protect_security_updates_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+        description: NGINX App Protect security updates repository
+        sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+        sslclientkey: /etc/ssl/nginx/nginx-repo.key
+        enabled: true
+        gpgcheck: true
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
+      when:
+        - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
+        - nginx_app_protect_manage_repo | bool
+  when: nginx_app_protect_waf_state != "absent"
 
 - name: (Amazon Linux/CentOS/RHEL) Install NGINX App Protect WAF
   yum:

@@ -13,3 +13,9 @@
         nginx_app_protect_install_signatures: true
         nginx_app_protect_install_threat_campaigns: true
         nginx_app_protect_configure: true
+        nginx_app_protect_security_policy_file_enable: true
+        nginx_app_protect_security_policy_file_src: files/test-security-policy.json
+        nginx_app_protect_security_policy_file_dst: /etc/app_protect/conf/test-security-policy.json
+        nginx_app_protect_log_policy_file_enable: true
+        nginx_app_protect_log_policy_file_src: files/test-log-profile.json
+        nginx_app_protect_log_policy_file_dst: /etc/app_protect/conf/test-log-profile.json

@@ -10,11 +10,13 @@ BREAKING CHANGES:
 ENHANCEMENTS:
 
 * Move non NGINX App Protect specific dependencies from the role into the Molecule Dockerfile.
+* New molecule tests for NGINX App Protect WAF and DoS removal scenarios.
 
 BUG FIXES:
 
 * Role was failing to uninstall App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
 * Always update NGINX App Protect dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
+* Uninstallation scenario was unintentionally creating repository entries.
 
 ## 0.6.1 (September 30, 2021)
 

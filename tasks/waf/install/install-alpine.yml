@@ -1,29 +1,32 @@
 ---
-- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
-  lineinfile:
-    path: /etc/apk/repositories
-    insertafter: EOF
-    line: "{{ nginx_plus_repository | default(nginx_plus_default_repository_alpine) }}"
-    state: "{{ nginx_license_status | default ('present') }}"
-  when: nginx_app_protect_manage_repo | bool
+- name: (Alpine Linux) Create Repositories
+  block:
+    - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
+      lineinfile:
+        path: /etc/apk/repositories
+        insertafter: EOF
+        line: "{{ nginx_plus_repository | default(nginx_plus_default_repository_alpine) }}"
+        state: "{{ nginx_license_status | default ('present') }}"
+      when: nginx_app_protect_manage_repo | bool
 
-- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
-  lineinfile:
-    path: /etc/apk/repositories
-    insertafter: EOF
-    line: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_alpine) }}"
-    state: "{{ nginx_license_status | default ('present') }}"
-  when: nginx_app_protect_manage_repo | bool
+    - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
+      lineinfile:
+        path: /etc/apk/repositories
+        insertafter: EOF
+        line: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_alpine) }}"
+        state: "{{ nginx_license_status | default ('present') }}"
+      when: nginx_app_protect_manage_repo | bool
 
-- name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
-  lineinfile:
-    path: /etc/apk/repositories
-    insertafter: EOF
-    line: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_alpine) }}"
-    state: "{{ nginx_license_status | default ('present') }}"
-  when:
-    - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
-    - nginx_app_protect_manage_repo | bool
+    - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
+      lineinfile:
+        path: /etc/apk/repositories
+        insertafter: EOF
+        line: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_alpine) }}"
+        state: "{{ nginx_license_status | default ('present') }}"
+      when:
+        - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
+        - nginx_app_protect_manage_repo | bool
+  when: nginx_app_protect_waf_state != "absent"
 
 - name: (Alpine Linux) Install NGINX App Protect
   apk:
