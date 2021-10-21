@@ -72,13 +72,13 @@
 - name: Ensure NGINX App Protect is running
   meta: flush_handlers
 
+- name: Remove NGINX App Protect license
+  include_tasks: "{{ role_path }}/tasks/common/install/remove-license.yml"
+  when: (nginx_app_protect_remove_license | bool) or nginx_app_protect_waf_state == "absent" or nginx_app_protect_dos_state == "absent"
+  tags: nginx_app_protect_remove_license
+
 - name: Remove NGINX App Protect WAF
   block:
-    - name: Remove NGINX App Protect license
-      include_tasks: "{{ role_path }}/tasks/common/install/remove-license.yml"
-      when: nginx_app_protect_remove_license | bool
-      tags: nginx_app_protect_remove_license
-
     - name: Remove NGINX App Protect WAF package
       include_tasks: "{{ role_path }}/tasks/waf/install/install-app-protect-waf.yml"
       tags: nginx_app_protect_waf_remove
@@ -89,14 +89,7 @@
       tags: nginx_app_protect_waf_remove_config
   when: nginx_app_protect_waf_state == "absent"
 
-- name: Remove NGINX App Protect WAF
-  block:
-    - name: Remove NGINX App Protect license
-      include_tasks: "{{ role_path }}/tasks/common/install/remove-license.yml"
-      when: nginx_app_protect_remove_license | bool
-      tags: nginx_app_protect_remove_license
-
-    - name: Remove NGINX App Protect DoS package
-      include_tasks: "{{ role_path }}/tasks/dos/install/install-app-protect-dos.yml"
-      tags: nginx_app_protect_dos_remove
+- name: Remove NGINX App Protect DoS
+  include_tasks: "{{ role_path }}/tasks/dos/install/install-app-protect-dos.yml"
+  tags: nginx_app_protect_dos_remove
   when: nginx_app_protect_dos_state == "absent"

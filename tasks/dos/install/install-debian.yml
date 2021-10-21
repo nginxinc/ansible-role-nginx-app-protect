@@ -8,7 +8,7 @@
       Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Host "true";
       Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
       Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
-    state: "{{ nginx_license_status | default ('present') }}"
+    state: "{{ nginx_app_protect_license_status | default ('present') }}"
     mode: 0444
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS license
@@ -45,5 +45,5 @@
     state: "{{ nginx_app_protect_dos_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
-  when: nginx_license_status is not defined
+  when: nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX

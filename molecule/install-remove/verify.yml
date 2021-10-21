@@ -65,3 +65,19 @@
       check_mode: true
       register: uninstall
       failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect DoS is uninstalled
+      package:
+        name: app-protect-dos
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect DoS Plus Module is uninstalled
+      package:
+        name: nginx-plus-module-appprotectdos
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)

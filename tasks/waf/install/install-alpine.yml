@@ -1,28 +1,28 @@
 ---
-- name: (Alpine Linux) Create Repositories
+- name: (Alpine Linux) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Create') }} Repositories
   block:
-    - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
+    - name: (Alpine Linux) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
       lineinfile:
         path: /etc/apk/repositories
         insertafter: EOF
         line: "{{ nginx_plus_repository | default(nginx_plus_default_repository_alpine) }}"
-        state: "{{ nginx_license_status | default ('present') }}"
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
       when: nginx_app_protect_manage_repo | bool
 
-    - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
+    - name: (Alpine Linux) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
       lineinfile:
         path: /etc/apk/repositories
         insertafter: EOF
         line: "{{ nginx_app_protect_repository | default(nginx_app_protect_default_repository_alpine) }}"
-        state: "{{ nginx_license_status | default ('present') }}"
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
       when: nginx_app_protect_manage_repo | bool
 
-    - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
+    - name: (Alpine Linux) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
       lineinfile:
         path: /etc/apk/repositories
         insertafter: EOF
         line: "{{ nginx_app_protect_security_updates_repository | default(nginx_app_protect_security_updates_default_repository_alpine) }}"
-        state: "{{ nginx_license_status | default ('present') }}"
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
       when:
         - (nginx_app_protect_install_signatures | bool) or (nginx_app_protect_install_threat_campaigns | bool)
         - nginx_app_protect_manage_repo | bool
@@ -34,8 +34,19 @@
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
-  when: nginx_license_status is not defined
+  when: nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
+
+- name: (Alpine Linux) Uninstall NGINX App Protect WAF dependencies
+  apk:
+    name:
+      - nginx-plus-module-appprotect
+      - app-protect-plugin
+      - app-protect-engine
+      - app-protect-compiler
+    state: absent
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_app_protect_license_status is not defined and nginx_app_protect_waf_state == "absent"
 
 - name: (Alpine Linux) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   apk:
@@ -45,7 +56,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - nginx_app_protect_install_signatures | bool
-    - nginx_license_status is not defined
+    - nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Alpine Linux) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
@@ -56,5 +67,5 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - nginx_app_protect_install_threat_campaigns | bool
-    - nginx_license_status is not defined
+    - nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX

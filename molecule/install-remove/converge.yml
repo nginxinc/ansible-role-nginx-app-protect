@@ -2,10 +2,11 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: Uninstall NGINX App Protect WAF
+    - name: Uninstall NGINX App Protect WAF and DoS
       include_role:
         name: ansible-role-nginx-app-protect
       vars:
-        nginx_app_protect_dos_enable: false
+        nginx_app_protect_waf_enable: false
         nginx_app_protect_waf_state: absent
+        nginx_app_protect_dos_enable: false
         nginx_app_protect_dos_state: absent

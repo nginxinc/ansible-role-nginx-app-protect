@@ -1,5 +1,5 @@
 ---
-- name: (Debian/Ubuntu) Create Repositories
+- name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Create') }} Repositories
   block:
     - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license
       blockinfile:
@@ -10,7 +10,7 @@
           Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Host "true";
           Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
           Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
-        state: "{{ nginx_license_status | default ('present') }}"
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
         mode: 0444
 
     - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF license
@@ -75,8 +75,19 @@
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
-  when: nginx_license_status is not defined
+  when: nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
+
+- name: (Debian/Ubuntu) Uninstall NGINX App Protect WAF dependencies
+  apt:
+    name:
+      - nginx-plus-module-appprotect
+      - app-protect-plugin
+      - app-protect-engine
+      - app-protect-compiler
+    state: absent
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_app_protect_license_status is not defined and nginx_app_protect_waf_state == "absent"
 
 - name: (Debian/Ubuntu) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   apt:
@@ -86,7 +97,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - nginx_app_protect_install_signatures | bool
-    - nginx_license_status is not defined
+    - nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Debian/Ubuntu) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
@@ -97,5 +108,5 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - nginx_app_protect_install_threat_campaigns | bool
-    - nginx_license_status is not defined
+    - nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
