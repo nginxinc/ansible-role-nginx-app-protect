@@ -76,11 +76,11 @@
     - name: Remove NGINX App Protect WAF package
       include_tasks: "{{ role_path }}/tasks/waf/install-app-protect-waf.yml"
       when: nginx_app_protect_waf_state == "absent"
-      tags: nginx_app_protect_remove
+      tags: nginx_app_protect_waf_remove
 
     - name: Remove NGINX App Protect DoS package
       include_tasks: "{{ role_path }}/tasks/dos/install-app-protect-waf.yml"
       when: nginx_app_protect_dos_state == "absent"
-      tags: nginx_app_protect_remove
+      tags: nginx_app_protect_dos_remove
   when: nginx_app_protect_waf_state == "absent"
         or nginx_app_protect_dos_state == "absent"
