@@ -8,7 +8,8 @@ Refactor how `nginx_app_protect_*_policy_file*` variables work. You can now spec
 
 BUG FIXES:
 
-Fix instances of `nginx_app_protect_license_status` being incorrectly set as `nginx_license_status` instead.
+* Fix instances of `nginx_app_protect_license_status` being incorrectly set as `nginx_license_status` instead.
+* Add NGINX App Protect DoS to the NAP uninstall tasks.
 
 ## 0.6.2 (October 25, 2021)
 
