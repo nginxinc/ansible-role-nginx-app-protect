@@ -47,7 +47,7 @@
     update_cache: true
     allow_downgrade: true
   ignore_errors: "{{ ansible_check_mode }}"
-  when: nginx_license_status is not defined
+  when: nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Amazon Linux/CentOS/RHEL) Install NGINX App Protect WAF signatures {{ nginx_app_protect_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
@@ -59,7 +59,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - nginx_app_protect_install_signatures | bool
-    - nginx_license_status is not defined
+    - nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Amazon Linux/CentOS/RHEL) Install NGINX App Protect WAF threat campaigns {{ nginx_app_protect_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
@@ -71,5 +71,5 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - nginx_app_protect_install_threat_campaigns | bool
-    - nginx_license_status is not defined
+    - nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
