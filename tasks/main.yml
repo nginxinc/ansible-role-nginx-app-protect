@@ -34,16 +34,14 @@
 
     - name: Set up signing keys
       include_tasks: "{{ role_path }}/tasks/common/keys/setup-keys.yml"
-      when: nginx_app_protect_waf_state != "absent"
-            or nginx_app_protect_install_signatures | bool
+      when: nginx_app_protect_install_signatures | bool
             or nginx_app_protect_install_threat_campaigns | bool
       tags: nginx_app_protect_key
 
     - name: Set up license
       include_tasks: "{{ role_path }}/tasks/common/install/setup-license.yml"
       when:
-        - nginx_app_protect_waf_state != "absent"
-          or nginx_app_protect_install_signatures | bool
+        - nginx_app_protect_install_signatures | bool
           or nginx_app_protect_install_threat_campaigns | bool
         - nginx_app_protect_setup_license | bool
       tags: nginx_app_protect_setup_license
@@ -68,18 +66,21 @@
       when: nginx_app_protect_configure | bool
       tags: nginx_app_protect_configure
   when: nginx_app_protect_waf_state != "absent"
+        or nginx_app_protect_dos_state != "absent"
 
 - name: Ensure NGINX App Protect is running
   meta: flush_handlers
 
 - name: Remove NGINX App Protect
   block:
-    - name: Remove NGINX App Protect package
-      include_tasks: "{{ role_path }}/tasks/waf/install/install-app-protect-waf.yml"
-      tags: nginx_app_protect_remove
+    - name: Remove NGINX App Protect WAF package
+      include_tasks: "{{ role_path }}/tasks/waf/install-app-protect-waf.yml"
+      when: nginx_app_protect_waf_state == "absent"
+      tags: nginx_app_protect_waf_remove
 
-    - name: Disable NGINX App Protect config
-      include_tasks: "{{ role_path }}/tasks/waf/config/configure-app-protect-waf.yml"
-      when: nginx_app_protect_configure | bool
-      tags: nginx_app_protect_remove_config
+    - name: Remove NGINX App Protect DoS package
+      include_tasks: "{{ role_path }}/tasks/dos/install-app-protect-waf.yml"
+      when: nginx_app_protect_dos_state == "absent"
+      tags: nginx_app_protect_dos_remove
   when: nginx_app_protect_waf_state == "absent"
+        or nginx_app_protect_dos_state == "absent"
