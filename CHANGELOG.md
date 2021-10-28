@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0 (Unreleased)
+
+BREAKING CHANGES:
+
+Refactor how `nginx_app_protect_*_policy_file*` variables work. You can now specify a list of both `security` and `log` policies for both NGINX App Protect WAF and NGINX App Protect DoS.
+
 ## 0.6.2 (October 25, 2021)
 
 ENHANCEMENTS:

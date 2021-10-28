@@ -43,3 +43,21 @@
       register: service
       failed_when: (service is changed) or (service is failed)
       when: ansible_os_family != "Alpine"
+
+    - name: Store the statistics of /etc/app_protect/conf/test-security-policy.json in the 'security_policy' variable
+      stat:
+        path: /etc/app_protect/conf/test-security-policy.json
+      register: security_policy
+
+    - name: Ensure /etc/app_protect/conf/test-security-policy.json exists
+      assert:
+        that: security_policy.stat.exists | bool
+
+    - name: Store the statistics of /etc/app_protect/conf/test-log-profile.json in the 'log_profile' variable
+      stat:
+        path: /etc/app_protect/conf/test-log-profile.json
+      register: log_profile
+
+    - name: Ensure /etc/app_protect/conf/test-security-profile.json exists
+      assert:
+        that: log_profile.stat.exists | bool
