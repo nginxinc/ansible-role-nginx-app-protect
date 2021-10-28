@@ -65,7 +65,7 @@
   tags: nginx_app_protect_remove_license
 
 - name: Configure NGINX App Protect
-  include_tasks: "{{ role_path }}/tasks/common/config/configure-app-protect-waf.yml"
+  include_tasks: "{{ role_path }}/tasks/common/config/configure-app-protect.yml"
   when: nginx_app_protect_configure | bool
   tags: nginx_app_protect_configure
 
