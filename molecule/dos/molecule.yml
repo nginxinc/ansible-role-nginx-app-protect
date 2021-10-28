@@ -1,8 +1,4 @@
 ---
-dependency:
-  name: galaxy
-  options:
-    role-file: molecule/dos/requirements.yml
 driver:
   name: docker
 lint: |
@@ -41,6 +37,5 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    prepare: prepare.yml
     converge: converge.yml
     verify: verify.yml

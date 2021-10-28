@@ -11,8 +11,8 @@
           - "{{ item }} is defined"
           - "{{ item }} | length > 0"
       loop:
-        - nginx_app_protect_security_policy_file_src
-        - nginx_app_protect_security_policy_file_dst
+        - nginx_app_protect_security_policy_file.0.src
+        - nginx_app_protect_security_policy_file.0.dest
       when: nginx_app_protect_security_policy_file_enable | bool
 
     - name: Fail if variables for 'nginx_app_protect_log_policy_file_enable' are not defined
@@ -21,8 +21,8 @@
           - "{{ item }} is defined"
           - "{{ item }} | length > 0"
       loop:
-        - nginx_app_protect_log_policy_file_src
-        - nginx_app_protect_log_policy_file_dst
+        - nginx_app_protect_log_policy_file.0.src
+        - nginx_app_protect_log_policy_file.0.dest
       when: nginx_app_protect_log_policy_file_enable | bool
   when: nginx_app_protect_configure | bool
 
@@ -50,12 +50,12 @@
   when: nginx_app_protect_waf_state != "absent" or nginx_app_protect_dos_state != "absent"
 
 - name: Install NGINX App Protect WAF
-  include_tasks: "{{ role_path }}/tasks/waf/install/install-app-protect-waf.yml"
+  include_tasks: "{{ role_path }}/tasks/waf/install-app-protect-waf.yml"
   when: nginx_app_protect_waf_enable | bool
   tags: nginx_app_protect_install_app_protect_waf
 
 - name: Install NGINX App Protect DoS
-  include_tasks: "{{ role_path }}/tasks/dos/install/install-app-protect-dos.yml"
+  include_tasks: "{{ role_path }}/tasks/dos/install-app-protect-dos.yml"
   when: nginx_app_protect_dos_enable | bool
   tags: nginx_app_protect_install_app_protect_dos
 
@@ -65,7 +65,7 @@
   tags: nginx_app_protect_remove_license
 
 - name: Configure NGINX App Protect
-  include_tasks: "{{ role_path }}/tasks/waf/config/configure-app-protect-waf.yml"
+  include_tasks: "{{ role_path }}/tasks/common/config/configure-app-protect-waf.yml"
   when: nginx_app_protect_configure | bool
   tags: nginx_app_protect_configure
 
@@ -77,19 +77,12 @@
   when: (nginx_app_protect_remove_license | bool) or nginx_app_protect_waf_state == "absent" or nginx_app_protect_dos_state == "absent"
   tags: nginx_app_protect_remove_license
 
-- name: Remove NGINX App Protect WAF
-  block:
-    - name: Remove NGINX App Protect WAF package
-      include_tasks: "{{ role_path }}/tasks/waf/install/install-app-protect-waf.yml"
-      tags: nginx_app_protect_waf_remove
-
-    - name: Disable NGINX App Protect config
-      include_tasks: "{{ role_path }}/tasks/waf/config/configure-app-protect-waf.yml"
-      when: nginx_app_protect_configure | bool
-      tags: nginx_app_protect_waf_remove_config
+- name: Remove NGINX App Protect WAF package
+  include_tasks: "{{ role_path }}/tasks/waf/install-app-protect-waf.yml"
   when: nginx_app_protect_waf_state == "absent"
+  tags: nginx_app_protect_waf_remove
 
 - name: Remove NGINX App Protect DoS
-  include_tasks: "{{ role_path }}/tasks/dos/install/install-app-protect-dos.yml"
-  tags: nginx_app_protect_dos_remove
+  include_tasks: "{{ role_path }}/tasks/dos/install-app-protect-dos.yml"
   when: nginx_app_protect_dos_state == "absent"
+  tags: nginx_app_protect_dos_remove
