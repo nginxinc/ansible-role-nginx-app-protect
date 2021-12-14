@@ -18,10 +18,12 @@
   block:
     - name: (Debian/Ubuntu) Add NGINX Plus signing key
       apt_key:
+        keyring: /usr/share/keyrings/nginx-archive-keyring.gpg
         url: "{{ nginx_app_protect_signing_key.nginx_plus | default(nginx_app_protect_default_signing_key_pgp) }}"
 
     - name: (Debian/Ubuntu) Add NGINX App Protect security updates signing key
       apt_key:
+        keyring: /usr/share/keyrings/nginx-archive-keyring.gpg
         url: "{{ nginx_app_protect_signing_key.security_updates | default(nginx_app_protect_security_updates_default_signing_key_pgp) }}"
   when: ansible_os_family == "Debian"
 

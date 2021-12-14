@@ -34,16 +34,11 @@
 
     - name: Set up signing keys
       include_tasks: "{{ role_path }}/tasks/common/keys/setup-keys.yml"
-      when: nginx_app_protect_install_signatures | bool
-            or nginx_app_protect_install_threat_campaigns | bool
       tags: nginx_app_protect_key
 
     - name: Set up license
       include_tasks: "{{ role_path }}/tasks/common/install/setup-license.yml"
-      when:
-        - nginx_app_protect_install_signatures | bool
-          or nginx_app_protect_install_threat_campaigns | bool
-        - nginx_app_protect_setup_license | bool
+      when: nginx_app_protect_setup_license | bool
       tags: nginx_app_protect_setup_license
 
     - name: Install NGINX App Protect WAF
