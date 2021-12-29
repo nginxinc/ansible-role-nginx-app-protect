@@ -19,7 +19,7 @@ nginx_app_protect_waf_state: present
 # Default is present.
 nginx_app_protect_dos_state: present
 
-# If you have a RHEL subscription, NGINX App Protect WAF's dependencies will use subscription repos.
+# If you have a RHEL subscription, NGINX App Protect WAF and DoS's dependencies will use subscription repos.
 # Otherwise, it will source packages from CentOS' repositories.
 # Default is false.
 nginx_app_protect_use_rhel_subscription_repos: false
