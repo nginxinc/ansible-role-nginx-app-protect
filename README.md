@@ -97,6 +97,9 @@ CentOS:
   - 7.4+
 Debian:
   - buster (10)
+RHEL:
+  - 7.4+
+  - 8.0+
 Ubuntu:
   - bionic (18.04)
   - focal (20.04)

@@ -7,11 +7,11 @@ nginx_app_protect_waf_linux_families:
   amazon: [
     '2',
   ]
-  debian: [
-    '10',
-  ]
   centos: [
     '7.4', '7.5', '7.6', '7.7', '7.8', '7.9',
+  ]
+  debian: [
+    '10',
   ]
   redhat: [
     '7.4', '7.5', '7.6', '7.7', '7.8', '7.9',
@@ -27,6 +27,9 @@ nginx_app_protect_dos_linux_families:
   ]
   debian: [
     '10',
+  ]
+  redhat: [
+    '7.4', '7.5', '7.6', '7.7', '7.8', '7.9', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5',
   ]
   ubuntu: [
     '18.04', '20.04',

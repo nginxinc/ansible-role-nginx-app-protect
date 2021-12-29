@@ -4,7 +4,8 @@
 
 ENHANCEMENTS:
 
-Add signing keys to a unique NGINX keyring on Debian based systems.
+* Add signing keys to a unique NGINX keyring on Debian based systems.
+* Add support of RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
 
 BUG FIXES:
 
