@@ -25,36 +25,37 @@
     - name: (RHEL) Install extended dependencies from CentOS repositories
       yum_repository:
         name: CentOS-7
-        baseurl: "http://ftp.heanet.ie/pub/centos/{{ ansible_distribution_major_version }}/os/$basearch/"
+        baseurl: "http://ftp.heanet.ie/pub/centos/7/os/$basearch/"
         description: NGINX App Protect dependencies
         enabled: true
         gpgcheck: true
-        gpgkey: "http://ftp.heanet.ie/pub/centos/{{ ansible_distribution_major_version }}/os/$basearch/\
-                RPM-GPG-KEY-CentOS-{{ ansible_distribution_major_version }}"
+        gpgkey: "http://ftp.heanet.ie/pub/centos/7/os/$basearch/\
+                RPM-GPG-KEY-CentOS-7"
         state: "{{ nginx_app_protect_license_status | default ('present') }}"
       when: not nginx_app_protect_use_rhel_subscription_repos | bool
 
-    - name: (RHEL) Install extended dependencies for NGINX App Protect DoS from epel repositories
-      yum_repository:
-        name: "epel-{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}"
-        baseurl: "https://download-ib01.fedoraproject.org/pub/epel/{{ ansible_distribution_major_version }}/x86_64"
-        description: NGINX App Protect DoS dependencies
-        enabled: true
-        gpgcheck: true
-        gpgkey: "https://download-ib01.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
-        state: "{{ nginx_app_protect_license_status | default ('present') }}"
-      when: not nginx_app_protect_use_rhel_subscription_repos | bool and nginx_app_protect_dos_enable | bool
+    - name: (RHEL) Install extended dependencies for NGINX App Protect DoS
+      block:
+        - name: (RHEL) Install from epel repositories
+          yum_repository:
+            name: "epel-CentOS-7"
+            baseurl: "https://download-ib01.fedoraproject.org/pub/epel/7/x86_64"
+            description: NGINX App Protect DoS dependencies
+            enabled: true
+            gpgcheck: true
+            gpgkey: "https://download-ib01.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7"
+            state: "{{ nginx_app_protect_license_status | default ('present') }}"
 
-    - name: (RHEL) Install extended dependencies for NGINX App Protect DoS from extras repositories
-      yum_repository:
-        name: "extras-{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}"
-        mirrorlist: "http://mirrorlist.centos.org/?release={{ ansible_distribution_major_version }}&arch=x86_64&repo=extras"
-        description: NGINX App Protect DoS dependencies
-        enabled: true
-        gpgcheck: true
-        gpgkey: "http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-{{ ansible_distribution_major_version }}"
-        state: "{{ nginx_app_protect_license_status | default ('present') }}"
-      when: not nginx_app_protect_use_rhel_subscription_repos | bool and nginx_app_protect_dos_enable | bool
+        - name: (RHEL) Install from extras repositories
+          yum_repository:
+            name: "extras-CentOS-7"
+            mirrorlist: "http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=extras"
+            description: NGINX App Protect DoS dependencies
+            enabled: true
+            gpgcheck: true
+            gpgkey: "http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7"
+            state: "{{ nginx_app_protect_license_status | default ('present') }}"
+      when: not nginx_app_protect_use_rhel_subscription_repos | bool and nginx_app_protect_dos_enable | bool and ansible_distribution_major_version == 7
 
     - name: (RHEL) Install extended dependencies from RHEL subscription repositories
       rhsm_repository:
