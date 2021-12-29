@@ -48,7 +48,7 @@
     - name: (RHEL) Install extended dependencies for NGINX App Protect DoS from extras repositories
       yum_repository:
         name: "extras-{{ ansible_distribution | lower}}-{{ ansible_distribution_major_version }}"
-        mirrorlist: "https://download-ib01.fedoraproject.org/pub/epel/{{ ansible_distribution_major_version }}/x86_64"
+        mirrorlist: "http://mirrorlist.centos.org/?release={{ ansible_distribution_major_version }}&arch=x86_64&repo=extras"
         description: NGINX App Protect DoS dependencies
         enabled: true
         gpgcheck: true
