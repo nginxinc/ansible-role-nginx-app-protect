@@ -62,6 +62,13 @@
           - "rhel-{{ ansible_distribution_major_version }}-server-rpms"
           - "rhel-{{ ansible_distribution_major_version }}-server-optional-rpms"
       when: nginx_app_protect_use_rhel_subscription_repos | bool
+
+    - name: (RHEL) Install additional dependencies for NGINX App Protect DoS from RHEL subscription repositories
+      rhsm_repository:
+        name:
+          - "rhel-{{ ansible_distribution_major_version }}-server-extras-rpms"
+          - "rhel-ha-for-rhel-{{ ansible_distribution_major_version }}-server-rpms"
+      when: nginx_app_protect_use_rhel_subscription_repos | bool and nginx_app_protect_dos_enable | bool
   when: ansible_distribution == "RedHat"
 
 - name: (Amazon Linux) Set up Amazon Linux Extras repositories
