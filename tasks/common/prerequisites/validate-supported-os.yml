@@ -44,4 +44,4 @@
 - name: Abort if installing on RHEL > 7 without subscription details
   fail:
     msg: NGINX App Protect cannot be installed on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }} without setting the 'nginx_app_protect_use_rhel_subscription_repos' variable
-  when: ansible_distribution == 'RedHat' and ansible_distribution_version > 7 and not nginx_app_protect_use_rhel_subscription_repos | bool
+  when: ansible_distribution == 'RedHat' and ansible_distribution_version | int > 7 and not nginx_app_protect_use_rhel_subscription_repos | bool
