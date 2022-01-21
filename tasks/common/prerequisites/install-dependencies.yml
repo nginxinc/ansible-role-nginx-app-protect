@@ -55,7 +55,7 @@
             gpgcheck: true
             gpgkey: "http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7"
             state: "{{ nginx_app_protect_license_status | default ('present') }}"
-      when: not nginx_app_protect_use_rhel_subscription_repos | bool and nginx_app_protect_dos_enable | bool and ansible_distribution_major_version == 7
+      when: not nginx_app_protect_use_rhel_subscription_repos | bool and nginx_app_protect_dos_enable | bool and ansible_distribution_major_version | int == 7
 
     - name: (RHEL) Install extended dependencies from RHEL subscription repositories
       rhsm_repository:
