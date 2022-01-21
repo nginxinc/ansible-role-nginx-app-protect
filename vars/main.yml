@@ -47,7 +47,7 @@ nginx_app_protect_debian_dependencies: [
 
 # Red Hat dependencies
 nginx_app_protect_redhat_dependencies: [
-  'ca-certificates', 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
+  'ca-certificates', 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm',
 ]
 
 # Amazon Linux 2 extras
