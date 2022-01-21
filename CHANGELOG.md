@@ -6,6 +6,7 @@ ENHANCEMENTS:
 
 * Add signing keys to a unique NGINX keyring on Debian based systems.
 * Add support of RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
+* Add support of RHEL 8.1+ for NGINX App Protect WAF 3.8.
 
 BUG FIXES:
 
