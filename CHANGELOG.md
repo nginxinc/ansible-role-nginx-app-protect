@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.1 (Unreleased)
+
+ENHANCEMENTS:
+
+Add signing keys to a unique NGINX keyring on Debian based systems.
+
+BUG FIXES:
+
+License and keys should now be correctly setup when neither signatures or threat campaigns are installed.
+
 ## 0.7.0 (October 28, 2021)
 
 BREAKING CHANGES:
