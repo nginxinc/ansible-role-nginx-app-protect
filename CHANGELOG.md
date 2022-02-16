@@ -4,7 +4,8 @@
 
 ENHANCEMENTS:
 
-Add signing keys to a unique NGINX keyring on Debian based systems.
+* Add signing keys to a unique NGINX keyring on Debian based systems.
+* Bump the Ansible `community.general` collection to `4.4.0` and `community.docker` collection to `2.1.1`.
 
 BUG FIXES:
 
