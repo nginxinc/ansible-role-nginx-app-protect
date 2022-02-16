@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.1 (Unreleased)
+## 0.7.1 (February 16, 2022)
 
 ENHANCEMENTS:
 
