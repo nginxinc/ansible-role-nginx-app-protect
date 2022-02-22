@@ -1,12 +1,13 @@
 # Changelog
 
-## 0.7.1 (Unreleased)
+## 0.7.1 (February 16, 2022)
 
 ENHANCEMENTS:
 
 * Add signing keys to a unique NGINX keyring on Debian based systems.
 * Add support of RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
 * Add support of RHEL 8.1+ for NGINX App Protect WAF 3.8.
+* Bump the Ansible `community.general` collection to `4.4.0` and `community.docker` collection to `2.1.1`.
 
 BUG FIXES:
 
