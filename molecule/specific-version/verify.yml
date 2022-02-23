@@ -5,11 +5,9 @@
     specify_app_protect_signatures_version: true
     specify_app_protect_threat_campaigns_version: true
     app_protect_signature_version_matrix:
-      alpine: "=2021.01.20-r1"
       debian: "=2019.07.16-1"
       redhat: "-2019.07.16"
     app_protect_threat_campaigns_version_matrix:
-      alpine: "=2021.01.03-r1"
       debian: "=2020.08.20-1"
       redhat: "-2020.08.20"
   tasks:
@@ -20,7 +18,6 @@
       check_mode: true
       register: install
       failed_when: (install is changed) or (install is failed)
-      when: ansible_os_family != "Alpine"
 
     - name: Check if NGINX App Protect WAF is installed
       package:
@@ -54,7 +51,6 @@
       check_mode: true
       register: service
       failed_when: (service is changed) or (service is failed)
-      when: ansible_os_family != "Alpine"
 
     - name: Check NGINX App Protect WAF version
       block:
@@ -69,4 +65,3 @@
         - name: Verify installed NAP threat campaigns version matches requested version
           assert:
             that: (ansible_facts.packages['app-protect-threat-campaigns'] | map(attribute='version') | first) == (app_protect_threat_campaigns_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, ''))
-      when: ansible_os_family != "Alpine"
