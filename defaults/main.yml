@@ -99,9 +99,6 @@ nginx_app_protect_start: true
 nginx_app_protect_service_modify: true
 nginx_app_protect_timeout: 180
 
-# Creates basic configuration files and enables NGINX App Protect WAF on the target host
-nginx_app_protect_configure: false
-
 # Copy local NGINX App Protect security policy to host
 nginx_app_protect_security_policy_file_enable: false
 nginx_app_protect_security_policy_file:

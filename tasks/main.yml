@@ -3,28 +3,25 @@
   include_tasks: "{{ role_path }}/tasks/common/prerequisites/validate-supported-os.yml"
   when: nginx_app_protect_waf_state != "absent" or nginx_app_protect_dos_state != "absent"
 
-- name: Check for conflicting WAF config variables
-  block:
-    - name: Fail if variables for 'nginx_app_protect_security_policy_file_enable' are not defined
-      assert:
-        that:
-          - "{{ item }} is defined"
-          - "{{ item }} | length > 0"
-      loop:
-        - nginx_app_protect_security_policy_file.0.src
-        - nginx_app_protect_security_policy_file.0.dest
-      when: nginx_app_protect_security_policy_file_enable | bool
+- name: Fail if variables for 'nginx_app_protect_security_policy_file_enable' are not defined
+  assert:
+    that:
+      - "{{ item }} is defined"
+      - "{{ item }} | length > 0"
+  loop:
+    - nginx_app_protect_security_policy_file.0.src
+    - nginx_app_protect_security_policy_file.0.dest
+  when: nginx_app_protect_security_policy_file_enable | bool
 
-    - name: Fail if variables for 'nginx_app_protect_log_policy_file_enable' are not defined
-      assert:
-        that:
-          - "{{ item }} is defined"
-          - "{{ item }} | length > 0"
-      loop:
-        - nginx_app_protect_log_policy_file.0.src
-        - nginx_app_protect_log_policy_file.0.dest
-      when: nginx_app_protect_log_policy_file_enable | bool
-  when: nginx_app_protect_configure | bool
+- name: Fail if variables for 'nginx_app_protect_log_policy_file_enable' are not defined
+  assert:
+    that:
+      - "{{ item }} is defined"
+      - "{{ item }} | length > 0"
+  loop:
+    - nginx_app_protect_log_policy_file.0.src
+    - nginx_app_protect_log_policy_file.0.dest
+  when: nginx_app_protect_log_policy_file_enable | bool
 
 - name: Install prerequisites
   include_tasks: "{{ role_path }}/tasks/common/prerequisites/install-dependencies.yml"
@@ -63,5 +60,6 @@
 
 - name: Configure NGINX App Protect
   include_tasks: "{{ role_path }}/tasks/common/config/configure-app-protect.yml"
-  when: nginx_app_protect_configure | bool
+  when: nginx_app_protect_security_policy_file_enable | bool
+        or nginx_app_protect_log_policy_file_enable | bool
   tags: nginx_app_protect_configure

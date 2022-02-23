@@ -7,6 +7,7 @@ BREAKING CHANGES:
 * Rename `nginx_app_protect_<waf/dos>_state` parameter to `nginx_app_protect_<waf/dos>_setup` parameters.
 * Rename multiple `nginx_app_protect_*` parameters and tags to `nginx_app_protect_waf_*` to aid in disambiguation.
 * Cleanup remaining Alpine Linux tasks.
+* Remove `nginx_app_protect_configure` parameter since it has limited functionality given the `nginx_app_protect_*_policy_file_enable` parameters.
 
 ENHANCEMENTS:
 
