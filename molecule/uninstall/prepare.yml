@@ -24,12 +24,10 @@
       include_role:
         name: ansible-role-nginx-app-protect
       vars:
-        nginx_app_protect_waf_enable: true
-        nginx_app_protect_waf_state: present
-        nginx_app_protect_dos_enable: true
-        nginx_app_protect_dos_state: present
         nginx_app_protect_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
-        nginx_app_protect_install_signatures: true
-        nginx_app_protect_install_threat_campaigns: true
+        nginx_app_protect_waf_enable: true
+        nginx_app_protect_waf_install_signatures: true
+        nginx_app_protect_waf_install_threat_campaigns: true
+        nginx_app_protect_dos_enable: true

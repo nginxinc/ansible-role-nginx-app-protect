@@ -1,42 +1,16 @@
 ---
-- name: (Debian/Red Hat OSs) Set up NGINX App Protect license
-  block:
-    - name: (Debian/Red Hat OSs) Create SSL directory
-      file:
-        path: /etc/ssl/nginx
-        state: directory
-        mode: 0755
+- name: (Debian/Red Hat OSs) Create SSL directory
+  file:
+    path: /etc/ssl/nginx
+    state: directory
+    mode: 0755
 
-    - name: (Debian/Red Hat OSs) Copy NGINX App Protect certificate and license key
-      copy:
-        src: "{{ item }}"
-        dest: /etc/ssl/nginx
-        decrypt: true
-        mode: 0444
-      loop:
-        - "{{ nginx_app_protect_license.certificate }}"
-        - "{{ nginx_app_protect_license.key }}"
-  when: ansible_os_family != "Alpine"
-
-- name: (Alpine Linux) Set up NGINX App Protect license
-  block:
-    - name: (Alpine Linux) Create APK directory
-      file:
-        path: /etc/apk
-        state: directory
-        mode: 0755
-
-    - name: (Alpine Linux) Copy NGINX App Protect key
-      copy:
-        src: "{{ nginx_app_protect_license.key }}"
-        dest: /etc/apk/cert.key
-        decrypt: true
-        mode: 0444
-
-    - name: (Alpine Linux) Copy NGINX App Protect certificate
-      copy:
-        src: "{{ nginx_app_protect_license.certificate }}"
-        dest: /etc/apk/cert.pem
-        decrypt: true
-        mode: 0444
-  when: ansible_os_family == "Alpine"
+- name: (Debian/Red Hat OSs) Copy NGINX App Protect certificate and license key
+  copy:
+    src: "{{ item }}"
+    dest: /etc/ssl/nginx
+    decrypt: true
+    mode: 0444
+  loop:
+    - "{{ nginx_app_protect_license.certificate }}"
+    - "{{ nginx_app_protect_license.key }}"

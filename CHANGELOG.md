@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.8.0 (Unreleased)
+
+BREAKING CHANGES:
+
+* The `nginx_app_protect_remove_config` tag has been changed to `nginx_app_protect_waf_remove_config` to aid in disambiguation.
+* The `nginx_app_protect_remove` tag has been changed to `nginx_app_protect_waf_remove` to aid in disambiguation.
+
+ENHANCEMENTS:
+
+New molecule tests for NGINX App Protect WAF and DoS removal scenarios.
+
+BUG FIXES:
+
+* Role was failing to uninstall App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
+* Uninstallation scenario was unintentionally creating repository entries.
+
 ## 0.7.1 (February 16, 2022)
 
 ENHANCEMENTS:
@@ -24,25 +40,15 @@ BUG FIXES:
 
 ## 0.6.2 (October 25, 2021)
 
-BREAKING CHANGES:
-
-* The `nginx_app_protect_remove_config` tag has been changed to `nginx_app_protect_waf_remove_config` to aid in disambiguation.
-* The `nginx_app_protect_remove` tag has been changed to `nginx_app_protect_waf_remove` to aid in disambiguation.
-
 ENHANCEMENTS:
 
-* Move non NGINX App Protect specific dependencies from the role into the Molecule Dockerfile.
-* New molecule tests for NGINX App Protect WAF and DoS removal scenarios.
-
-BUG FIXES:
-
-* Role was failing to uninstall App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
-* Always update NGINX App Protect dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
-* Uninstallation scenario was unintentionally creating repository entries.
 * Remove Alpine 3.10 from the list of supported platform for NAP (and from Molecule).
 * Move non NGINX App Protect specific dependencies from the role into the Molecule Dockerfile.
 * Change Dependabot frequency from daily to weekly.
 * Minor touch-up of GitHub actions workflows.
+
+BUG FIXES:
+
 * NGINX App Protect WAF 3.6 has been released and with it comes support for NGINX Plus R25. Per last release's KNOWN ISSUES, NGINX App Protect DoS will still only work with NGINX Plus R24.
 * Always update NGINX App Protect dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
 
