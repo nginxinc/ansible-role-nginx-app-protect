@@ -65,6 +65,3 @@
   include_tasks: "{{ role_path }}/tasks/common/config/configure-app-protect.yml"
   when: nginx_app_protect_configure | bool
   tags: nginx_app_protect_configure
-
-# - name: Ensure NGINX App Protect is running
-#   meta: flush_handlers
