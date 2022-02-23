@@ -13,12 +13,12 @@
   tasks:
     - name: Set NGINX App Protect WAF signature version fact
       set_fact:
-        nginx_app_protect_signatures_version: "{{ app_protect_signature_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"
+        nginx_app_protect_waf_signatures_version: "{{ app_protect_signature_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"
       when: specify_app_protect_signatures_version| bool
 
     - name: Set NGINX App Protect WAF threat campaigns version fact
       set_fact:
-        nginx_app_protect_threat_campaigns_version: "{{ app_protect_threat_campaigns_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"
+        nginx_app_protect_waf_threat_campaigns_version: "{{ app_protect_threat_campaigns_version_matrix[ansible_os_family | lower] }}{{ (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '') }}"
       when: specify_app_protect_threat_campaigns_version| bool
 
     - name: Install NGINX App Protect WAF
@@ -29,7 +29,6 @@
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
         nginx_app_protect_remove_license: false
-        nginx_app_protect_install_signatures: true
-        nginx_app_protect_install_threat_campaigns: true
-        nginx_app_protect_configure: false
-        nginx_app_protect_waf_state: present
+        nginx_app_protect_waf_install_signatures: true
+        nginx_app_protect_waf_install_threat_campaigns: true
+        # nginx_app_protect_waf_state: present
