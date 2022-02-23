@@ -5,19 +5,19 @@ nginx_app_protect_waf_enable: true
 # Specify whether or not this role should install the NGINX App Protect DoS product.
 nginx_app_protect_dos_enable: false
 
-# Specify whether you want to maintain your version of NGINX App Protect WAF, upgrade to the latest version, or remove NGINX App Protect WAF.
-# Using 'present' will install the latest version of NGINX App Protect WAF on a fresh install.
-# Using 'latest' will upgrade NGINX App Protect WAF to the latest version on every playbook execution.
-# Using 'absent' will remove NGINX App Protect WAF from your system.
-# Default is present.
-nginx_app_protect_waf_state: present
+# Specify whether you want to install NGINX App Protect WAF, upgrade to the latest version, or remove NGINX App Protect WAF.
+# Using 'install' will install the latest version of NGINX App Protect WAF on a fresh install.
+# Using 'upgrade' will upgrade NGINX App Protect WAF to the latest version of NGINX App Protect WAF on every playbook execution.
+# Using 'uninstall' will remove NGINX App Protect WAF from your system.
+# Default is install.
+nginx_app_protect_waf_setup: install
 
-# Specify whether you want to maintain your version of NGINX App Protect DoS, upgrade to the latest version, or remove NGINX App Protect DoS.
-# Using 'present' will install the latest version of NGINX App Protect DoS on a fresh install.
-# Using 'latest' will upgrade NGINX App Protect DoS to the latest version on every playbook execution.
-# Using 'absent' will remove NGINX App Protect DoS from your system.
-# Default is present.
-nginx_app_protect_dos_state: present
+# Specify whether you want to install NGINX App Protect DoS, upgrade to the latest version, or remove NGINX App Protect DoS.
+# Using 'install' will install the latest version of NGINX App Protect DoS on a fresh install.
+# Using 'upgrade' will upgrade NGINX App Protect DoS to the latest version of NGINX App Protect DoS on every playbook execution.
+# Using 'uninstall' will remove NGINX App Protect DoS from your system.
+# Default is install.
+nginx_app_protect_dos_setup: install
 
 # If you have a RHEL subscription, NGINX App Protect WAF's dependencies will use subscription repos.
 # Otherwise, it will source packages from CentOS' repositories.
@@ -27,16 +27,16 @@ nginx_app_protect_use_rhel_subscription_repos: false
 # The installation of NGINX App Protect WAF includes a base signature set, which may be out of date.
 # This option installs the latest NGINX App Protect signatures.
 # Default is true.
-nginx_app_protect_install_signatures: true
+nginx_app_protect_waf_install_signatures: true
 
 # (Optional) Installs a specific version of the NGINX App Protect WAF attack signatures package
 # Default is to install the latest release.
-# nginx_app_protect_signatures_version: "=2019.07.16-1" # <- Example value for Debian/Ubuntu
+# nginx_app_protect_waf_signatures_version: "=2019.07.16-1" # <- Example value for Debian/Ubuntu
 
 # The installation of NGINX App Protect WAF can include a page of frequently-updated, high-accuracy signatures called "threat campaigns".
 # This option installs the latest NGINX App Protect WAF threat campaigns signatures.
 # Default is true.
-nginx_app_protect_install_threat_campaigns: true
+nginx_app_protect_waf_install_threat_campaigns: true
 
 # (Optional) Installs a specific version of the NGINX App Protect WAF threat campaigns package
 # Default is to install the latest release.
@@ -46,25 +46,35 @@ nginx_app_protect_install_threat_campaigns: true
 # Default settings are the official NGINX signing key hosts.
 # nginx_app_protect_signing_key:
 #   nginx_plus: https://cs.nginx.com/static/keys/nginx_signing.key
-#   security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
+#   waf_security_updates: https://cs.nginx.com/static/keys/app-protect-security-updates.key
 
-# Specify whether or not you want to manage the NGINX App Protect repositories.
-# Using 'true' will manage NGINX App Protect repositories.
-# Using 'false' will not manage the NGINX App Protect repositories, allowing them to be managed through other means.
+# Specify whether or not you want to manage the NGINX App Protect WAF repositories.
+# Using 'true' will manage NGINX App Protect WAF repositories.
+# Using 'false' will not manage the NGINX App Protect WAF repositories, allowing them to be managed through other means.
 # Default is true
-nginx_app_protect_manage_repo: true
+nginx_app_protect_waf_manage_repo: true
+
+# Specify whether or not you want to manage the NGINX App Protect DoS repositories.
+# Using 'true' will manage NGINX App Protect DoS repositories.
+# Using 'false' will not manage the NGINX App Protect DoS repositories, allowing them to be managed through other means.
+# Default is true
+nginx_app_protect_dos_manage_repo: true
 
 # (Optional) Specify repository for NGINX Plus.
 # Defaults are the official NGINX repositories.
 # nginx_plus_repository: deb [arch=amd64] https://pkgs.nginx.com/plus/debian buster nginx-plus
 
-# (Optional) Specify repository for NGINX App Protect.
+# (Optional) Specify repository for NGINX App Protect WAF.
 # Defaults are the official NGINX repositories.
-# nginx_app_protect_repository: deb [arch=amd64] https://pkgs.nginx.com/app-protect/debian buster nginx-plus
+# nginx_app_protect_waf_repository: deb [arch=amd64 signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/app-protect/debian buster nginx-plus
 
-# (Optional) Specify repository for NGINX App Protect security updates.
+# (Optional) Specify repository for NGINX App Protect WAF security updates.
 # Defaults are the official NGINX repositories.
-# nginx_app_protect_security_updates_repository: deb [arch=amd64] https://app-protect-security-updates.nginx.com/debian buster nginx-plus
+# nginx_app_protect_waf_security_updates_repository: deb [arch=amd64 signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://app-protect-security-updates.nginx.com/debian buster nginx-plus
+
+# (Optional) Specify repository for NGINX App Protect DoS.
+# Defaults are the official NGINX repositories.
+# nginx_app_protect_dos_repository: deb [arch=amd64 signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/app-protect-dos/debian buster nginx-plus
 
 # Location of your NGINX App Protect license in your local machine.
 # Default is the files folder within the NGINX Ansible role.

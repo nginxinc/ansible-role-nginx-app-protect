@@ -1,6 +1,0 @@
----
-- name: Install NGINX App Protect DoS
-  include_tasks: "{{ role_path }}/tasks/dos/install-{{ ansible_os_family | lower }}.yml"
-
-- name: Modify NGINX Plus service
-  include_tasks: "{{ role_path }}/tasks/common/install/service-modification.yml"

@@ -42,7 +42,6 @@
       check_mode: true
       register: service
       failed_when: (service is changed) or (service is failed)
-      when: ansible_os_family != "Alpine"
 
     - name: Store the statistics of /etc/app_protect/conf/test-security-policy.json in the 'security_policy' variable
       stat:

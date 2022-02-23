@@ -11,7 +11,6 @@
   when:
     - nginx_app_protect_start | bool
     - not ansible_check_mode | bool
-    - ansible_os_family != "Alpine"
   listen: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Handler - NGINX App Protect) Check NGINX

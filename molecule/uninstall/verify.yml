@@ -1,0 +1,83 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if NGINX Plus is installed
+      package:
+        name: nginx-plus
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect WAF is uninstalled
+      package:
+        name: app-protect
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect WAF Compiler is uninstalled
+      package:
+        name: app-protect-compiler
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect WAF Engine is uninstalled
+      package:
+        name: app-protect-engine
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect WAF Plugin is uninstalled
+      package:
+        name: app-protect-plugin
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect WAF Plus Module is uninstalled
+      package:
+        name: nginx-plus-module-appprotect
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect WAF signatures is uninstalled
+      package:
+        name: app-protect-attack-signatures
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect WAF threat campaigns is uninstalled
+      package:
+        name: app-protect-threat-campaigns
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect DoS is uninstalled
+      package:
+        name: app-protect-dos
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)
+
+    - name: Check if NGINX App Protect DoS Plus Module is uninstalled
+      package:
+        name: nginx-plus-module-appprotectdos
+        state: absent
+      check_mode: true
+      register: uninstall
+      failed_when: (uninstall is changed) or (uninstall is failed)

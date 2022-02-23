@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.8.0 (Unreleased)
+
+BREAKING CHANGES:
+
+* Rename `nginx_app_protect_<waf/dos>_state` parameter to `nginx_app_protect_<waf/dos>_setup` parameters.
+* Rename multiple `nginx_app_protect_*` parameters and tags to `nginx_app_protect_waf_*` to aid in disambiguation.
+* Cleanup remaining Alpine Linux tasks.
+
+ENHANCEMENTS:
+
+New molecule tests for NGINX App Protect WAF and DoS removal scenarios.
+
+BUG FIXES:
+
+* Role was failing to uninstall NGINX App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
+* Uninstallation scenario was unintentionally creating repository entries.
+
 ## 0.7.1 (February 16, 2022)
 
 ENHANCEMENTS:
