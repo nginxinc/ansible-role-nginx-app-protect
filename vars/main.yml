@@ -39,11 +39,9 @@ nginx_app_protect_state_vals:
   upgrade: latest
 
 nginx_app_protect_waf_default_setup: install
-
-nginx_app_protect_dos_default_setup: install
-
 nginx_app_protect_waf_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_waf_setup] | default(nginx_app_protect_state_vals[nginx_app_protect_waf_default_setup]) }}"
 
+nginx_app_protect_dos_default_setup: install
 nginx_app_protect_dos_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_dos_setup] | default(nginx_app_protect_state_vals[nginx_app_protect_dos_default_setup]) }}"
 
 # Debian dependencies
