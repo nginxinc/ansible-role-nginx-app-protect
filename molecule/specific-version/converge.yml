@@ -31,4 +31,3 @@
         nginx_app_protect_remove_license: false
         nginx_app_protect_waf_install_signatures: true
         nginx_app_protect_waf_install_threat_campaigns: true
-        # nginx_app_protect_waf_state: present
