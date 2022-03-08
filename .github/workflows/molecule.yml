@@ -27,11 +27,11 @@ jobs:
     steps:
       - name: Check out the codebase
         if: github.event.pull_request.head.repo.full_name == github.repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Set up Python 3
         if: github.event.pull_request.head.repo.full_name == github.repository
-        uses: actions/setup-python@v2.3.2
+        uses: actions/setup-python@v3.0.0
         with:
           python-version: 3.x
 
