@@ -4,10 +4,6 @@
   vars:
     rhel_subscription: false
   pre_tasks:
-    - name: debug
-      debug:
-        var: "{{ lookup('env', 'RHEL_USERNAME') }}"
-
     - name: (RHEL) Check if there is a valid RHEL subscription
       set_fact:
         rhel_subscription: true

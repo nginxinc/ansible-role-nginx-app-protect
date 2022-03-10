@@ -51,3 +51,5 @@ jobs:
           ANSIBLE_FORCE_COLOR: 1
           NGINX_CRT: ${{ secrets.NGINX_CRT }}
           NGINX_KEY: ${{ secrets.NGINX_KEY }}
+          RHEL_USERNAME: ${{ secrets.RHEL_USERNAME }}
+          RHEL_PASSWORD: ${{ secrets.RHEL_PASSWORD }}
