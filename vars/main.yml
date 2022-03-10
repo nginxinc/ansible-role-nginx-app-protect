@@ -49,16 +49,12 @@ nginx_app_protect_dos_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_
 
 # Amazon Linux 2 extras
 nginx_app_protect_amazon_extras: [
-  'epel', 'selinux-ng',
+  'selinux-ng',
 ]
 
 # Debian dependencies
 nginx_app_protect_debian_dependencies: [
   'apt-transport-https', 'ca-certificates',
-]
-
-nginx_app_protect_centos_dependencies: [
-  'ca-certificates', 'epel-release',
 ]
 
 # Red Hat dependencies
