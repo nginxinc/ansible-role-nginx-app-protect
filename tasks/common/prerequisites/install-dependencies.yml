@@ -6,67 +6,70 @@
     state: latest  # noqa package-latest
   when: ansible_os_family == "Debian"
 
-- name: (Amazon Linux/CentOS/RHEL) Install package dependencies
+- name: (Amazon Linux) Set up Amazon Linux Extras repositories
+  command: "amazon-linux-extras enable {{ item }}"
+  changed_when: false
+  loop: "{{ nginx_app_protect_amazon_extras }}"
+  when: ansible_distribution == "Amazon"
+
+- name: import epel key
+  rpm_key:
+    state: present
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+  when: ansible_distribution == "RedHat"
+
+- name: (Amazon Linux/CentOS) Install package dependencies
   yum:
-    name: "{{ nginx_app_protect_redhat_dependencies }}"
+    name: "{{ lookup('vars', 'nginx_app_protect_' + ((ansible_distribution == 'RedHat') | ternary('redhat', 'centos')) + '_dependencies') }}"
     update_cache: true
     state: latest  # noqa package-latest
   when: ansible_os_family == "RedHat"
 
 - name: (RHEL) Set up RHEL specific repositories
   block:
-    - name: (RHEL) Install extended dependencies from CentOS repositories
+    - name: (RHEL 7) More dependencies not sub
       yum_repository:
-        name: CentOS-7
-        baseurl: "http://ftp.heanet.ie/pub/centos/7/os/$basearch/"
+        name: centos
         description: NGINX App Protect dependencies
+        baseurl: "https://ftp.heanet.ie/pub/centos/7/os/$basearch/"
         enabled: true
         gpgcheck: true
-        gpgkey: "http://ftp.heanet.ie/pub/centos/7/os/$basearch/\
-                RPM-GPG-KEY-CentOS-7"
+        gpgkey: "https://ftp.heanet.ie/pub/centos/7/os/$basearch/RPM-GPG-KEY-CentOS-7"
         state: "{{ nginx_app_protect_license_status | default ('present') }}"
-      when: not nginx_app_protect_use_rhel_subscription_repos | bool
+      when:
+        - ansible_distribution_major_version == '7'
+        - not nginx_app_protect_use_rhel_subscription_repos | bool
 
-    - name: (RHEL) Install extended dependencies for NGINX App Protect DoS
-      block:
-        - name: (RHEL) Install from epel repositories
-          yum_repository:
-            name: "epel-CentOS-7"
-            baseurl: "https://download-ib01.fedoraproject.org/pub/epel/7/x86_64"
-            description: NGINX App Protect DoS dependencies
-            enabled: true
-            gpgcheck: true
-            gpgkey: "https://download-ib01.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7"
-            state: "{{ nginx_app_protect_license_status | default ('present') }}"
+    - name: (RHEL 7) Install from extras repositories
+      yum_repository:
+        name: extras
+        description: NGINX App Protect DodS dependencies
+        mirrorlist: "http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=extras"
+        enabled: true
+        gpgcheck: true
+        gpgkey: "http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7"
+        state: "{{ nginx_app_protect_license_status | default ('present') }}"
+      when:
+        - ansible_distribution_major_version == '7'
+        - not nginx_app_protect_use_rhel_subscription_repos | bool
+        - nginx_app_protect_dos_enable | bool
 
-        - name: (RHEL) Install from extras repositories
-          yum_repository:
-            name: "extras-CentOS-7"
-            mirrorlist: "http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=extras"
-            description: NGINX App Protect DoS dependencies
-            enabled: true
-            gpgcheck: true
-            gpgkey: "http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7"
-            state: "{{ nginx_app_protect_license_status | default ('present') }}"
-      when: not nginx_app_protect_use_rhel_subscription_repos | bool and nginx_app_protect_dos_enable | bool and ansible_distribution_major_version | int == 7
-
-    - name: (RHEL) Install extended dependencies from RHEL subscription repositories
+    - name: (RHEL 7) More depencies but sub
       rhsm_repository:
         name:
-          - "rhel-{{ ansible_distribution_major_version }}-server-rpms"
-          - "rhel-{{ ansible_distribution_major_version }}-server-optional-rpms"
-      when: nginx_app_protect_use_rhel_subscription_repos | bool
+          - "rhel-*-optional-rpms"
+          - "rhel-*-extras-rpms"
+          - "rhel-ha-for-rhel-*-server-rpms"
+      when:
+        - ansible_distribution_major_version == '7'
+        - nginx_app_protect_use_rhel_subscription_repos | bool
 
-    - name: (RHEL) Install additional dependencies for NGINX App Protect DoS from RHEL subscription repositories
+    # both waf and dos
+    - name: (RHEL 8) More depencies but sub
       rhsm_repository:
         name:
-          - "rhel-{{ ansible_distribution_major_version }}-server-extras-rpms"
-          - "rhel-ha-for-rhel-{{ ansible_distribution_major_version }}-server-rpms"
-      when: nginx_app_protect_use_rhel_subscription_repos | bool and nginx_app_protect_dos_enable | bool
+          - "codeready-builder-for-rhel-8-x86_64-rpms"
+      when:
+        - ansible_distribution_major_version == '8'
+        - nginx_app_protect_use_rhel_subscription_repos | bool
   when: ansible_distribution == "RedHat"
-
-- name: (Amazon Linux) Set up Amazon Linux Extras repositories
-  command: "amazon-linux-extras enable {{ item }}"
-  changed_when: false
-  loop: "{{ nginx_app_protect_amazon_extras }}"
-  when: ansible_distribution == "Amazon"

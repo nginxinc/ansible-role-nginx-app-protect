@@ -19,6 +19,24 @@
 
 - name: Install NGINX App Protect WAF and DoS
   hosts: all
+  vars:
+    rhel_subscription: false
+  pre_tasks:
+    - name: (RHEL) Check if there is a valid RHEL subscription
+      set_fact:
+        rhel_subscription: true
+      when:
+        - lookup('env', 'RHEL_USERNAME') | length > 0
+        - lookup('env', 'RHEL_PASSWORD') | length > 0
+        - ansible_distribution_major_version == '8'
+
+    - name: (RHEL) Register system into RHEL subscription manager
+      redhat_subscription:
+        username: "{{ lookup('env', 'RHEL_USERNAME') }}"
+        password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
+      when:
+        - ansible_distribution == "RedHat"
+        - rhel_subscription| bool
   tasks:
     - name: Install NGINX App Protect WAF
       include_role:
@@ -31,3 +49,10 @@
         nginx_app_protect_waf_install_signatures: true
         nginx_app_protect_waf_install_threat_campaigns: true
         nginx_app_protect_dos_enable: true
+  post_tasks:
+    - name: (RHEL) Unregister system from RHEL subscription manager
+      redhat_subscription:
+        state: absent
+      when:
+        - ansible_distribution == "RedHat"
+        - rhel_subscription | bool

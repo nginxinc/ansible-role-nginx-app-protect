@@ -47,19 +47,24 @@ nginx_app_protect_waf_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_
 nginx_app_protect_dos_default_setup: install
 nginx_app_protect_dos_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_dos_setup] | default(nginx_app_protect_state_vals[nginx_app_protect_dos_default_setup]) }}"
 
+# Amazon Linux 2 extras
+nginx_app_protect_amazon_extras: [
+  'epel', 'selinux-ng',
+]
+
 # Debian dependencies
 nginx_app_protect_debian_dependencies: [
   'apt-transport-https', 'ca-certificates',
 ]
 
-# Red Hat dependencies
-nginx_app_protect_redhat_dependencies: [
-  'ca-certificates', 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm',
+nginx_app_protect_centos_dependencies: [
+  'ca-certificates', 'epel-release',
 ]
 
-# Amazon Linux 2 extras
-nginx_app_protect_amazon_extras: [
-  'selinux-ng',
+# Red Hat dependencies
+nginx_app_protect_redhat_dependencies: [
+  'ca-certificates',
+  'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_distribution == "Amazon") | ternary("7", ansible_distribution_major_version)) }}.noarch.rpm',
 ]
 
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
