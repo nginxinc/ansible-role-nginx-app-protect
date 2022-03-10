@@ -51,5 +51,7 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
+    prepare: ../common/prepare.yml
     converge: converge.yml
+    side_effect: ../common/side_effect.yml
     verify: verify.yml

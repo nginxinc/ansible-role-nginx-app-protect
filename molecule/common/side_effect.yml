@@ -1,0 +1,8 @@
+---
+- name: Cleanup
+  hosts: all
+  tasks:
+    - name: (RHEL) Unregister system from RHEL subscription manager
+      redhat_subscription:
+        state: absent
+      when: ansible_distribution == "RedHat"
