@@ -58,9 +58,9 @@
     - name: (RHEL 7) Set up RHEL 7 dependencies from RHEL official repositories
       rhsm_repository:
         name:
-          - rhel-*-optional-rpms
-          - rhel-*-extras-rpms
-          - rhel-ha-for-rhel-*-server-rpms
+          - rhel-7-server-optional-rpms
+          - rhel-7-server-extras-rpms
+          - rhel-ha-for-rhel-7-server-rpms
       when:
         - ansible_distribution_major_version == '7'
         - nginx_app_protect_use_rhel_subscription_repos | bool
