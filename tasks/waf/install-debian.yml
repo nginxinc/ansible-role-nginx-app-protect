@@ -68,7 +68,7 @@
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF
   apt:
-    name: "app-protect{{ (nginx_app_protect_waf_state == 'absent') | ternary(',app-protect-compiler,app-protect-engine,app-protect-plugin,nginx-plus-module-appprotect', '') }}"
+    name: app-protect{{ (nginx_app_protect_waf_state == 'absent') | ternary(',app-protect-compiler,app-protect-engine,app-protect-plugin,nginx-plus-module-appprotect', '') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
@@ -77,7 +77,7 @@
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF signatures {{ nginx_app_protect_waf_signatures_version is defined | ternary(nginx_app_protect_waf_signatures_version, '') }}
   apt:
-    name: "app-protect-attack-signatures{{ nginx_app_protect_waf_signatures_version | default('') }}"
+    name: app-protect-attack-signatures{{ nginx_app_protect_waf_signatures_version | default('') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
     allow_downgrade: "{{ omit if ansible_version.full is version('2.12', '<') else true }}"
@@ -89,7 +89,7 @@
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF threat campaigns {{ nginx_app_protect_waf_threat_campaigns_version is defined | ternary(nginx_app_protect_waf_threat_campaigns_version, '') }}
   apt:
-    name: "app-protect-threat-campaigns{{ nginx_app_protect_waf_threat_campaigns_version | default('') }}"
+    name: app-protect-threat-campaigns{{ nginx_app_protect_waf_threat_campaigns_version | default('') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
     allow_downgrade: "{{ omit if ansible_version.full is version('2.12', '<') else true }}"

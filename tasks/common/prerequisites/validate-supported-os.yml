@@ -40,3 +40,11 @@
         msg: NGINX App Protect DoS is not supported on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }}
       when: not supported_os_dos
   when: nginx_app_protect_dos_enable | bool and nginx_app_protect_dos_state != "absent"
+
+- name: Abort if installing on RHEL > 7 without subscription details
+  fail:
+    msg: NGINX App Protect cannot be installed on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }} without setting the 'nginx_app_protect_use_rhel_subscription_repos' variable
+  when:
+    - ansible_distribution == "RedHat"
+    - ansible_distribution_version | int > 7
+    - not nginx_app_protect_use_rhel_subscription_repos | bool

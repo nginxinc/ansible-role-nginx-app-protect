@@ -1,0 +1,32 @@
+---
+- name: Cleanup
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Block
+      block:
+        - name: Wait for containers to be up
+          wait_for_connection:
+            delay: 1
+            timeout: 2
+          register: connection
+          ignore_errors: true
+
+        - name: Containers are not up, quit from here
+          fail:
+          when: connection.failed
+
+        - name: Gather facts
+          setup:
+            gather_subset:
+              - "!all"
+              - "!any"
+              - distribution
+
+        - name: (RHEL) Unregister system from RHEL subscription manager
+          redhat_subscription:
+            state: absent
+          when: ansible_distribution == "RedHat"
+      rescue:
+        - name: It's ok we're at startup
+          meta: noop

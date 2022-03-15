@@ -1,6 +1,23 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    rhel_subscription: false
+  pre_tasks:
+    - name: (RHEL) Check if there is a valid RHEL subscription
+      set_fact:
+        rhel_subscription: true
+      when:
+        - lookup('env', 'RHEL_USERNAME') | length > 0
+        - lookup('env', 'RHEL_PASSWORD') | length > 0
+
+    - name: (RHEL) Register system into RHEL subscription manager
+      redhat_subscription:
+        username: "{{ lookup('env', 'RHEL_USERNAME') }}"
+        password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
+      when:
+        - ansible_distribution == "RedHat"
+        - rhel_subscription| bool
   tasks:
     - name: Install NGINX App Protect WAF
       include_role:
@@ -9,6 +26,7 @@
         nginx_app_protect_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
+        nginx_app_protect_use_rhel_subscription_repos: "{{ rhel_subscription }}"
         nginx_app_protect_remove_license: false
         nginx_app_protect_install_signatures: true
         nginx_app_protect_install_threat_campaigns: true

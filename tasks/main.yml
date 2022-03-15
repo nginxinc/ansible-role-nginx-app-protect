@@ -1,7 +1,8 @@
 ---
 - name: Check if OS is supported for NGINX App Protect WAF or DoS install
   include_tasks: "{{ role_path }}/tasks/common/prerequisites/validate-supported-os.yml"
-  when: nginx_app_protect_waf_state != "absent" or nginx_app_protect_dos_state != "absent"
+  when: nginx_app_protect_waf_state != "absent"
+        or nginx_app_protect_dos_state != "absent"
 
 - name: Fail if variables for 'nginx_app_protect_security_policy_file_enable' are not defined
   assert:
