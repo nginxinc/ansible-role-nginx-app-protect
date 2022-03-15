@@ -14,13 +14,13 @@
 
         - name: Containers are not up, quit from here
           fail:
-          when: connection['failed']
+          when: connection.failed
 
         - name: Gather facts
           setup:
             gather_subset:
-              - '!all'
-              - '!any'
+              - "!all"
+              - "!any"
               - distribution
 
         - name: (RHEL) Unregister system from RHEL subscription manager

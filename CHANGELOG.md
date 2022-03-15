@@ -6,12 +6,14 @@ BREAKING CHANGES:
 
 * Rename `nginx_app_protect_<waf/dos>_state` parameter to `nginx_app_protect_<waf/dos>_setup` parameters.
 * Rename multiple `nginx_app_protect_*` parameters and tags to `nginx_app_protect_waf_*` to aid in disambiguation.
-* Cleanup remaining Alpine Linux tasks.
+* Cleanup deprecated Alpine Linux tasks.
 * Remove `nginx_app_protect_configure` parameter since it has limited functionality given the `nginx_app_protect_*_policy_file_enable` parameters.
 
 ENHANCEMENTS:
 
-New molecule tests for NGINX App Protect WAF and DoS removal scenarios.
+* Add support of RHEL 8.1+ for NGINX App Protect WAF 3.8.
+* Add support of RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
+* New molecule tests for RHEL 7/8 and for NGINX App Protect WAF/DoS removal scenarios.
 
 BUG FIXES:
 
@@ -24,8 +26,6 @@ BUG FIXES:
 ENHANCEMENTS:
 
 * Add signing keys to a unique NGINX keyring on Debian based systems.
-* Add support of RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
-* Add support of RHEL 8.1+ for NGINX App Protect WAF 3.8.
 * Bump the Ansible `community.general` collection to `4.4.0` and `community.docker` collection to `2.1.1`.
 
 BUG FIXES:

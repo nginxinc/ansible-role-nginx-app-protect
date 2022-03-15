@@ -28,7 +28,6 @@
       when:
         - lookup('env', 'RHEL_USERNAME') | length > 0
         - lookup('env', 'RHEL_PASSWORD') | length > 0
-        - ansible_distribution_major_version == '8'
 
     - name: (RHEL) Register system into RHEL subscription manager
       redhat_subscription:

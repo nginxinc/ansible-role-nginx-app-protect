@@ -60,6 +60,5 @@ provisioner:
   playbooks:
     prepare: ../common/prepare.yml
     converge: converge.yml
-    # side_effect: ../common/side_effect.yml
     verify: verify.yml
     cleanup: ../common/cleanup.yml
