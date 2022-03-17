@@ -88,3 +88,6 @@ nginx_app_protect_waf_security_updates_default_repository_amazon: https://pkgs.n
 # Default NGINX App Protect DoS repositories
 nginx_app_protect_dos_default_repository_debian: "deb [arch=amd64 signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/app-protect-dos/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus"
 nginx_app_protect_dos_default_repository_redhat: https://pkgs.nginx.com/app-protect-dos/centos/{{ ansible_distribution_major_version }}/$basearch/
+
+# Name of the SELinux module that this role creates for App Protect DoS
+nginx_app_protect_dos_selinux_module: app-protect-dos
