@@ -36,6 +36,7 @@
 
 - name: (CentOS/RHEL) SELinux - check if module was loaded
   command: semodule --list-modules
+  register: semodule_loaded
   changed_when: nginx_app_protect_dos_selinux_module not in semodule_loaded.stdout_lines
   notify: (CentOS/RHEL) SELinux - build and install policy
 
