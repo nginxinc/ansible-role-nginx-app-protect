@@ -34,20 +34,23 @@
   when: nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
-- name: (CentOS/RHEL) SELinux - check if module was loaded
-  command: semodule --list-modules
-  register: semodule_loaded
-  changed_when: nginx_app_protect_dos_selinux_module not in semodule_loaded.stdout_lines
-  notify: (CentOS/RHEL) SELinux - build and install policy
+- name: (CentOS/RHEL) SELinux - check if selinux-policy package is installed
+  block:
+    - name: (CentOS/RHEL) SELinux - check if module was loaded
+      command: semodule --list-modules
+      register: semodule_loaded
+      changed_when: nginx_app_protect_dos_selinux_module not in semodule_loaded.stdout_lines
+      notify: (CentOS/RHEL) SELinux - build and install policy
 
-- name: (CentOS/RHEL) SELinux - create work directory
-  file:
-    path: /var/lib/selinux
-    state: directory
-    mode: 0700
+    - name: (CentOS/RHEL) SELinux - create work directory
+      file:
+        path: /var/lib/selinux
+        state: directory
+        mode: 0700
 
-- name: (CentOS/RHEL) SELinux - copy type enforcement file
-  template:
-    src: "{{ nginx_app_protect_dos_selinux_module_template | default(nginx_app_protect_dos_selinux_module ~ '.te') }}"
-    dest: /var/lib/selinux/{{ nginx_app_protect_dos_selinux_module }}.te
-    mode: 0644
+    - name: (CentOS/RHEL) SELinux - copy type enforcement file
+      template:
+        src: "{{ nginx_app_protect_dos_selinux_module_template | default(nginx_app_protect_dos_selinux_module ~ '.te') }}"
+        dest: /var/lib/selinux/{{ nginx_app_protect_dos_selinux_module }}.te
+        mode: 0644
+  when: "'selinux-policy' in ansible_facts.packages"
