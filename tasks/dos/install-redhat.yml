@@ -74,4 +74,4 @@
             - "semodule -i {{ nginx_app_protect_dos_selinux_module }}.pp"
           changed_when: true
       when: not semodule_loaded | bool
-  when: "'selinux-policy' in ansible_facts.packages"
+  when: "'selinux-policy' in ansible_facts.packages and nginx_app_protect_dos_setup != 'uninstall'"
