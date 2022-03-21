@@ -1,16 +1,4 @@
 ---
-
-- name: (CentOS/RHEL) SELinux - build and install policy
-  command: "{{ item }}"
-  args:
-    chdir: /var/lib/selinux
-  with_items:
-    - "checkmodule -M -m -o {{ nginx_app_protect_dos_selinux_module }}.mod {{ nginx_app_protect_dos_selinux_module }}.te"
-    - "semodule_package -o {{ nginx_app_protect_dos_selinux_module }}.pp -m {{ nginx_app_protect_dos_selinux_module }}.mod"
-    - "semodule -i {{ nginx_app_protect_dos_selinux_module }}.pp"
-  changed_when: false
-  listen: (CentOS/RHEL) SELinux - build and install policy
-
 - name: (Handler - NGINX App Protect) Systemd daemon-reload
   systemd:
     daemon_reload: true

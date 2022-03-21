@@ -34,23 +34,44 @@
   when: nginx_app_protect_license_status is not defined
   notify: (Handler - NGINX App Protect) Run NGINX
 
+- name: (CentOS/RHEL) SELinux - gather installed package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
 - name: (CentOS/RHEL) SELinux - check if selinux-policy package is installed
   block:
-    - name: (CentOS/RHEL) SELinux - check if module was loaded
+    - name: (CentOS/RHEL) SELinux - list loaded SELinux modules
       command: semodule --list-modules
-      register: semodule_loaded
-      changed_when: nginx_app_protect_dos_selinux_module not in semodule_loaded.stdout_lines
+      register: semodules_loaded_list
+      changed_when: false
       notify: (CentOS/RHEL) SELinux - build and install policy
 
-    - name: (CentOS/RHEL) SELinux - create work directory
-      file:
-        path: /var/lib/selinux
-        state: directory
-        mode: 0700
+    - name: (CentOS/RHEL) SELinux - determine if module was loaded
+      set_fact:
+        semodule_loaded: nginx_app_protect_dos_selinux_module not in semodule_loaded.stdout_lines
 
-    - name: (CentOS/RHEL) SELinux - copy type enforcement file
-      template:
-        src: "{{ nginx_app_protect_dos_selinux_module_template | default(nginx_app_protect_dos_selinux_module ~ '.te') }}"
-        dest: /var/lib/selinux/{{ nginx_app_protect_dos_selinux_module }}.te
-        mode: 0644
+    - name: (CentOS/RHEL) SELinux - build module
+      block:
+        - name: (CentOS/RHEL) SELinux - create work directory
+          file:
+            path: /var/lib/selinux
+            state: directory
+            mode: 0700
+
+        - name: (CentOS/RHEL) SELinux - copy type enforcement file
+          template:
+            src: "{{ nginx_app_protect_dos_selinux_module_template | default(nginx_app_protect_dos_selinux_module ~ '.te') }}"
+            dest: /var/lib/selinux/{{ nginx_app_protect_dos_selinux_module }}.te
+            mode: 0644
+
+        - name: (CentOS/RHEL) SELinux - build and install policy
+          command: "{{ item }}"
+          args:
+            chdir: /var/lib/selinux
+          with_items:
+            - "checkmodule -M -m -o {{ nginx_app_protect_dos_selinux_module }}.mod {{ nginx_app_protect_dos_selinux_module }}.te"
+            - "semodule_package -o {{ nginx_app_protect_dos_selinux_module }}.pp -m {{ nginx_app_protect_dos_selinux_module }}.mod"
+            - "semodule -i {{ nginx_app_protect_dos_selinux_module }}.pp"
+          changed_when: true
+      when: not semodule_loaded | bool
   when: "'selinux-policy' in ansible_facts.packages"
