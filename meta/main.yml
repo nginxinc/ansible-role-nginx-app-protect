@@ -35,3 +35,7 @@ galaxy_info:
     - server
     - development
     - dos
+
+collections:
+  - ansible.posix
+  - community.general
