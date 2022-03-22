@@ -9,6 +9,10 @@ BREAKING CHANGES:
 * Cleanup deprecated Alpine Linux tasks.
 * Remove `nginx_app_protect_configure` parameter since it has limited functionality given the `nginx_app_protect_*_policy_file_enable` parameters.
 
+FEATURES:
+
+Rename all modules to use the fully qualified collection name (FQCN) per Ansible guidelines.
+
 ENHANCEMENTS:
 
 * Add support of RHEL 8.1+ for NGINX App Protect WAF 3.8.
