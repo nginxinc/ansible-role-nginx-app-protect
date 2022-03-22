@@ -1,6 +1,6 @@
 ---
 - name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nginx-plus
     description: NGINX Plus repository
     baseurl: "{{ nginx_plus_repository | default(nginx_plus_default_repository_redhat) }}"
@@ -13,7 +13,7 @@
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nginx-app-protect-dos
     description: NGINX App Protect DoS repository
     baseurl: "{{ nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_redhat) }}"
@@ -26,7 +26,7 @@
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (CentOS/RHEL) {{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS
-  yum:
+  ansible.builtin.yum:
     name: app-protect-dos{{ (nginx_app_protect_dos_state == 'absent') | ternary(',nginx-plus-module-appprotectdos', '') }}
     state: "{{ nginx_app_protect_dos_state }}"
     update_cache: true

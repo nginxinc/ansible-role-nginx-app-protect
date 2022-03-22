@@ -1,6 +1,6 @@
 ---
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nginx-plus
     description: NGINX Plus repository
     baseurl: "{{ nginx_plus_repository |
@@ -14,7 +14,7 @@
   when: nginx_app_protect_waf_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nginx-app-protect
     description: NGINX App Protect WAF repository
     baseurl: "{{ nginx_app_protect_waf_repository |
@@ -28,7 +28,7 @@
   when: nginx_app_protect_waf_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nginx-app-protect-security-updates
     description: NGINX App Protect WAF security updates repository
     baseurl: "{{ nginx_app_protect_waf_security_updates_repository |
@@ -44,7 +44,7 @@
     - nginx_app_protect_waf_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF
-  yum:
+  ansible.builtin.yum:
     name: app-protect{{ (nginx_app_protect_waf_state == 'absent') | ternary(',app-protect-compiler,app-protect-engine,app-protect-plugin,nginx-plus-module-appprotect', '') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
@@ -53,7 +53,7 @@
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF signatures {{ nginx_app_protect_waf_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
-  yum:
+  ansible.builtin.yum:
     name: app-protect-attack-signatures{{ nginx_app_protect_waf_signatures_version | default('') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
@@ -65,7 +65,7 @@
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF threat campaigns {{ nginx_app_protect_waf_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
-  yum:
+  ansible.builtin.yum:
     name: app-protect-threat-campaigns{{ nginx_app_protect_waf_threat_campaigns_version | default('') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true

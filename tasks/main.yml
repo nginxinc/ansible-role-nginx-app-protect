@@ -1,11 +1,11 @@
 ---
 - name: Check if OS is supported for NGINX App Protect WAF or DoS install
-  include_tasks: "{{ role_path }}/tasks/common/prerequisites/validate-supported-os.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/prerequisites/validate-supported-os.yml"
   when: nginx_app_protect_waf_state != "absent"
         or nginx_app_protect_dos_state != "absent"
 
 - name: Fail if variables for 'nginx_app_protect_security_policy_file_enable' are not defined
-  assert:
+  ansible.builtin.assert:
     that:
       - "{{ item }} is defined"
       - "{{ item }} | length > 0"
@@ -15,7 +15,7 @@
   when: nginx_app_protect_security_policy_file_enable | bool
 
 - name: Fail if variables for 'nginx_app_protect_log_policy_file_enable' are not defined
-  assert:
+  ansible.builtin.assert:
     that:
       - "{{ item }} is defined"
       - "{{ item }} | length > 0"
@@ -25,42 +25,42 @@
   when: nginx_app_protect_log_policy_file_enable | bool
 
 - name: Install prerequisites
-  include_tasks: "{{ role_path }}/tasks/common/prerequisites/install-dependencies.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/prerequisites/install-dependencies.yml"
   when: nginx_app_protect_waf_enable | bool
         or nginx_app_protect_dos_enable | bool
   tags: nginx_app_protect_prerequisites
 
 - name: Set up signing keys
-  include_tasks: "{{ role_path }}/tasks/common/keys/setup-keys.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/keys/setup-keys.yml"
   when: nginx_app_protect_waf_enable | bool
         or nginx_app_protect_dos_enable | bool
   tags: nginx_app_protect_key
 
 - name: Set up NGINX App Protect license
-  include_tasks: "{{ role_path }}/tasks/common/install/setup-license.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/install/setup-license.yml"
   when: nginx_app_protect_setup_license | bool
   tags: nginx_app_protect_setup_license
 
 - name: "{{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF"
-  include_tasks: "{{ role_path }}/tasks/waf/install-{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/waf/install-{{ ansible_os_family | lower }}.yml"
   when: nginx_app_protect_waf_enable | bool
   tags: nginx_app_protect_install_app_protect_waf
 
 - name: "{{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS"
-  include_tasks: "{{ role_path }}/tasks/dos/install-{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/dos/install-{{ ansible_os_family | lower }}.yml"
   when: nginx_app_protect_dos_enable | bool
   tags: nginx_app_protect_install_app_protect_dos
 
 - name: Modify NGINX Plus service
-  include_tasks: "{{ role_path }}/tasks/common/install/service-modification.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/install/service-modification.yml"
 
 - name: Remove NGINX App Protect license
-  include_tasks: "{{ role_path }}/tasks/common/install/remove-license.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/install/remove-license.yml"
   when: nginx_app_protect_remove_license | bool
   tags: nginx_app_protect_remove_license
 
 - name: Configure NGINX App Protect
-  include_tasks: "{{ role_path }}/tasks/common/config/configure-app-protect.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/config/configure-app-protect.yml"
   when: nginx_app_protect_security_policy_file_enable | bool
         or nginx_app_protect_log_policy_file_enable | bool
   tags: nginx_app_protect_configure

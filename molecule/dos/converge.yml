@@ -5,7 +5,7 @@
     rhel_subscription: false
   pre_tasks:
     - name: (RHEL) Check if there is a valid RHEL subscription
-      set_fact:
+      ansible.builtin.set_fact:
         rhel_subscription: true
       when:
         - lookup('env', 'RHEL_USERNAME') | length > 0
@@ -20,7 +20,7 @@
         - rhel_subscription| bool
   tasks:
     - name: Install NGINX App Protect DoS
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-nginx-app-protect
       vars:
         nginx_app_protect_waf_enable: false

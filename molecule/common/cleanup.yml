@@ -6,18 +6,18 @@
     - name: Block
       block:
         - name: Wait for containers to be up
-          wait_for_connection:
+          ansible.builtin.wait_for_connection:
             delay: 1
             timeout: 2
           register: connection
           ignore_errors: true
 
         - name: Containers are not up, quit from here
-          fail:
+          ansible.builtin.fail:
           when: connection.failed
 
         - name: Gather facts
-          setup:
+          ansible.builtin.setup:
             gather_subset:
               - "!all"
               - "!any"
@@ -29,4 +29,4 @@
           when: ansible_distribution == "RedHat"
       rescue:
         - name: It's ok we're at startup
-          meta: noop
+          ansible.builtin.meta: noop

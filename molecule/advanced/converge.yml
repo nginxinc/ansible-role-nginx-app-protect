@@ -3,7 +3,7 @@
   hosts: nap
   tasks:
     - name: Install NGINX App Protect WAF
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-nginx-app-protect
       vars:
         nginx_app_protect_license:

@@ -1,12 +1,12 @@
 ---
 - name: (Debian/Red Hat OSs) Create SSL directory
-  file:
+  ansible.builtin.file:
     path: /etc/ssl/nginx
     state: directory
     mode: 0755
 
 - name: (Debian/Red Hat OSs) Copy NGINX App Protect certificate and license key
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /etc/ssl/nginx
     decrypt: true
