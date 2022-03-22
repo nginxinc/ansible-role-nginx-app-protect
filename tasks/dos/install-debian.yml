@@ -1,6 +1,6 @@
 ---
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
     create: true
     block: |
@@ -12,7 +12,7 @@
     mode: 0444
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS license
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/apt/apt.conf.d/90app-protect-dos
     create: true
     block: |
@@ -24,7 +24,7 @@
     mode: 0444
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     filename: nginx-plus
     repo: "{{ nginx_plus_repository | default(nginx_plus_default_repository_debian) }}"
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
@@ -33,7 +33,7 @@
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     filename: nginx-app-protect-dos
     repo: "{{ nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian) }}"
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
@@ -42,7 +42,7 @@
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS
-  apt:
+  ansible.builtin.apt:
     name: "app-protect-dos{{ (nginx_app_protect_dos_state == 'absent') | ternary(',nginx-plus-module-appprotectdos', '') }}"
     state: "{{ nginx_app_protect_dos_state }}"
     update_cache: true

@@ -1,13 +1,13 @@
 ---
 - name: (Debian/Ubuntu) Install package dependencies
-  apt:
+  ansible.builtin.apt:
     name: "{{ nginx_app_protect_debian_dependencies }}"
     update_cache: true
     state: latest  # noqa package-latest
   when: ansible_os_family == "Debian"
 
 - name: (Amazon Linux) Set up Amazon Linux Extras repositories
-  command: "amazon-linux-extras enable {{ item }}"
+  ansible.builtin.command: "amazon-linux-extras enable {{ item }}"
   changed_when: false
   loop: "{{ nginx_app_protect_amazon_extras }}"
   when: ansible_distribution == "Amazon"
@@ -15,12 +15,12 @@
 - name: (Amazon Linux/CentOS/RHEL) Install package dependencies
   block:
     - name: (Amazon Linux/CentOS/RHEL) Import EPEL GPG key
-      rpm_key:
+      ansible.builtin.rpm_key:
         state: present
         key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_distribution == 'Amazon') | ternary('7', ansible_distribution_major_version)) }}
 
     - name: (Amazon Linux/CentOS/RHEL) Install package dependencies
-      yum:
+      ansible.builtin.yum:
         name: "{{ nginx_app_protect_redhat_dependencies }}"
         update_cache: true
         state: latest  # noqa package-latest
@@ -29,7 +29,7 @@
 - name: (RHEL) Set up RHEL specific repositories
   block:
     - name: (RHEL 7) Set up RHEL dependencies from OSS repositories
-      yum_repository:
+      ansible.builtin.yum_repository:
         name: centos
         description: NGINX App Protect dependencies
         baseurl: https://ftp.heanet.ie/pub/centos/7/os/$basearch/
@@ -42,7 +42,7 @@
         - not nginx_app_protect_use_rhel_subscription_repos | bool
 
     - name: (RHEL 7 DoS) Set up RHEL NGINX App Protect DoS dependencies from OSS repositories
-      yum_repository:
+      ansible.builtin.yum_repository:
         name: extras
         description: NGINX App Protect DoS dependencies
         mirrorlist: http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=extras

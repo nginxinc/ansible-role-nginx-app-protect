@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: Check if NGINX Plus is installed
-      package:
+      ansible.builtin.package:
         name: nginx-plus
         state: present
       check_mode: true
@@ -11,7 +11,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF is installed
-      package:
+      ansible.builtin.package:
         name: app-protect
         state: present
       check_mode: true
@@ -19,7 +19,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF signatures is installed
-      package:
+      ansible.builtin.package:
         name: app-protect-attack-signatures
         state: present
       check_mode: true
@@ -27,7 +27,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF threat campaigns is installed
-      package:
+      ansible.builtin.package:
         name: app-protect-threat-campaigns
         state: present
       check_mode: true
@@ -35,7 +35,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX service is running
-      service:
+      ansible.builtin.service:
         name: nginx
         state: started
         enabled: true
@@ -44,19 +44,19 @@
       failed_when: (service is changed) or (service is failed)
 
     - name: Store the statistics of /etc/app_protect/conf/test-security-policy.json in the 'security_policy' variable
-      stat:
+      ansible.builtin.stat:
         path: /etc/app_protect/conf/test-security-policy.json
       register: security_policy
 
     - name: Ensure /etc/app_protect/conf/test-security-policy.json exists
-      assert:
+      ansible.builtin.assert:
         that: security_policy.stat.exists | bool
 
     - name: Store the statistics of /etc/app_protect/conf/test-log-profile.json in the 'log_profile' variable
-      stat:
+      ansible.builtin.stat:
         path: /etc/app_protect/conf/test-log-profile.json
       register: log_profile
 
     - name: Ensure /etc/app_protect/conf/test-security-profile.json exists
-      assert:
+      ansible.builtin.assert:
         that: log_profile.stat.exists | bool

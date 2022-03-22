@@ -1,10 +1,10 @@
 ---
 - name: (Handler - NGINX App Protect) Systemd daemon-reload
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
 
 - name: (Handler - NGINX App Protect) Restart NGINX
-  service:
+  ansible.builtin.service:
     name: nginx
     state: restarted
     enabled: true
@@ -14,14 +14,14 @@
   listen: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Handler - NGINX App Protect) Check NGINX
-  command: nginx -t
+  ansible.builtin.command: nginx -t
   register: config_check
   ignore_errors: true
   changed_when: false
   listen: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Handler - NGINX App Protect) Print NGINX error if syntax check fails
-  debug:
+  ansible.builtin.debug:
     var: config_check.stderr_lines
   failed_when: config_check.rc != 0
   when:
