@@ -2,13 +2,13 @@
 - name: Modify NGINX Plus service
   block:
     - name: Create override for NGINX Plus service
-      file:
+      ansible.builtin.file:
         path: /etc/systemd/system/nginx.service.d
         state: directory
         mode: 0755
 
     - name: Increase timeout for NGINX Plus service
-      template:
+      ansible.builtin.template:
         src: nginx.service.override.conf.j2
         dest: /etc/systemd/system/nginx.service.d/override.conf
         owner: root

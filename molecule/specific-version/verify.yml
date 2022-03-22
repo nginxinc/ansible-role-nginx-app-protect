@@ -12,7 +12,7 @@
       redhat: "-2020.08.20"
   tasks:
     - name: Check if NGINX Plus is installed
-      package:
+      ansible.builtin.package:
         name: nginx-plus
         state: present
       check_mode: true
@@ -20,7 +20,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF is installed
-      package:
+      ansible.builtin.package:
         name: app-protect
         state: present
       check_mode: true
@@ -28,7 +28,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF signatures is installed
-      package:
+      ansible.builtin.package:
         name: app-protect-attack-signatures
         state: present
       check_mode: true
@@ -36,7 +36,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF threat campaigns is installed
-      package:
+      ansible.builtin.package:
         name: app-protect-threat-campaigns
         state: present
       check_mode: true
@@ -44,7 +44,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX service is running
-      service:
+      ansible.builtin.service:
         name: nginx
         state: started
         enabled: true
@@ -55,13 +55,13 @@
     - name: Check NGINX App Protect WAF version
       block:
         - name: Check installed software
-          package_facts:
+          ansible.builtin.package_facts:
             manager: auto
 
         - name: Verify installed NAP signatures version matches requested version
-          assert:
+          ansible.builtin.assert:
             that: "{{ (ansible_facts.packages['app-protect-attack-signatures'] | map(attribute='version') | first) == (app_protect_signature_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '')) }}"
 
         - name: Verify installed NAP threat campaigns version matches requested version
-          assert:
+          ansible.builtin.assert:
             that: "{{ (ansible_facts.packages['app-protect-threat-campaigns'] | map(attribute='version') | first) == (app_protect_threat_campaigns_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '')) }}"

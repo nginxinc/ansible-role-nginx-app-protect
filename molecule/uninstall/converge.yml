@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: Uninstall NGINX App Protect WAF and DoS
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-nginx-app-protect
       vars:
         nginx_app_protect_waf_enable: true

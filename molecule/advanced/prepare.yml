@@ -4,14 +4,14 @@
   gather_facts: false
   tasks:
     - name: Create ephemeral license certificate file from b64 decoded env var
-      copy:
+      ansible.builtin.copy:
         content: "{{ lookup('env','NGINX_CRT') | b64decode }}"
         dest: ../../files/license/nginx-repo.crt
         force: false
         mode: 0444
 
     - name: Create ephemeral license key file from b64 decoded env var
-      copy:
+      ansible.builtin.copy:
         content: "{{ lookup('env','NGINX_KEY') | b64decode }}"
         dest: ../../files/license/nginx-repo.key
         force: false
@@ -21,7 +21,7 @@
   hosts: nap
   tasks:
     - name: Set up rsyslog
-      include_role:
+      ansible.builtin.include_role:
         name: robertdebock.rsyslog
       vars:
         rsyslog_receiver: true
@@ -33,5 +33,5 @@
   gather_facts: false
   tasks:
     - name: Start nginx on test workload
-      raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
+      ansible.builtin.raw: nohup nginx </dev/null >/dev/null 2>&1 & sleep 1
       changed_when: false

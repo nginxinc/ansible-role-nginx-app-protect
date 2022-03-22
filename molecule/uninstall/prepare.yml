@@ -4,14 +4,14 @@
   gather_facts: false
   tasks:
     - name: Create ephemeral license certificate file from b64 decoded env var
-      copy:
+      ansible.builtin.copy:
         content: "{{ lookup('env','NGINX_CRT') | b64decode }}"
         dest: ../../files/license/nginx-repo.crt
         force: false
         mode: 0444
 
     - name: Create ephemeral license key file from b64 decoded env var
-      copy:
+      ansible.builtin.copy:
         content: "{{ lookup('env','NGINX_KEY') | b64decode }}"
         dest: ../../files/license/nginx-repo.key
         force: false
@@ -23,7 +23,7 @@
     rhel_subscription: false
   pre_tasks:
     - name: (RHEL) Check if there is a valid RHEL subscription
-      set_fact:
+      ansible.builtin.set_fact:
         rhel_subscription: true
       when:
         - lookup('env', 'RHEL_USERNAME') | length > 0
@@ -38,7 +38,7 @@
         - rhel_subscription| bool
   tasks:
     - name: Install NGINX App Protect WAF
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-nginx-app-protect
       vars:
         nginx_app_protect_use_rhel_subscription_repos: "{{ rhel_subscription }}"

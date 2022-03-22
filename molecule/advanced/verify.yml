@@ -3,7 +3,7 @@
   hosts: nap
   tasks:
     - name: Check if NGINX Plus is installed
-      package:
+      ansible.builtin.package:
         name: nginx-plus
         state: present
       check_mode: true
@@ -11,7 +11,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF is installed
-      package:
+      ansible.builtin.package:
         name: app-protect
         state: present
       check_mode: true
@@ -19,7 +19,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF signatures is installed
-      package:
+      ansible.builtin.package:
         name: app-protect-attack-signatures
         state: present
       check_mode: true
@@ -27,7 +27,7 @@
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX App Protect WAF threat campaigns is installed
-      package:
+      ansible.builtin.package:
         name: app-protect-threat-campaigns
         state: present
       check_mode: true
