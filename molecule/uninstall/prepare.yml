@@ -30,7 +30,7 @@
         - lookup('env', 'RHEL_PASSWORD') | length > 0
 
     - name: (RHEL) Register system into RHEL subscription manager
-      redhat_subscription:
+      community.general.redhat_subscription:
         username: "{{ lookup('env', 'RHEL_USERNAME') }}"
         password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
       when:
@@ -51,7 +51,7 @@
         nginx_app_protect_dos_enable: true
   post_tasks:
     - name: (RHEL) Unregister system from RHEL subscription manager
-      redhat_subscription:
+      community.general.redhat_subscription:
         state: absent
       when:
         - ansible_distribution == "RedHat"

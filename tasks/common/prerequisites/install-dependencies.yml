@@ -56,7 +56,7 @@
         - nginx_app_protect_dos_enable | bool
 
     - name: (RHEL 7) Set up RHEL dependencies from RHEL official repositories
-      rhsm_repository:
+      community.general.rhsm_repository:
         name:
           - rhel-7-server-optional-rpms
           - rhel-7-server-extras-rpms
@@ -66,7 +66,7 @@
         - nginx_app_protect_use_rhel_subscription_repos | bool
 
     - name: (RHEL 8) Set up RHEL dependencies from RHEL official repositories
-      rhsm_repository:
+      community.general.rhsm_repository:
         name: codeready-builder-for-rhel-8-x86_64-rpms
       when:
         - ansible_distribution_major_version == "8"

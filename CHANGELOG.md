@@ -9,11 +9,16 @@ BREAKING CHANGES:
 * Cleanup deprecated Alpine Linux tasks.
 * Remove `nginx_app_protect_configure` parameter since it has limited functionality given the `nginx_app_protect_*_policy_file_enable` parameters.
 
+FEATURES:
+
+Rename all modules to use the fully qualified collection name (FQCN) per Ansible guidelines.
+
 ENHANCEMENTS:
 
 * Add support of RHEL 8.1+ for NGINX App Protect WAF 3.8.
 * Add support of RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
 * New molecule tests for RHEL 7/8 and for NGINX App Protect WAF/DoS removal scenarios.
+* Bump the Ansible `community.general` collection to `4.6.1` and `community.docker` collection to `2.2.1`.
 
 BUG FIXES:
 
