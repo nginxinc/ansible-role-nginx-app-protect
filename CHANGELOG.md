@@ -25,6 +25,7 @@ BUG FIXES:
 * Role was failing to uninstall NGINX App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
 * Uninstallation scenario was unintentionally creating repository entries.
 * Ansible check mode runs will no longer fail if NGINX has not yet been installed.
+* The `nginx_app_protect_timeout` setting previous only applied to service stop operations. Now includes both start and stop operations.
 
 ## 0.7.1 (February 16, 2022)
 
