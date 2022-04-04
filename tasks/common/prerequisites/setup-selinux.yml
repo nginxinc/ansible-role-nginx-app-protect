@@ -21,7 +21,7 @@
     - httpd_can_network_connect
     - httpd_can_network_relay
 
-- name: Allow SELinux TCP connections on specific ports
+- name: Allow SELinux TCP HTTP connections on specific ports
   community.general.seport:
     ports: "{{ nginx_app_protect_selinux_tcp_ports }}"
     proto: tcp
@@ -29,13 +29,29 @@
     state: present
   when: nginx_app_protect_selinux_tcp_ports is defined
 
-- name: Allow SELinux UDP connections on specific ports
+- name: Allow SELinux TCP Syslog connections on specific ports
+  community.general.seport:
+    ports: "{{ nginx_app_protect_selinux_syslog_tcp_ports }}"
+    proto: tcp
+    setype: syslogd_port_t
+    state: present
+  when: nginx_app_protect_selinux_syslog_tcp_ports is defined
+
+- name: Allow SELinux UDP HTTP connections on specific ports
   community.general.seport:
     ports: "{{ nginx_app_protect_selinux_udp_ports }}"
     proto: udp
     setype: http_port_t
     state: present
   when: nginx_app_protect_selinux_udp_ports is defined
+
+- name: Allow SELinux TCP Syslog connections on specific ports
+  community.general.seport:
+    ports: "{{ nginx_app_protect_selinux_syslog_tcp_ports }}"
+    proto: udp
+    setype: syslogd_port_t
+    state: present
+  when: nginx_app_protect_selinux_syslog_udp_ports is defined
 
 - name: Create SELinux NGINX App Protect module
   ansible.builtin.template:

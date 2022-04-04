@@ -122,10 +122,20 @@ nginx_app_protect_selinux_enforcing: true
 #   - 80
 #   - 443
 
+# List of TCP ports to add to syslog_port_t type (80 and 443 have this type already)
+# nginx_app_protect_selinux_syslog_tcp_ports:
+#   - 1514
+#   - 5144
+
 # List of UDP ports to add to http_port_t type
 # nginx_app_protect_selinux_udp_ports:
 #   - 80
 #   - 443
+
+# List of UDP ports to add to syslog_port_t type
+# nginx_app_protect_selinux_syslog_udp_ports:
+#   - 1514
+#   - 5144
 
 # Temporary directory to hold selinux modules
 nginx_app_protect_selinux_tempdir: /tmp
