@@ -11,7 +11,8 @@ BREAKING CHANGES:
 
 FEATURES:
 
-Rename all modules to use the fully qualified collection name (FQCN) per Ansible guidelines.
+* Add support for enabling SELinux on RHEL based systems, and tweak it by default when installing NGINX App Protect DoS to avoid SELinux misconfiguration issues.
+* Rename all modules to use the fully qualified collection name (FQCN) per Ansible guidelines.
 
 ENHANCEMENTS:
 

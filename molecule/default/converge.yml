@@ -28,8 +28,8 @@
           key: license/nginx-repo.key
         nginx_app_protect_use_rhel_subscription_repos: "{{ rhel_subscription }}"
         nginx_app_protect_remove_license: false
-        nginx_app_protect_install_signatures: true
-        nginx_app_protect_install_threat_campaigns: true
+        nginx_app_protect_waf_install_signatures: true
+        nginx_app_protect_waf_install_threat_campaigns: true
         nginx_app_protect_configure: true
         nginx_app_protect_security_policy_file_enable: true
         nginx_app_protect_security_policy_file:

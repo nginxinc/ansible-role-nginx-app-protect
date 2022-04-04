@@ -1,0 +1,21 @@
+module nginx-app-protect-module 1.0;
+
+require {
+        type unconfined_t;
+        type unconfined_service_t;
+        type httpd_t;
+        type tmpfs_t;
+        type initrc_t;
+        type initrc_state_t;
+        class capability sys_resource;
+        class shm { associate read unix_read unix_write write };
+        class file { read write };
+}
+
+#============= httpd_t ==============
+allow httpd_t initrc_state_t:file { read write };
+allow httpd_t self:capability sys_resource;
+allow httpd_t tmpfs_t:file { read write };
+allow httpd_t unconfined_service_t:shm { associate read unix_read unix_write write };
+allow httpd_t unconfined_t:shm { associate read write unix_read unix_write };
+allow httpd_t initrc_t:shm { associate read unix_read unix_write write };
