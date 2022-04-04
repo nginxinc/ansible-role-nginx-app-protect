@@ -25,7 +25,7 @@
   when: nginx_app_protect_log_policy_file_enable | bool
 
 - name: Install prerequisites
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/prerequisites/install-dependencies.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/prerequisites/prerequisites.yml"
   when: nginx_app_protect_waf_enable | bool
         or nginx_app_protect_dos_enable | bool
   tags: nginx_app_protect_prerequisites

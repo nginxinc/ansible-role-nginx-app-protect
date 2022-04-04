@@ -17,7 +17,7 @@
     - name: (Amazon Linux/CentOS/RHEL) Import EPEL GPG key
       ansible.builtin.rpm_key:
         state: present
-        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_distribution == 'Amazon') | ternary('7', ansible_distribution_major_version)) }}
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ (ansible_distribution == 'Amazon') | ternary('7', ansible_distribution_major_version) }}
 
     - name: (Amazon Linux/CentOS/RHEL) Install package dependencies
       ansible.builtin.yum:
@@ -54,6 +54,11 @@
         - ansible_distribution_major_version == "7"
         - not nginx_app_protect_use_rhel_subscription_repos | bool
         - nginx_app_protect_dos_enable | bool
+
+    - name: (RHEL) Enable RHEL subscription manager repos management
+      ansible.builtin.command: "subscription-manager config --rhsm.manage_repos=1"
+      changed_when: false
+      when: nginx_app_protect_use_rhel_subscription_repos | bool
 
     - name: (RHEL 7) Set up RHEL dependencies from RHEL official repositories
       community.general.rhsm_repository:

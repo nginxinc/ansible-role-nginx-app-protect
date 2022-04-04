@@ -9,7 +9,7 @@
 
     - name: Increase timeout for NGINX Plus service
       ansible.builtin.template:
-        src: nginx.service.override.conf.j2
+        src: services/nginx.service.override.conf.j2
         dest: /etc/systemd/system/nginx.service.d/override.conf
         owner: root
         group: root
