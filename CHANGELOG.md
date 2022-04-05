@@ -8,6 +8,7 @@ BREAKING CHANGES:
 * Rename multiple `nginx_app_protect_*` parameters and tags to `nginx_app_protect_waf_*` to aid in disambiguation.
 * Cleanup deprecated Alpine Linux tasks.
 * Remove `nginx_app_protect_configure` parameter since it has limited functionality given the `nginx_app_protect_*_policy_file_enable` parameters.
+* The `nginx_app_protect_timeout` setting previous only applied to service stop operations. This parameter has been changed to `nginx_app_protect_timeoutstopsec` to better reflect its usage, and a new parameter, `nginx_app_protect_timeoutstartsec` has been introduced to tweak service start operation timeouts.
 
 FEATURES:
 
@@ -26,7 +27,6 @@ BUG FIXES:
 * Role was failing to uninstall NGINX App Protect DoS packages when the `nginx_app_protect_dos_state` was set to `absent`.
 * Uninstallation scenario was unintentionally creating repository entries.
 * Ansible check mode runs will no longer fail if NGINX has not yet been installed.
-* The `nginx_app_protect_timeout` setting previous only applied to service stop operations. Now includes both start and stop operations.
 
 ## 0.7.1 (February 16, 2022)
 
