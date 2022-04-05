@@ -1,3 +1,7 @@
 [Service]
-# Override default 90 second timeout
-TimeoutSec={{ nginx_app_protect_timeout }}
+{% if nginx_app_protect_timeoutstartsec is defined %}
+TimeoutStartSec={{ nginx_app_protect_timeoutstartsec }}
+{% endif %}
+{% if nginx_app_protect_timeoutstopsec is defined %}
+TimeoutStopSec={{ nginx_app_protect_timeoutstopsec }}
+{% endif %}

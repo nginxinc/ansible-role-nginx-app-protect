@@ -97,7 +97,8 @@ nginx_app_protect_start: true
 # Increase NGINX service timeout to accommodate ruleset loading from default 90s.
 # Default is commented out.
 nginx_app_protect_service_modify: true
-nginx_app_protect_timeout: 180
+nginx_app_protect_timeoutstartsec: 180
+nginx_app_protect_timeoutstopcsec: 180
 
 # Copy local NGINX App Protect security policy to host
 nginx_app_protect_security_policy_file_enable: false
