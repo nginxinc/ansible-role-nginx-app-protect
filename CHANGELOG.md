@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.8.0 (Unreleased)
+## 0.8.0 (April 6, 2022)
 
 BREAKING CHANGES:
 
@@ -21,6 +21,7 @@ ENHANCEMENTS:
 * Add support of RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
 * New molecule tests for RHEL 7/8 and for NGINX App Protect WAF/DoS removal scenarios.
 * Bump the Ansible `community.general` collection to `4.7.0` and `community.docker` collection to `2.3.0`.
+* Update Dependabot to trigger updates at the same time across all NGINX core roles at the same time and to avoid triggering release drafter on GitHub actions dependency updates.
 
 BUG FIXES:
 

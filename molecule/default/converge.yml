@@ -30,7 +30,6 @@
         nginx_app_protect_remove_license: false
         nginx_app_protect_waf_install_signatures: true
         nginx_app_protect_waf_install_threat_campaigns: true
-        nginx_app_protect_configure: true
         nginx_app_protect_security_policy_file_enable: true
         nginx_app_protect_security_policy_file:
           - src: files/test-security-policy.json
