@@ -12,7 +12,7 @@ galaxy_info:
   platforms:
     - name: Amazon Linux 2
       versions:
-        - any
+        - all
     - name: EL
       versions:
         - '7'
