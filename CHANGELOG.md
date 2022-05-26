@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.1 (Unreleased)
+
+BUG FIXES:
+
+Always refresh the `yum` cache.
+
 ## 0.8.0 (April 6, 2022)
 
 BREAKING CHANGES:
