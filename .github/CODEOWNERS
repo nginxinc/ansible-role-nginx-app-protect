@@ -2,5 +2,5 @@
 #####################
 
 * @alessfg @aknot242
-.github/workflows/*
+/.github/workflows/
 *.md
