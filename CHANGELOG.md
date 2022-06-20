@@ -2,6 +2,10 @@
 
 ## 0.8.1 (Unreleased)
 
+ENHANCEMENTS:
+
+Bump the Ansible `community.general` collection to `5.1.1`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `2.6.0`.
+
 BUG FIXES:
 
 Always refresh the `yum` cache.

@@ -26,7 +26,7 @@
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (CentOS/RHEL) Force Yum cache refresh
-  command: yum clean metadata
+  ansible.builtin.command: yum clean metadata
   changed_when: false
 
 - name: (CentOS/RHEL) {{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS
