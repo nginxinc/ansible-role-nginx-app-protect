@@ -27,7 +27,7 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
     ---
     collections:
       - name: community.general
-        version: 5.1.0
+        version: 5.1.1
       - name: ansible.posix
         version: 1.4.0
       - name: community.docker  # Only required if you plan to use Molecule (see below)
