@@ -61,19 +61,19 @@
   register: nginx_app_protect_selinux_module
 
 - name: Check SELinux NGINX App Protect module
-  ansible.builtin.command: "checkmodule -M -m -o {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.mod {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.te"
+  ansible.builtin.command: checkmodule -M -m -o {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.mod {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.te
   args:
     creates: "{{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.mod"
   changed_when: false
 
 - name: Compile SELinux NGINX App Protect module
-  ansible.builtin.command: "semodule_package -o {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.pp -m {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.mod"
+  ansible.builtin.command: semodule_package -o {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.pp -m {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.mod
   args:
     creates: "{{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.pp"
   changed_when: false
 
 - name: Import SELinux NGINX App Protect module
-  ansible.builtin.command: "semodule -i {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.pp"  # noqa no-handler
+  ansible.builtin.command: semodule -i {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.pp # noqa no-handler
   changed_when: false
   when: nginx_app_protect_selinux_module.changed | bool
 

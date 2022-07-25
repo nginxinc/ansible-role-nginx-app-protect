@@ -10,6 +10,11 @@ BUG FIXES:
 
 Always refresh the `yum` cache.
 
+TESTS:
+
+* Remove Yamllint (Ansible Lint now incorporates Yamllint).
+* Skip Ansible Lint line length rule.
+
 ## 0.8.0 (April 6, 2022)
 
 BREAKING CHANGES:

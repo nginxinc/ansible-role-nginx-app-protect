@@ -43,7 +43,7 @@
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS
   ansible.builtin.apt:
-    name: "app-protect-dos{{ (nginx_app_protect_dos_state == 'absent') | ternary(',nginx-plus-module-appprotectdos', '') }}"
+    name: app-protect-dos{{ (nginx_app_protect_dos_state == 'absent') | ternary(',nginx-plus-module-appprotectdos', '') }}
     state: "{{ nginx_app_protect_dos_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"

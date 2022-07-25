@@ -3,11 +3,11 @@
   ansible.builtin.apt:
     name: "{{ nginx_app_protect_debian_dependencies }}"
     update_cache: true
-    state: latest  # noqa package-latest
+    state: latest # noqa package-latest
   when: ansible_os_family == "Debian"
 
 - name: (Amazon Linux) Set up Amazon Linux Extras repositories
-  ansible.builtin.command: "amazon-linux-extras enable {{ item }}"
+  ansible.builtin.command: amazon-linux-extras enable {{ item }}
   changed_when: false
   loop: "{{ nginx_app_protect_amazon_extras }}"
   when: ansible_distribution == "Amazon"
@@ -23,7 +23,7 @@
       ansible.builtin.yum:
         name: "{{ nginx_app_protect_redhat_dependencies }}"
         update_cache: true
-        state: latest  # noqa package-latest
+        state: latest # noqa package-latest
   when: ansible_os_family == "RedHat"
 
 - name: (RHEL) Set up RHEL specific repositories
@@ -56,7 +56,7 @@
         - nginx_app_protect_dos_enable | bool
 
     - name: (RHEL) Enable RHEL subscription manager repos management
-      ansible.builtin.command: "subscription-manager config --rhsm.manage_repos=1"
+      ansible.builtin.command: subscription-manager config --rhsm.manage_repos=1
       changed_when: false
       when: nginx_app_protect_use_rhel_subscription_repos | bool
 
