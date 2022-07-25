@@ -2,34 +2,34 @@
 # NGINX App Protect WAF platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
 nginx_app_protect_waf_linux_families:
   amazon: [
-    2,
+    "2",
   ]
   centos: [
-    7.4, 7.5, 7.6, 7.7, 7.8, 7.9,
+    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
   ]
   debian: [
-    10,
+    "10",
   ]
   redhat: [
-    7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8.1, 8.2, 8.3, 8.4, 8.5,
+    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9", "8.1", "8.2", "8.3", "8.4", "8.5",
   ]
   ubuntu: [
-    18.04, 20.04,
+    "18.04", "20.04",
   ]
 
 # NGINX App Protect DoS platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
 nginx_app_protect_dos_linux_families:
   centos: [
-    7.4, 7.5, 7.6, 7.7, 7.8, 7.9,
+    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
   ]
   debian: [
-    10,
+    "10",
   ]
   redhat: [
-    7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5,
+    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9", "8.0", "8.1", "8.2", "8.3", "8.4", "8.5",
   ]
   ubuntu: [
-    18.04, 20.04,
+    "18.04", "20.04",
   ]
 
 nginx_app_protect_setup_vars: [
