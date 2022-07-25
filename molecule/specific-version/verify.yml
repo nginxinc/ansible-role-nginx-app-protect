@@ -5,11 +5,11 @@
     specify_app_protect_signatures_version: true
     specify_app_protect_threat_campaigns_version: true
     app_protect_signature_version_matrix:
-      debian: "=2019.07.16-1"
-      redhat: "-2019.07.16"
+      debian: =2019.07.16-1
+      redhat: -2019.07.16
     app_protect_threat_campaigns_version_matrix:
-      debian: "=2020.08.20-1"
-      redhat: "-2020.08.20"
+      debian: =2020.08.20-1
+      redhat: -2020.08.20
   tasks:
     - name: Check if NGINX Plus is installed
       ansible.builtin.package:
@@ -58,10 +58,10 @@
           ansible.builtin.package_facts:
             manager: auto
 
-        - name: Verify installed NAP signatures version matches requested version  # noqa var-spacing
+        - name: Verify installed NAP signatures version matches requested version # noqa var-spacing
           ansible.builtin.assert:
             that: "{{ (ansible_facts.packages['app-protect-attack-signatures'] | map(attribute='version') | first) == (app_protect_signature_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '')) }}"
 
-        - name: Verify installed NAP threat campaigns version matches requested version  # noqa var-spacing
+        - name: Verify installed NAP threat campaigns version matches requested version # noqa var-spacing
           ansible.builtin.assert:
             that: "{{ (ansible_facts.packages['app-protect-threat-campaigns'] | map(attribute='version') | first) == (app_protect_threat_campaigns_version_matrix[ansible_os_family | lower] | regex_replace('^-|=','') + (ansible_os_family | lower == 'debian') | ternary('~' ~ ansible_distribution_release, '')) }}"

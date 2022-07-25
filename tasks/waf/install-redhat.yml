@@ -3,8 +3,7 @@
   ansible.builtin.yum_repository:
     name: nginx-plus
     description: NGINX Plus repository
-    baseurl: "{{ nginx_plus_repository |
-              default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_distribution == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+    baseurl: "{{ nginx_plus_repository | default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_distribution == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
     enabled: true
@@ -17,8 +16,7 @@
   ansible.builtin.yum_repository:
     name: nginx-app-protect
     description: NGINX App Protect WAF repository
-    baseurl: "{{ nginx_app_protect_waf_repository |
-              default(lookup('vars', 'nginx_app_protect_waf_default_repository_' + ((ansible_distribution == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+    baseurl: "{{ nginx_app_protect_waf_repository | default(lookup('vars', 'nginx_app_protect_waf_default_repository_' + ((ansible_distribution == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
     enabled: true
@@ -31,8 +29,7 @@
   ansible.builtin.yum_repository:
     name: nginx-app-protect-security-updates
     description: NGINX App Protect WAF security updates repository
-    baseurl: "{{ nginx_app_protect_waf_security_updates_repository |
-              default(lookup('vars', 'nginx_app_protect_waf_security_updates_default_repository_' + ((ansible_distribution == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+    baseurl: "{{ nginx_app_protect_waf_security_updates_repository | default(lookup('vars', 'nginx_app_protect_waf_security_updates_default_repository_' + ((ansible_distribution == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
     enabled: true

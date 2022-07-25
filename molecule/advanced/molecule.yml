@@ -7,7 +7,6 @@ driver:
   name: docker
 lint: |
   set -e
-  yamllint .
   ansible-lint --force-color
 platforms:
   - name: test-workload
@@ -22,8 +21,8 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
     groups:
       - nap
     networks:
@@ -33,8 +32,8 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
     groups:
       - nap
     networks:
@@ -44,8 +43,8 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
     groups:
       - nap
     networks:
@@ -55,8 +54,8 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
     groups:
       - nap
     networks:
