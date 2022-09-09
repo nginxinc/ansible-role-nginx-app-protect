@@ -12,6 +12,7 @@ Always refresh the `yum` cache.
 
 TESTS:
 
+* Update GitHub actions to only skip \*plus\* scenarios when the NGINX Plus license secrets are not present (it used to only run the NGINX Plus test scenarios during internal PRs).
 * Remove Yamllint (Ansible Lint now incorporates Yamllint).
 * Skip Ansible Lint line length rule.
 
