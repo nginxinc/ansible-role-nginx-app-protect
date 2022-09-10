@@ -33,4 +33,4 @@
         backup: true
         mode: 0644
       loop: "{{ nginx_app_protect_log_policy_file }}"
-  when: nginx_app_protect_log_policy_file_enable  | bool
+  when: nginx_app_protect_log_policy_file_enable | bool
