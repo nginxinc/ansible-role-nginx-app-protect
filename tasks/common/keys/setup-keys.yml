@@ -1,4 +1,17 @@
 ---
+- name: (Alpine Linux) Set up NGINX App Protect DoS signing key
+  block:
+    - name: (Alpine Linux) Set up NGINX App Protect DoS signing key URL
+      ansible.builtin.set_fact:
+        keysite: "{{ nginx_app_protect_signing_key.nginx_plus | default(nginx_app_protect_default_signing_key_rsa_pub) }}"
+
+    - name: (Alpine Linux) Download NGINX App Protect DoS signing key
+      ansible.builtin.get_url:
+        url: "{{ keysite }}"
+        dest: /etc/apk/keys/nginx_signing.rsa.pub
+        mode: 0400
+  when: ansible_os_family == "Alpine"
+
 - name: (Debian/Ubuntu) Set up NGINX App Protect and security updates signing key
   block:
     - name: (Debian/Ubuntu) Add NGINX Plus signing key

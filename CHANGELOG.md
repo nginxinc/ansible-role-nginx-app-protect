@@ -2,6 +2,11 @@
 
 ## 0.8.1 (Unreleased)
 
+FEATURES:
+
+* Add support for Alpine Linux for NGINX App Protect DoS.
+* Add support for Debian bullseye for NGINX App Protect DoS.
+
 ENHANCEMENTS:
 
 Bump the Ansible `community.general` collection to `5.501`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `3.1.0`.
@@ -33,8 +38,8 @@ FEATURES:
 
 ENHANCEMENTS:
 
-* Add support of RHEL 8.1+ for NGINX App Protect WAF 3.8.
-* Add support of RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
+* Add support for RHEL 8.1+ for NGINX App Protect WAF 3.8.
+* Add support for RHEL 7.4+ and 8.x for NGINX App Protect DoS 2.1.
 * New molecule tests for RHEL 7/8 and for NGINX App Protect WAF/DoS removal scenarios.
 * Bump the Ansible `community.general` collection to `4.7.0` and `community.docker` collection to `2.3.0`.
 * Update Dependabot to trigger updates at the same time across all NGINX core roles at the same time and to avoid triggering release drafter on GitHub actions dependency updates.
