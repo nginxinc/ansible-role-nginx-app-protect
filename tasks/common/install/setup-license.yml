@@ -64,7 +64,7 @@
 
     - name: (Debian/Red Hat OSs) Install cryptography package
       ansible.builtin.package:
-        name: "{{ (ansible_python_version_major == 3) | ternary('python3-cryptography', 'python2-cryptography') }}"
+        name: "{{ (ansible_python.version.major == 3) | ternary('python3-cryptography', 'python2-cryptography') }}"
 
     - name: (Debian/Red Hat OSs) Check that NGINX App Protect WAF/DoS certificate is valid
       community.crypto.x509_certificate_info:
