@@ -1,0 +1,34 @@
+---
+- name: (Alpine Linux) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
+  ansible.builtin.lineinfile:
+    path: /etc/apk/repositories
+    insertafter: EOF
+    line: "{{ nginx_plus_repository | default(nginx_plus_default_repository_alpine) }}"
+    state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
+  when: nginx_app_protect_dos_manage_repo | bool
+
+- name: (Alpine Linux) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS repository
+  ansible.builtin.lineinfile:
+    path: /etc/apk/repositories
+    insertafter: EOF
+    line: "{{ nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_alpine) }}"
+    state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
+  when: nginx_app_protect_dos_manage_repo | bool
+
+- name: (Alpine Linux) {{ nginx_app_protect_dos_setup | capitalize }} NGINX Plus
+  community.general.apk:
+    name: nginx-plus
+    repository: "{{ nginx_plus_repository | default(nginx_plus_default_repository_alpine) }}"
+    state: "{{ nginx_app_protect_dos_state }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_app_protect_license_status is not defined
+  notify: (Handler - NGINX App Protect) Run NGINX
+
+- name: (Alpine Linux) {{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS
+  community.general.apk:
+    name: app-protect-dos{{ (nginx_app_protect_dos_state == 'absent') | ternary(',nginx-plus-module-appprotectdos', '') }}
+    repository: "{{ nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_alpine) }}"
+    state: "{{ nginx_app_protect_dos_state }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_app_protect_license_status is not defined
+  notify: (Handler - NGINX App Protect) Run NGINX
