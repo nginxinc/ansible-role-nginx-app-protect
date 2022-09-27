@@ -3,6 +3,11 @@
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/prerequisites/install-dependencies.yml"
 
 - name: Set up SELinux
+  when:
+    - nginx_app_protect_selinux | bool or (nginx_app_protect_dos_enable | bool and nginx_app_protect_dos_setup == "install")
+    - "'selinux' in ansible_facts"
+    - ansible_facts['os_family'] in ['RedHat', 'Suse']
+    - ansible_facts['distribution'] not in ['Amazon', 'OracleLinux']
   block:
     - name: Check if SELinux is enabled
       ansible.builtin.debug:
@@ -12,8 +17,3 @@
     - name: Configure SELinux
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/prerequisites/setup-selinux.yml"
       when: ansible_facts['selinux']['mode'] is defined
-  when:
-    - nginx_app_protect_selinux | bool or (nginx_app_protect_dos_enable | bool and nginx_app_protect_dos_setup == "install")
-    - "'selinux' in ansible_facts"
-    - ansible_facts['os_family'] in ['RedHat', 'Suse']
-    - ansible_facts['distribution'] not in ['Amazon', 'OracleLinux']

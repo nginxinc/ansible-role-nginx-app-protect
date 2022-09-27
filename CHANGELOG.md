@@ -20,7 +20,7 @@ TESTS:
 
 * Update GitHub actions to only skip \*plus\* scenarios when the NGINX Plus license secrets are not present (it used to only run the NGINX Plus test scenarios during internal PRs).
 * Remove Yamllint (Ansible Lint now incorporates Yamllint).
-* Skip Ansible Lint line length rule.
+* Skip Ansible Lint line length and no templates in name rules. Slightly refactor code to incorporate changes added to Ansible Lint 6.7.0.
 
 ## 0.8.0 (April 6, 2022)
 

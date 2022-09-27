@@ -1,5 +1,6 @@
 ---
 - name: Copy NGINX App Protect security policy files
+  when: nginx_app_protect_security_policy_file_enable | bool
   block:
     - name: Ensure NGINX App Protect security policy directories exist
       ansible.builtin.file:
@@ -15,9 +16,9 @@
         backup: true
         mode: 0644
       loop: "{{ nginx_app_protect_security_policy_file }}"
-  when: nginx_app_protect_security_policy_file_enable | bool
 
 - name: Copy NGINX App Protect log policy files
+  when: nginx_app_protect_log_policy_file_enable | bool
   block:
     - name: Ensure NGINX App Protect log policy directories exist
       ansible.builtin.file:
@@ -33,4 +34,3 @@
         backup: true
         mode: 0644
       loop: "{{ nginx_app_protect_log_policy_file }}"
-  when: nginx_app_protect_log_policy_file_enable | bool

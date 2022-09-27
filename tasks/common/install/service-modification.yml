@@ -1,5 +1,8 @@
 ---
 - name: Modify NGINX Plus service
+  when:
+    - ansible_service_mgr == "systemd"
+    - nginx_app_protect_service_modify | bool
   block:
     - name: Create override for NGINX Plus service
       ansible.builtin.file:
@@ -15,6 +18,3 @@
         group: root
         mode: 0644
       notify: (Handler - NGINX App Protect) Systemd daemon-reload
-  when:
-    - ansible_service_mgr == "systemd"
-    - nginx_app_protect_service_modify | bool
