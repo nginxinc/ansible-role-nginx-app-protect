@@ -6,6 +6,7 @@ FEATURES:
 
 * Add support for Alpine Linux for NGINX App Protect DoS.
 * Add support for Debian bullseye for NGINX App Protect DoS.
+* Add support for RHEL 8.6.
 * Check NGINX App Protect license is valid before trying to install NGINX App Protect (this means the role now requires the `community.crypto` collection).
 
 ENHANCEMENTS:
