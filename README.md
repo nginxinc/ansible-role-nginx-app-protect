@@ -96,10 +96,13 @@ Ubuntu:
 The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect DoS:
 
 ```yaml
+Alpine:
+  - 3.15
 CentOS:
   - 7.4+
 Debian:
   - buster (10)
+  - bullseye (11)
 RHEL:
   - 7.4+
   - 8.0+
@@ -132,7 +135,11 @@ A working functional playbook example can be found in the **`molecule/default/`*
 
 | Name | Description |
 | ---- | ----------- |
-| **[`molecule/default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/default/converge.yml)** | Install and configure NGINX App Protect |
+| **[`molecule/default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/default/converge.yml)** | Install and configure NGINX App Protect WAF |
+ **[`molecule/advanced/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/advanced/converge.yml)** | Advanced integration test including NGINX App Protect WAF sending log data to a "remote" syslog server |
+| **[`molecule/dos/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/dos/converge.yml)** | Install NGINX App Protect DoS |
+| **[`molecule/specific-version/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/specific-version/converge.yml)** | Install a specific version of NGINX App Protect WAF signatures |
+| **[`molecule/uninstall/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/uninstall/converge.yml)** | Uninstall NGINX App Protect WAF/DoS |
 
 ## Other NGINX Ansible Collections and Roles
 
@@ -141,8 +148,6 @@ You can find the Ansible NGINX Core collection of roles to install and configure
 You can find the Ansible NGINX role to install NGINX OSS and NGINX Plus [here](https://github.com/nginxinc/ansible-role-nginx).
 
 You can find the Ansible NGINX configuration role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config).
-
-You can find the Ansible NGINX Controller collection of roles to install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller).
 
 You can find the Ansible NGINX Unit role to install NGINX Unit [here](https://github.com/nginxinc/ansible-role-nginx-unit).
 

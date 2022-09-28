@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.8.1 (Unreleased)
+## 0.8.1 (September 28, 2022)
 
 FEATURES:
 
@@ -11,7 +11,7 @@ FEATURES:
 
 ENHANCEMENTS:
 
-Bump the Ansible `community.general` collection to `5.501`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `3.1.0`.
+Bump the Ansible `community.general` collection to `5.5.0`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `3.1.0`.
 
 BUG FIXES:
 
