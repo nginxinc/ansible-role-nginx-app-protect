@@ -1,5 +1,6 @@
 ---
 - name: (Alpine Linux) Set up NGINX App Protect WAF/DoS license
+  when: ansible_os_family == "Alpine"
   block:
     - name: Install cryptography package
       ansible.builtin.package:
@@ -42,9 +43,9 @@
           - cert.public_key == key.public_key
         success_msg: Your NGINX App Protect WAF/DoS license is valid!
         fail_msg: Something went wrong! Make sure your App Protect WAF/DoS license is valid!
-  when: ansible_os_family == "Alpine"
 
 - name: (Debian/Red Hat OSs) Set up NGINX App Protect WAF/DoS license
+  when: ansible_os_family != "Alpine"
   block:
     - name: (Debian/Red Hat OSs) Create SSL directory
       ansible.builtin.file:
@@ -83,4 +84,3 @@
           - cert.public_key == key.public_key
         success_msg: Your NGINX App Protect WAF/DoS license is valid!
         fail_msg: Something went wrong! Make sure your NGINX App Protect WAF/DoS license is valid!
-  when: ansible_os_family != "Alpine"

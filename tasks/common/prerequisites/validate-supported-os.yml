@@ -1,5 +1,6 @@
 ---
 - name: (WAF) Set supported_os_waf when platform and major/minor version are in the WAF supported platforms dictionary
+  when: nginx_app_protect_waf_enable | bool and nginx_app_protect_waf_state != "absent"
   block:
     - name: (WAF) Set fact to true if item present in dictionary
       ansible.builtin.set_fact:
@@ -18,9 +19,9 @@
       ansible.builtin.fail:
         msg: NGINX App Protect WAF is not supported on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }}
       when: not supported_os_waf
-  when: nginx_app_protect_waf_enable | bool and nginx_app_protect_waf_state != "absent"
 
 - name: (DoS) Set supported_os_dos when platform and major/minor version are in the DoS supported platforms dictionary
+  when: nginx_app_protect_dos_enable | bool and nginx_app_protect_dos_state != "absent"
   block:
     - name: (DoS) Set fact to true if item present in dictionary
       ansible.builtin.set_fact:
@@ -39,7 +40,6 @@
       ansible.builtin.fail:
         msg: NGINX App Protect DoS is not supported on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }}
       when: not supported_os_dos
-  when: nginx_app_protect_dos_enable | bool and nginx_app_protect_dos_state != "absent"
 
 - name: Abort if installing on RHEL > 7 without subscription details
   ansible.builtin.fail:
