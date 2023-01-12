@@ -4,7 +4,7 @@
 
 BUG FIXES:
 
-The Alpine Linux `libelf` dependency is no longer automatically installed by NGINX App Protect DoS so we need to explicitly install it as a prerequesite.
+The Alpine Linux `libelf` dependency is no longer automatically installed by NGINX App Protect DoS so we need to explicitly install it as a prerequisite.
 
 ## 0.8.1 (September 28, 2022)
 
