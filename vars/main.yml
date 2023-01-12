@@ -52,7 +52,7 @@ nginx_app_protect_dos_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_
 
 # Alpine Linux dependencies
 nginx_app_protect_alpine_dependencies: [
-  boost, ca-certificates, coreutils, openssl, pcre2, zeromq,
+  boost, ca-certificates, coreutils, libelf, openssl, pcre2, zeromq,
 ]
 
 # Amazon Linux 2 extras
