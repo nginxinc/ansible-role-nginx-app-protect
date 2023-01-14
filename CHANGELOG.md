@@ -2,6 +2,10 @@
 
 ## 0.8.2 (Unreleased)
 
+ENHANCEMENTS:
+
+Bump the Ansible `community.general` collection to `6.2.0`, `community.crypto` collection to `2.10.0` and `community.docker` collection to `3.4.0`.
+
 BUG FIXES:
 
 The Alpine Linux `libelf` dependency is no longer automatically installed by NGINX App Protect DoS so we need to explicitly install it as a prerequisite.
