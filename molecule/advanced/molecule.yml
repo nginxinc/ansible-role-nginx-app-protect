@@ -11,6 +11,7 @@ lint: |
 platforms:
   - name: test-workload
     image: nginxdemos/hello
+    platform: amd64
     privileged: true
     groups:
       - workload
@@ -19,6 +20,7 @@ platforms:
   - name: centos-7
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
+    platform: amd64
     privileged: true
     cgroupns_mode: host
     volumes:
@@ -30,6 +32,7 @@ platforms:
       - name: molecule-test
   - name: debian-buster
     image: debian:buster-slim
+    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -42,6 +45,7 @@ platforms:
       - name: molecule-test
   - name: ubuntu-bionic
     image: ubuntu:bionic
+    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -54,6 +58,7 @@ platforms:
       - name: molecule-test
   - name: ubuntu-focal
     image: ubuntu:focal
+    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

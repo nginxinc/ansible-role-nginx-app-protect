@@ -12,7 +12,8 @@ The Alpine Linux `libelf` dependency is no longer automatically installed by NGI
 
 TESTS:
 
-Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
+* Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
+* Explicitly specify `amd64` as the platform used in Molecule tests. This will ensure that tests work as expected when run on different host architectures (e.g. newer Macbooks with `arm` processors).
 
 ## 0.8.1 (September 28, 2022)
 
