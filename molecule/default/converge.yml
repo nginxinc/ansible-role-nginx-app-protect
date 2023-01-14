@@ -17,7 +17,7 @@
         password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
       when:
         - ansible_distribution == "RedHat"
-        - rhel_subscription| bool
+        - rhel_subscription | bool
   tasks:
     - name: Install NGINX App Protect WAF
       ansible.builtin.include_role:
