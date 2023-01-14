@@ -9,6 +9,7 @@ platforms:
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -16,6 +17,7 @@ platforms:
     image: registry.access.redhat.com/ubi7/ubi:7.9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -23,6 +25,7 @@ platforms:
     image: debian:buster-slim
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -30,6 +33,7 @@ platforms:
     image: ubuntu:bionic
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -37,6 +41,7 @@ platforms:
     image: ubuntu:focal
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
