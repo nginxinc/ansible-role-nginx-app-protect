@@ -4,7 +4,7 @@
 
 FEATURES:
 
-Refactor how this role checks if your distribution is supported NGINX App Protect. The role will no longer fail if the distros are not supported, you will instead get a warning. This should help with the ocassional lag between new releases of distributions and/or NGINX App Protect and this role being updated to support those releases.
+Refactor how this role checks if your distribution is supported NGINX App Protect. The role will no longer fail if the  target distribution is not supported, instead, you will get a warning. This should help with the occasional lag between new releases of distributions and/or NGINX App Protect and this role being updated to support those releases.
 
 ENHANCEMENTS:
 
