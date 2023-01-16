@@ -4,7 +4,11 @@
 
 FEATURES:
 
-Refactor how this role checks if your distribution is supported NGINX App Protect. The role will no longer fail if the  target distribution is not supported, instead, you will get a warning. This should help with the occasional lag between new releases of distributions and/or NGINX App Protect and this role being updated to support those releases.
+* Refactor how this role checks if your distribution is supported NGINX App Protect. The role will no longer fail if the  target distribution is not supported, instead, you will get a warning. This should help with the occasional lag between new releases of distributions and/or NGINX App Protect and this role being updated to support those releases.
+* Add support for Debian bullseye for NGINX App Protect WAF.
+* Add support for Oracle Linux 7.x & 8.x for NGINX App Protect WAF.
+* Add support for RHEL 8.7.
+* Remove support for Debian buster for NGINX App Protect WAF/DoS.
 
 ENHANCEMENTS:
 
