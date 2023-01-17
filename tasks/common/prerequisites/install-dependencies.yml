@@ -92,3 +92,4 @@
         option: enabled
         value: 1
         mode: 0644
+      when: ansible_distribution == "OracleLinux"
