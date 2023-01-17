@@ -28,5 +28,5 @@
     msg: NGINX App Protect cannot be installed on {{ ansible_distribution }} {{ ansible_distribution_version }} without setting the 'nginx_app_protect_use_rhel_subscription_repos' variable
   when:
     - ansible_distribution == "RedHat"
-    - ansible_distribution_version is version('7', '>')
+    - ansible_distribution_major_version is version('7', '>')
     - not nginx_app_protect_use_rhel_subscription_repos | bool
