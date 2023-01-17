@@ -1,51 +1,32 @@
 ---
-- name: (WAF) Set supported_os_waf when platform and major/minor version are in the WAF supported platforms dictionary
-  when: nginx_app_protect_waf_enable | bool and nginx_app_protect_waf_state != "absent"
-  block:
-    - name: (WAF) Set fact to true if item present in dictionary
-      ansible.builtin.set_fact:
-        supported_os_waf: true
-      when:
-        - ansible_distribution | lower in item.key
-        - ansible_distribution_version | regex_search('\\d+\\.?\\d*') in item.value
-      loop: "{{ query('dict', nginx_app_protect_waf_linux_families) }}"
+- name: (WAF) Check whether you are using a supported NGINX App Protect WAF distribution
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution | lower in nginx_app_protect_waf_linux_families.keys() | list
+      - ansible_distribution_version | regex_search('\\d+\\.?\\d*') in nginx_app_protect_waf_linux_families[ansible_distribution | lower]
+    success_msg: Your distribution, {{ ansible_distribution }} {{ ansible_distribution_version }}, is supported by NGINX App Protect WAF
+    fail_msg: Your distribution, {{ ansible_distribution }} {{ ansible_distribution_version }}, is not supported by NGINX App Protect WAF
+  when:
+    - nginx_app_protect_waf_enable | bool
+    - nginx_app_protect_waf_state != "absent"
+  ignore_errors: true # noqa ignore-errors
 
-    - name: (WAF) Set supported_os_waf to false if fact not defined
-      ansible.builtin.set_fact:
-        supported_os_waf: false
-      when: supported_os_waf is not defined
+- name: (DoS) Check whether you are using a supported NGINX App Protect DoS distribution
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution | lower in nginx_app_protect_dos_linux_families.keys() | list
+      - ansible_distribution_version | regex_search('\\d+\\.?\\d*') in nginx_app_protect_dos_linux_families[ansible_distribution | lower]
+    success_msg: Your distribution, {{ ansible_distribution }} {{ ansible_distribution_version }}, is supported by NGINX App Protect DoS
+    fail_msg: Your distribution, {{ ansible_distribution }} {{ ansible_distribution_version }}, is not supported by NGINX App Protect DoS
+  when:
+    - nginx_app_protect_dos_enable | bool
+    - nginx_app_protect_dos_state != "absent"
+  ignore_errors: true # noqa ignore-errors
 
-    - name: (WAF) Abort if the OS / version combination is not supported
-      ansible.builtin.fail:
-        msg: NGINX App Protect WAF is not supported on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }}
-      when: not supported_os_waf
-
-- name: (DoS) Set supported_os_dos when platform and major/minor version are in the DoS supported platforms dictionary
-  when: nginx_app_protect_dos_enable | bool and nginx_app_protect_dos_state != "absent"
-  block:
-    - name: (DoS) Set fact to true if item present in dictionary
-      ansible.builtin.set_fact:
-        supported_os_dos: true
-      when:
-        - ansible_distribution | lower in item.key
-        - ansible_distribution_version | regex_search('\\d+\\.?\\d+') in item.value
-      loop: "{{ query('dict', nginx_app_protect_dos_linux_families) }}"
-
-    - name: (DoS) Set supported_os_dos to false if fact not defined
-      ansible.builtin.set_fact:
-        supported_os_dos: false
-      when: supported_os_dos is not defined
-
-    - name: (DoS) Abort if the OS / version combination is not supported
-      ansible.builtin.fail:
-        msg: NGINX App Protect DoS is not supported on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }}
-      when: not supported_os_dos
-
-- name: Abort if installing on RHEL > 7 without subscription details
+- name: Abort if installing NGINX App Protect on RHEL >7 without subscription details
   ansible.builtin.fail:
-    msg: NGINX App Protect cannot be installed on OS family {{ ansible_distribution }} version {{ ansible_distribution_version }} without setting the 'nginx_app_protect_use_rhel_subscription_repos'
-      variable
+    msg: NGINX App Protect cannot be installed on {{ ansible_distribution }} {{ ansible_distribution_version }} without setting the 'nginx_app_protect_use_rhel_subscription_repos' variable
   when:
     - ansible_distribution == "RedHat"
-    - ansible_distribution_version | int > 7
+    - ansible_distribution_major_version is version('7', '>')
     - not nginx_app_protect_use_rhel_subscription_repos | bool
