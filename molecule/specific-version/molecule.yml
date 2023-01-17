@@ -50,15 +50,6 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: rhel-8
-    image: redhat/ubi8:8.7
-    platform: amd64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
   - name: ubuntu-bionic
     image: ubuntu:bionic
     platform: amd64
