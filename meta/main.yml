@@ -22,7 +22,6 @@ galaxy_info:
         - "8"
     - name: Debian
       versions:
-        - buster
         - bullseye
     - name: Ubuntu
       versions:
@@ -41,4 +40,5 @@ galaxy_info:
 
 collections:
   - ansible.posix
+  - community.crypto
   - community.general

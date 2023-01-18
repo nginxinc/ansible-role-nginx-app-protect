@@ -5,6 +5,15 @@ lint: |
   set -e
   ansible-lint --force-color
 platforms:
+  - name: amazonlinux-2
+    image: amazonlinux:2
+    platform: amd64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: centos-7
     image: centos:7
     platform: amd64
@@ -14,17 +23,8 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: rhel-7
-    image: registry.access.redhat.com/ubi7/ubi:7.9
-    platform: amd64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
-  - name: debian-buster
-    image: debian:buster-slim
+  - name: debian-bullseye
+    image: debian:bullseye-slim
     platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -32,6 +32,24 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
+  - name: oraclelinux-8
+    image: oraclelinux:8
+    platform: amd64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
+  - name: rhel-7
+    image: registry.access.redhat.com/ubi7:7.9
+    platform: amd64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: ubuntu-bionic
     image: ubuntu:bionic
     platform: amd64
