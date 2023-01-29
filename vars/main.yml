@@ -1,47 +1,8 @@
 ---
-# NGINX App Protect WAF platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
-nginx_app_protect_waf_linux_families:
-  amazon: [
-    "2",
-  ]
-  centos: [
-    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
-  ]
-  debian: [
-    "11",
-  ]
-  oraclelinux: [
-    "8.1", "8.2", "8.3", "8.4", "8.5", "8.6", "8.7",
-  ]
-  redhat: [
-    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9", "8.1", "8.2", "8.3", "8.4", "8.5", "8.6", "8.7",
-  ]
-  ubuntu: [
-    "18.04", "20.04",
-  ]
+# Set the values allowed for various variables
+nginx_app_protect_setup_vars: [install, uninstall, upgrade]
 
-# NGINX App Protect DoS platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
-nginx_app_protect_dos_linux_families:
-  alpine: [
-    "3.15",
-  ]
-  centos: [
-    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9",
-  ]
-  debian: [
-    "11",
-  ]
-  redhat: [
-    "7.4", "7.5", "7.6", "7.7", "7.8", "7.9", "8.0", "8.1", "8.2", "8.3", "8.4", "8.5", "8.6", "8.7",
-  ]
-  ubuntu: [
-    "18.04", "20.04",
-  ]
-
-nginx_app_protect_setup_vars: [
-  install, uninstall, upgrade,
-]
-
+# Determine the current value of 'nginx_app_protect_*_state'
 nginx_app_protect_state_vals:
   install: present
   uninstall: absent
@@ -53,26 +14,67 @@ nginx_app_protect_waf_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_
 nginx_app_protect_dos_default_setup: install
 nginx_app_protect_dos_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_dos_setup] | default(nginx_app_protect_state_vals[nginx_app_protect_dos_default_setup]) }}"
 
+# NGINX App Protect WAF platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
+nginx_app_protect_waf_distributions:
+  amazon:
+    name: Amazon Linux
+    versions: [2]
+    architectures: [x86_64]
+  centos:
+    name: CentOS
+    versions: [7]
+    architectures: [x86_64]
+  debian:
+    name: Debian
+    versions: [11]
+    architectures: [x86_64]
+  oraclelinux:
+    name: Oracle Linux
+    versions: [8]
+    architectures: [x86_64]
+  redhat:
+    name: Red Hat Enterprise Linux
+    versions: [7, 8]
+    architectures: [x86_64]
+  ubuntu:
+    name: Ubuntu
+    versions: [18.04, 20.04]
+    architectures: [x86_64]
+
+# NGINX App Protect DoS platform matrix. Populate this dictionary of lists with appropriate values from ansible_distribution and ansible_distribution_version facts
+nginx_app_protect_dos_distributions:
+  alpine:
+    name: Alpine Linux
+    versions: [3.15]
+    architectures: [x86_64]
+  centos:
+    name: CentOS
+    versions: [7]
+    architectures: [x86_64]
+  debian:
+    name: Debian
+    versions: [11]
+    architectures: [x86_64]
+  redhat:
+    name: Red Hat Enterprise Linux
+    versions: [7, 8]
+    architectures: [x86_64]
+  ubuntu:
+    name: Ubuntu
+    versions: [18.04, 20.04]
+    architectures: [x86_64]
+
 # Alpine Linux dependencies
-nginx_app_protect_alpine_dependencies: [
-  boost, ca-certificates, coreutils, libelf, openssl, pcre2, zeromq,
-]
+nginx_app_protect_alpine_dependencies: [boost, ca-certificates, coreutils, libelf, openssl, pcre2, zeromq]
 
 # Amazon Linux 2 extras
-nginx_app_protect_amazon_extras: [
-  selinux-ng,
-]
+nginx_app_protect_amazon_extras: [selinux-ng]
 
 # Debian dependencies
-nginx_app_protect_debian_dependencies: [
-  apt-transport-https, ca-certificates,
-]
+nginx_app_protect_debian_dependencies: [apt-transport-https, ca-certificates]
 
 # Red Hat dependencies
-nginx_app_protect_redhat_dependencies: [
-  ca-certificates,
-  "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_distribution == 'Amazon') | ternary('7', ansible_distribution_major_version)) }}.noarch.rpm",
-]
+nginx_app_protect_redhat_dependencies: [ca-certificates, "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_distribution == 'Amazon') | ternary('7', ansible_distribution_major_version)) }}.noarch.rpm"]
 
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
 # Default settings are the official NGINX signing key hosts.

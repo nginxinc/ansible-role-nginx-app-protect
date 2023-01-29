@@ -1,0 +1,75 @@
+---
+- name: (WAF) Check whether you are using a supported NGINX App Protect WAF distribution
+  ansible.builtin.assert:
+    that:
+      - "{{ ansible_facts['distribution'] | lower in nginx_app_protect_waf_distributions.keys() | list }}"
+      - "{{ (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
+        if ansible_facts['distribution'] | lower in ['ubuntu'] else ansible_facts['distribution_major_version'] in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | string }}"
+      - "{{ ansible_facts['architecture'] in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['architectures'] }}"
+    success_msg: Your distribution, {{ nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is supported by NGINX App Protect WAF.
+    fail_msg: Your distribution, {{ nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is not supported by NGINX App Protect WAF.
+  when:
+    - nginx_app_protect_waf_enable | bool
+    - nginx_app_protect_waf_state != "absent"
+  ignore_errors: true # noqa ignore-errors
+
+- name: (DoS) Check whether you are using a supported NGINX App Protect DoS distribution
+  ansible.builtin.assert:
+    that:
+      - "{{ ansible_facts['distribution'] | lower in nginx_app_protect_dos_distributions.keys() | list }}"
+      - "{{ (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
+        if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version'] in nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['versions'] | string }}"
+      - "{{ ansible_facts['architecture'] in nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['architectures'] }}"
+    success_msg: Your distribution, {{ nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is supported by NGINX App Protect DoS.
+    fail_msg: Your distribution, {{ nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is not supported by NGINX App Protect DoS.
+  when:
+    - nginx_app_protect_dos_enable | bool
+    - nginx_app_protect_dos_state != "absent"
+  ignore_errors: true # noqa ignore-errors
+
+- name: Warn if installing NGINX App Protect on RHEL >7 without subscription details
+  ansible.builtin.fail:
+    msg: NGINX App Protect cannot be installed on Red Hat Enterprise Linux {{ ansible_distribution_version }} without a valid Red Hat Enterprise Linux subscription. Subscribe your target environment before running the role and then set the 'nginx_app_protect_use_rhel_subscription_repos' variable to true.
+  when:
+    - ansible_distribution == "RedHat"
+    - ansible_distribution_major_version is version('7', '>')
+    - not nginx_app_protect_use_rhel_subscription_repos | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Check that 'nginx_app_protect_waf_setup' is an allowed value
+  ansible.builtin.assert:
+    that: nginx_app_protect_waf_setup in nginx_app_protect_setup_vars
+    fail_msg: The value you used for 'nginx_app_protect_waf_setup', {{ nginx_app_protect_waf_setup }}, is not allowed. The allowed values are [{{ nginx_app_protect_setup_vars | join(', ') }}].
+  when: nginx_app_protect_waf_enable | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Check that 'nginx_app_protect_dos_setup' is an allowed value
+  ansible.builtin.assert:
+    that: nginx_app_protect_dos_setup in nginx_app_protect_setup_vars
+    fail_msg: The value you used for 'nginx_app_protect_dos_setup', {{ nginx_app_protect_waf_setup }}, is not allowed. The allowed values are [{{ nginx_app_protect_setup_vars | join(', ') }}].
+  when: nginx_app_protect_dos_enable | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Check that the variables for 'nginx_app_protect_security_policy_file_enable' are defined
+  ansible.builtin.assert:
+    that:
+      - "{{ item }} is defined"
+      - "{{ item }} | length > 0"
+    fail_msg: If you want to publish a security policy file, don't forget to define at least one 'src' and 'dest' variables
+  loop:
+    - nginx_app_protect_security_policy_file.0.src
+    - nginx_app_protect_security_policy_file.0.dest
+  when: nginx_app_protect_security_policy_file_enable | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Check that the variables for 'nginx_app_protect_log_policy_file_enable' are defined
+  ansible.builtin.assert:
+    that:
+      - "{{ item }} is defined"
+      - "{{ item }} | length > 0"
+    fail_msg: If you want to publish a log policy file, don't forget to define at least one 'src' and 'dest' variables
+  loop:
+    - nginx_app_protect_log_policy_file.0.src
+    - nginx_app_protect_log_policy_file.0.dest
+  when: nginx_app_protect_log_policy_file_enable | bool
+  ignore_errors: true # noqa ignore-errors

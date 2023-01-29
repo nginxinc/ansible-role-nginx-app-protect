@@ -1,37 +1,9 @@
 ---
-- name: Check whether you are using a supported NGINX App Protect distribution
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/prerequisites/validate-supported-os.yml"
-  when: nginx_app_protect_waf_state != "absent"
-        or nginx_app_protect_dos_state != "absent"
-  tags: nginx_app_protect_check_support
+- name: Validate distribution and role variables
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/validate/validate.yml"
+  tags: nginx_app_protect_validate
 
-- name: Check if the variables for 'nginx_app_protect_security_policy_file_enable' are defined
-  ansible.builtin.assert:
-    that:
-      - "{{ item }} is defined"
-      - "{{ item }} | length > 0"
-    fail_msg: If you want to publish a security policy file, don't forget to define at least one 'src' and 'dest' variables
-  loop:
-    - nginx_app_protect_security_policy_file.0.src
-    - nginx_app_protect_security_policy_file.0.dest
-  when: nginx_app_protect_security_policy_file_enable | bool
-  ignore_errors: true # noqa ignore-errors
-  tags: nginx_app_protect_check_policy_file
-
-- name: Check if the variables for 'nginx_app_protect_log_policy_file_enable' are defined
-  ansible.builtin.assert:
-    that:
-      - "{{ item }} is defined"
-      - "{{ item }} | length > 0"
-    fail_msg: If you want to publish a log policy file, don't forget to define at least one 'src' and 'dest' variables
-  loop:
-    - nginx_app_protect_log_policy_file.0.src
-    - nginx_app_protect_log_policy_file.0.dest
-  when: nginx_app_protect_log_policy_file_enable | bool
-  ignore_errors: true # noqa ignore-errors
-  tags: nginx_app_protect_check_policy_file
-
-- name: Install prerequisites
+- name: Set up prerequisites
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/common/prerequisites/prerequisites.yml"
   when: nginx_app_protect_waf_enable | bool
         or nginx_app_protect_dos_enable | bool
