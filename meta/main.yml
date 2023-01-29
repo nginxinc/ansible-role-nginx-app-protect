@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: nginxinc
-  description: Official Ansible role for NGINX App Protect WAF and DoS
+  description: Official Ansible role for installing and configuring NGINX App Protect WAF and DoS
   role_name: nginx_app_protect
   company: F5, Inc.
 
