@@ -6,5 +6,5 @@ collections:
     version: 2.10.0
   - name: community.general
     version: 6.2.0
-  - name: community.docker  # Only required if you plan to use Molecule
+  - name: community.docker # Only required if you plan to use Molecule
     version: 3.4.0

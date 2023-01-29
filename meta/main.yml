@@ -7,7 +7,7 @@ galaxy_info:
 
   license: Apache License, Version 2.0
 
-  min_ansible_version: '2.12'
+  min_ansible_version: "2.12"
 
   platforms:
     - name: Alpine
@@ -15,7 +15,7 @@ galaxy_info:
     - name: Amazon Linux 2
       versions: [all]
     - name: EL
-      versions: ['7', '8']
+      versions: ["7", "8"]
     - name: Debian
       versions: [bullseye]
     - name: Ubuntu

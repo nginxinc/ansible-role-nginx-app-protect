@@ -20,8 +20,8 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
 
 ### Ansible
 
-* This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.12`).
-* When using Ansible core, you will also need to install the following collections:
+- This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.12`).
+- When using Ansible core, you will also need to install the following collections:
 
     ```yaml
     ---
@@ -37,18 +37,18 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
     ```
 
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
-* Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).
+- Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).
 
 ### Jinja2
 
-* This role uses Jinja2 templates. Ansible core installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum version of Jinja2 required for the role to properly function is `2.11`.
-* Instructions on how to install Jinja2 can be found in the [Jinja2 website](https://jinja.palletsprojects.com/en/2.11.x/intro/#installation).
+- This role uses Jinja2 templates. Ansible core installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum version of Jinja2 required for the role to properly function is `3.1`.
+- Instructions on how to install Jinja2 can be found in the [Jinja2 website](https://jinja.palletsprojects.com/en/2.11.x/intro/#installation).
 
 ### Molecule (Optional)
 
-* Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `3.3`.
-* Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule Docker driver.*
-* To run the Molecule tests, you must copy your NGINX App Protect license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
+- Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `4.x`.
+- Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule Docker driver.*
+- To run the Molecule tests, you must copy your NGINX App Protect license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
 
   You can alternatively add your NGINX App Protect repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 
@@ -62,11 +62,25 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
 
 ### Ansible Galaxy
 
-Use `ansible-galaxy install nginxinc.nginx_app_protect` to install the latest stable release of the role on your system.
+To install the latest stable release of the role on your system, use:
+
+```bash
+ansible-galaxy install nginxinc.nginx_app_protect
+```
+
+Alternatively, if you have already installed the role, update the role to the latest release:
+
+```bash
+ansible-galaxy install -f nginxinc.nginx_app_protect
+```
 
 ### Git
 
-Use `git clone https://github.com/nginxinc/ansible-role-nginx-app-protect.git` to pull the latest edge commit of the role from GitHub.
+To pull the latest edge commit of the role from GitHub, use:
+
+```bash
+git clone https://github.com/nginxinc/ansible-role-nginx-app-protect.git
+```
 
 ## Platforms
 
@@ -88,8 +102,6 @@ Ubuntu:
   - bionic (18.04)
   - focal (20.04)
 ```
-
-**Note:** Due to a packaging limitation in NGINX App Protect on Alpine, it may be required to explicitly install NGINX Plus on the instance **before** using the NGINX App Protect role if a hotfix version of NGINX Plus has been published. It is recommended to use the [NGINX Core](https://galaxy.ansible.com/nginxinc/nginx_core) Ansible role for this purpose.
 
 ### NGINX App Protect DoS
 
@@ -127,7 +139,7 @@ Similarly, descriptions and defaults for preset variables can be found in the **
 
 ## Dependencies
 
-* If NGINX Plus is *not* already installed on the system, this role will install the version of NGINX Plus that is dependent on the version of NGINX App Protect that is being installed.
+If NGINX Plus is *not* already installed on the system, this role will install the version of NGINX Plus that is dependent on the version of NGINX App Protect that is being installed.
 
 ## Example Playbook
 
