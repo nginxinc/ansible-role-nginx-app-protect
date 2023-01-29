@@ -18,7 +18,8 @@ Bump the Ansible `community.general` collection to `6.2.0`, `community.crypto` c
 
 BUG FIXES:
 
-The Alpine Linux `libelf` dependency is no longer automatically installed by NGINX App Protect DoS so we need to explicitly install it as a prerequisite.
+* The Alpine Linux `libelf` dependency is no longer automatically installed by NGINX App Protect DoS so we need to explicitly install it as a prerequisite.
+* The `ignore-tags` GitHub actions key does not exist. Replace it with the correct key, `tags-ignore`.
 
 TESTS:
 
