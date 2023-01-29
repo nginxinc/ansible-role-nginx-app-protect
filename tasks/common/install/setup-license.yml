@@ -1,6 +1,6 @@
 ---
 - name: (Alpine Linux) Set up NGINX App Protect WAF/DoS license
-  when: ansible_os_family == "Alpine"
+  when: ansible_facts['os_family'] == "Alpine"
   block:
     - name: Install cryptography package
       ansible.builtin.package:
@@ -14,14 +14,14 @@
 
     - name: (Alpine Linux) Copy NGINX App Protect WAF/DoS certificate
       ansible.builtin.copy:
-        src: "{{ nginx_app_protect_license.certificate }}"
+        src: "{{ nginx_app_protect_license['certificate'] }}"
         dest: /etc/apk/cert.pem
         decrypt: true
         mode: 0444
 
     - name: (Alpine Linux) Copy NGINX App Protect WAF/DoS key
       ansible.builtin.copy:
-        src: "{{ nginx_app_protect_license.key }}"
+        src: "{{ nginx_app_protect_license['key'] }}"
         dest: /etc/apk/cert.key
         decrypt: true
         mode: 0444
@@ -45,7 +45,7 @@
         fail_msg: Something went wrong! Make sure your App Protect WAF/DoS license is valid!
 
 - name: (Debian/Red Hat OSs) Set up NGINX App Protect WAF/DoS license
-  when: ansible_os_family != "Alpine"
+  when: ansible_facts['os_family'] != "Alpine"
   block:
     - name: (Debian/Red Hat OSs) Create SSL directory
       ansible.builtin.file:
@@ -60,12 +60,12 @@
         decrypt: true
         mode: 0444
       loop:
-        - "{{ nginx_app_protect_license.certificate }}"
-        - "{{ nginx_app_protect_license.key }}"
+        - "{{ nginx_app_protect_license['certificate'] }}"
+        - "{{ nginx_app_protect_license['key'] }}"
 
     - name: (Debian/Red Hat OSs) Install cryptography package
       ansible.builtin.package:
-        name: "{{ (ansible_python.version.major == 3) | ternary('python3-cryptography', 'python2-cryptography') }}"
+        name: "{{ (ansible_python['version']['major'] == 3) | ternary('python3-cryptography', 'python2-cryptography') }}"
 
     - name: (Debian/Red Hat OSs) Check that NGINX App Protect WAF/DoS certificate is valid
       community.crypto.x509_certificate_info:
@@ -80,7 +80,7 @@
     - name: (Debian/Red Hat OSs) Check that NGINX App Protect WAF/DoS license is valid
       ansible.builtin.assert:
         that:
-          - cert.expired == false
-          - cert.public_key == key.public_key
+          - "{{ not cert['expired'] | bool }}"
+          - "{{ cert['public_key'] == key['public_key'] }}"
         success_msg: Your NGINX App Protect WAF/DoS license is valid!
         fail_msg: Something went wrong! Make sure your NGINX App Protect WAF/DoS license is valid!

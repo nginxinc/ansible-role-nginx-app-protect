@@ -6,6 +6,7 @@ FEATURES:
 
 * Validate that various role variables have been set to one of the allowed values.
 * Refactor how this role checks if your distribution is supported NGINX App Protect. The role will no longer fail if the  target distribution is not supported, instead, you will get a warning. This should help with the occasional lag between new releases of distributions and/or NGINX App Protect and this role being updated to support those releases. In addition, the role will also now check if your distribution's architecture is supported.
+* Refactor Ansible facts from dot to array notation to keep in with the standards set by the other roles in the Ansible NGINX core collection.
 * Add support for Debian bullseye for NGINX App Protect WAF.
 * Add support for Oracle Linux 7.x & 8.x for NGINX App Protect WAF.
 * Add support for RHEL 8.7.

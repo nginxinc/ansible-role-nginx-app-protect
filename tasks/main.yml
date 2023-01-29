@@ -21,12 +21,12 @@
   tags: nginx_app_protect_setup_license
 
 - name: "{{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF"
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/waf/install-{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/waf/install-{{ ansible_facts['os_family'] | lower }}.yml"
   when: nginx_app_protect_waf_enable | bool
   tags: nginx_app_protect_install_app_protect_waf
 
 - name: "{{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS"
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/dos/install-{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/dos/install-{{ ansible_facts['os_family'] | lower }}.yml"
   when: nginx_app_protect_dos_enable | bool
   tags: nginx_app_protect_install_app_protect_dos
 

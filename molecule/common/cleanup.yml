@@ -26,7 +26,7 @@
         - name: (RHEL) Unregister system from RHEL subscription manager
           community.general.redhat_subscription:
             state: absent
-          when: ansible_distribution == "RedHat"
+          when: ansible_facts['distribution'] == "RedHat"
       rescue:
         - name: It's ok we're at startup
           ansible.builtin.meta: noop

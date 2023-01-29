@@ -75,7 +75,7 @@
 - name: Import SELinux NGINX App Protect module
   ansible.builtin.command: semodule -i {{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.pp # noqa no-handler
   changed_when: false
-  when: nginx_app_protect_selinux_module.changed | bool
+  when: nginx_app_protect_selinux_module['changed'] | bool
 
 - name: Set SELinux mode to enforcing
   ansible.posix.selinux:

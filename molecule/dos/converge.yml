@@ -16,7 +16,7 @@
         username: "{{ lookup('env', 'RHEL_USERNAME') }}"
         password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
       when:
-        - ansible_distribution == "RedHat"
+        - ansible_facts['distribution'] == "RedHat"
         - rhel_subscription| bool
   tasks:
     - name: Install NGINX App Protect DoS
