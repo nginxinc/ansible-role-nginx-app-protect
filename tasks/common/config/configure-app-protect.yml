@@ -4,15 +4,15 @@
   block:
     - name: Ensure NGINX App Protect security policy directories exist
       ansible.builtin.file:
-        path: "{{ item.dest | default('/etc/app_protect/conf') | dirname }}"
+        path: "{{ item['dest'] | default('/etc/app_protect/conf') | dirname }}"
         state: directory
         mode: 0755
       loop: "{{ nginx_app_protect_security_policy_file }}"
 
     - name: Copy NGINX App Protect security policy files
       ansible.builtin.copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest | default('/etc/app_protect/conf') }}"
+        src: "{{ item['src'] }}"
+        dest: "{{ item['dest'] | default('/etc/app_protect/conf') }}"
         backup: true
         mode: 0644
       loop: "{{ nginx_app_protect_security_policy_file }}"
@@ -22,15 +22,15 @@
   block:
     - name: Ensure NGINX App Protect log policy directories exist
       ansible.builtin.file:
-        path: "{{ item.dest | default('/etc/app_protect/conf') | dirname }}"
+        path: "{{ item['dest'] | default('/etc/app_protect/conf') | dirname }}"
         state: directory
         mode: 0755
       loop: "{{ nginx_app_protect_log_policy_file }}"
 
     - name: Copy NGINX App Protect log policy files
       ansible.builtin.copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest | default('/etc/app_protect/conf') }}"
+        src: "{{ item['src'] }}"
+        dest: "{{ item['dest'] | default('/etc/app_protect/conf') }}"
         backup: true
         mode: 0644
       loop: "{{ nginx_app_protect_log_policy_file }}"

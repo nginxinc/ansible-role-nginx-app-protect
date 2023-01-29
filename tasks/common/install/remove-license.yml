@@ -4,11 +4,11 @@
     nginx_app_protect_license_status: absent
 
 - name: Delete NGINX App Protect WAF repository data
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/waf/install-{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/waf/install-{{ ansible_facts['os_family'] | lower }}.yml"
   when: nginx_app_protect_waf_enable | bool
 
 - name: Delete NGINX App Protect DoS repository data
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/dos/install-{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/dos/install-{{ ansible_facts['os_family'] | lower }}.yml"
   when: nginx_app_protect_dos_enable | bool
 
 - name: Delete NGINX App Protect license

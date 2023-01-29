@@ -1,10 +1,10 @@
 ---
 - name: (Alpine Linux) Set up NGINX App Protect DoS signing key
-  when: ansible_os_family == "Alpine"
+  when: ansible_facts['os_family'] == "Alpine"
   block:
     - name: (Alpine Linux) Set up NGINX App Protect DoS signing key URL
       ansible.builtin.set_fact:
-        keysite: "{{ nginx_app_protect_signing_key.nginx_plus | default(nginx_app_protect_default_signing_key_rsa_pub) }}"
+        keysite: "{{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key_rsa_pub) }}"
 
     - name: (Alpine Linux) Download NGINX App Protect DoS signing key
       ansible.builtin.get_url:
@@ -13,27 +13,27 @@
         mode: 0400
 
 - name: (Debian/Ubuntu) Set up NGINX App Protect and security updates signing key
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   block:
     - name: (Debian/Ubuntu) Add NGINX Plus signing key
       ansible.builtin.apt_key:
         keyring: /usr/share/keyrings/nginx-archive-keyring.gpg
-        url: "{{ nginx_app_protect_signing_key.nginx_plus | default(nginx_app_protect_default_signing_key_pgp) }}"
+        url: "{{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key_pgp) }}"
 
     - name: (Debian/Ubuntu) Add NGINX App Protect security updates signing key
       ansible.builtin.apt_key:
         keyring: /usr/share/keyrings/nginx-archive-keyring.gpg
-        url: "{{ nginx_app_protect_waf_signing_key.waf_security_updates | default(nginx_app_protect_waf_security_updates_default_signing_key_pgp) }}"
+        url: "{{ nginx_app_protect_waf_signing_key['waf_security_updates'] | default(nginx_app_protect_waf_security_updates_default_signing_key_pgp) }}"
       when: (nginx_app_protect_waf_install_signatures | bool) or (nginx_app_protect_waf_install_threat_campaigns | bool)
 
 - name: (Amazon Linux/CentOS/RHEL) Set up NGINX App Protect and security updates signing key
-  when: ansible_os_family == "RedHat"
+  when: ansible_facts['os_family'] == "RedHat"
   block:
     - name: (CentOS/RHEL) Add NGINX Plus signing key
       ansible.builtin.rpm_key:
-        key: "{{ nginx_app_protect_signing_key.nginx_plus | default(nginx_app_protect_default_signing_key_pgp) }}"
+        key: "{{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key_pgp) }}"
 
     - name: (Amazon Linux/CentOS/RHEL) Add NGINX App Protect security updates signing key
       ansible.builtin.rpm_key:
-        key: "{{ nginx_app_protect_waf_signing_key.waf_security_updates | default(nginx_app_protect_waf_security_updates_default_signing_key_pgp) }}"
+        key: "{{ nginx_app_protect_waf_signing_key['waf_security_updates'] | default(nginx_app_protect_waf_security_updates_default_signing_key_pgp) }}"
       when: (nginx_app_protect_waf_install_signatures | bool) or (nginx_app_protect_waf_install_threat_campaigns | bool)
