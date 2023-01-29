@@ -22,10 +22,10 @@
 
 - name: (Handler - NGINX App Protect) Print NGINX error if syntax check fails
   ansible.builtin.debug:
-    var: config_check.stderr_lines
-  failed_when: config_check.rc != 0
+    var: config_check['stderr_lines']
+  failed_when: config_check['rc'] != 0
   when:
-    - config_check.stderr_lines is defined
-    - config_check.stderr_lines != []
-    - config_check.rc != 0
+    - config_check['stderr_lines'] is defined
+    - config_check['stderr_lines'] != []
+    - config_check['rc'] != 0
   listen: (Handler - NGINX App Protect) Run NGINX
