@@ -8,7 +8,7 @@
       ansible.builtin.file:
         path: /etc/systemd/system/nginx.service.d
         state: directory
-        mode: 0755
+        mode: "0755"
 
     - name: Increase timeout for NGINX Plus service
       ansible.builtin.template:
@@ -16,5 +16,5 @@
         dest: /etc/systemd/system/nginx.service.d/override.conf
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
       notify: (Handler - NGINX App Protect) Systemd daemon-reload

@@ -91,5 +91,5 @@
     section: ol8_codeready_builder
     option: enabled
     value: 1
-    mode: 0644
+    mode: "0644"
   when: ansible_facts['distribution'] == "OracleLinux"

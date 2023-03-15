@@ -9,7 +9,7 @@
       Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
       Acquire::https::{{ (nginx_plus_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0444
+    mode: "0444"
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS license
   ansible.builtin.blockinfile:
@@ -21,7 +21,7 @@
       Acquire::https::{{ (nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
       Acquire::https::{{ (nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0444
+    mode: "0444"
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   ansible.builtin.apt_repository:
@@ -29,7 +29,7 @@
     repo: "{{ nginx_plus_repository | default(nginx_plus_default_repository_debian) }}"
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
     update_cache: false
-    mode: 0644
+    mode: "0644"
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS repository
@@ -38,7 +38,7 @@
     repo: "{{ nginx_app_protect_dos_repository | default(nginx_app_protect_dos_default_repository_debian) }}"
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
     update_cache: false
-    mode: 0644
+    mode: "0644"
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (Debian/Ubuntu) {{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS

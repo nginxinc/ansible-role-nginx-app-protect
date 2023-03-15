@@ -10,21 +10,21 @@
       ansible.builtin.file:
         path: /etc/apk
         state: directory
-        mode: 0755
+        mode: "0755"
 
     - name: (Alpine Linux) Copy NGINX App Protect WAF/DoS certificate
       ansible.builtin.copy:
         src: "{{ nginx_app_protect_license['certificate'] }}"
         dest: /etc/apk/cert.pem
         decrypt: true
-        mode: 0444
+        mode: "0444"
 
     - name: (Alpine Linux) Copy NGINX App Protect WAF/DoS key
       ansible.builtin.copy:
         src: "{{ nginx_app_protect_license['key'] }}"
         dest: /etc/apk/cert.key
         decrypt: true
-        mode: 0444
+        mode: "0444"
 
     - name: (Alpine Linux) Check that NGINX App Protect WAF/DoS certificate is valid
       community.crypto.x509_certificate_info:
@@ -51,14 +51,14 @@
       ansible.builtin.file:
         path: /etc/ssl/nginx
         state: directory
-        mode: 0755
+        mode: "0755"
 
     - name: (Debian/Red Hat OSs) Copy NGINX App Protect WAF/DoS certificate and license key
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: /etc/ssl/nginx
         decrypt: true
-        mode: 0444
+        mode: "0444"
       loop:
         - "{{ nginx_app_protect_license['certificate'] }}"
         - "{{ nginx_app_protect_license['key'] }}"

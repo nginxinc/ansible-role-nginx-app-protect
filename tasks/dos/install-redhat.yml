@@ -9,7 +9,7 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0644
+    mode: "0644"
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect DoS repository
@@ -22,7 +22,7 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_dos_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0644
+    mode: "0644"
   when: nginx_app_protect_dos_manage_repo | bool
 
 - name: (CentOS/RHEL) Force Yum cache refresh
