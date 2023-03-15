@@ -57,7 +57,7 @@
   ansible.builtin.template:
     src: "{{ role_path }}/templates/selinux/nginx-app-protect-module.te.j2"
     dest: "{{ nginx_app_protect_selinux_tempdir }}/nginx-app-protect-module.te"
-    mode: 0644
+    mode: "0644"
   register: nginx_app_protect_selinux_module
 
 - name: Check SELinux NGINX App Protect module

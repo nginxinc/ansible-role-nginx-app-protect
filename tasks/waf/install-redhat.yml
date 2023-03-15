@@ -9,7 +9,7 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_waf_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0644
+    mode: "0644"
   when: nginx_app_protect_waf_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF repository
@@ -22,7 +22,7 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_waf_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0644
+    mode: "0644"
   when: nginx_app_protect_waf_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF security updates repository
@@ -35,7 +35,7 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_waf_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0644
+    mode: "0644"
   when:
     - (nginx_app_protect_waf_install_signatures | bool) or (nginx_app_protect_waf_install_threat_campaigns | bool)
     - nginx_app_protect_waf_manage_repo | bool

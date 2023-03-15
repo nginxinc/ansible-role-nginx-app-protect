@@ -10,7 +10,7 @@
       ansible.builtin.get_url:
         url: "{{ keysite }}"
         dest: /etc/apk/keys/nginx_signing.rsa.pub
-        mode: 0400
+        mode: "0400"
 
 - name: (Debian/Ubuntu) Set up NGINX App Protect and security updates signing key
   when: ansible_facts['os_family'] == "Debian"
