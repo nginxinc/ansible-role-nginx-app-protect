@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.1 (Unreleased)
+
+CI/CD:
+
+- Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
+- Add pre-releases to Release Drafter.
+
 ## 0.9.0 (January 29, 2023)
 
 FEATURES:
