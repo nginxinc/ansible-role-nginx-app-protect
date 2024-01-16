@@ -9,12 +9,11 @@
           ansible.builtin.wait_for_connection:
             delay: 1
             timeout: 2
-          register: connection
-          ignore_errors: true
+          register: container
 
         - name: Containers are not up, quit from here
           ansible.builtin.fail:
-          when: connection.failed
+          when: container['failed'] | bool
 
         - name: Gather facts
           ansible.builtin.setup:
