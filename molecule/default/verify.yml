@@ -59,4 +59,4 @@
 
     - name: Ensure /etc/app_protect/conf/test-security-profile.json exists
       ansible.builtin.assert:
-        that: log_profile.stat.exists | bool
+        that: log_profile['stat']['exists'] | bool
