@@ -1,9 +1,6 @@
 ---
 driver:
   name: docker
-lint: |
-  set -e
-  ansible-lint --force-color
 platforms:
   - name: amazonlinux-2
     image: amazonlinux:2

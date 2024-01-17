@@ -1,9 +1,6 @@
 ---
 driver:
   name: docker
-lint: |
-  set -e
-  ansible-lint --force-color
 platforms:
   - name: alpine-3.15
     image: alpine:3.15

@@ -13,9 +13,36 @@ on:
     - cron: "0 0 1 * *"
   workflow_dispatch:
 jobs:
+  ansible-lint:
+    name: Ansible Lint
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install Ansible Lint
+        run: pip3 install -r .github/workflows/requirements/requirements_ansible_lint.txt
+
+      - name: Install Ansible collection dependencies
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
+
+      - name: Run Ansible Lint
+        run: ansible-lint --force-color
+
   molecule:
     name: Molecule
     runs-on: ubuntu-22.04
+    needs: ansible-lint
+    env:
+      NGINX_CRT: ${{ secrets.NGINX_CRT }}
+      NGINX_KEY: ${{ secrets.NGINX_KEY }}
+      RHEL_USERNAME: ${{ secrets.RHEL_USERNAME }}
+      RHEL_PASSWORD: ${{ secrets.RHEL_PASSWORD }}
     strategy:
       fail-fast: false
       matrix:
@@ -27,10 +54,10 @@ jobs:
           - uninstall
     steps:
       - name: Check out the codebase
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python 3
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.x
 
@@ -46,7 +73,4 @@ jobs:
         env:
           PY_COLORS: 1
           ANSIBLE_FORCE_COLOR: 1
-          NGINX_CRT: ${{ secrets.NGINX_CRT }}
-          NGINX_KEY: ${{ secrets.NGINX_KEY }}
-          RHEL_USERNAME: ${{ secrets.RHEL_USERNAME }}
-          RHEL_PASSWORD: ${{ secrets.RHEL_PASSWORD }}
+
