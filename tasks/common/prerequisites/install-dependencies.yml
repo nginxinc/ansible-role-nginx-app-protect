@@ -78,11 +78,11 @@
         - ansible_facts['distribution_major_version'] is version('7', '==')
         - nginx_app_protect_use_rhel_subscription_repos | bool
 
-    - name: (RHEL 8) Set up RHEL dependencies from RHEL official repositories
+    - name: (RHEL 8/9) Set up RHEL dependencies from RHEL official repositories
       community.general.rhsm_repository:
-        name: codeready-builder-for-rhel-8-x86_64-rpms
+        name: codeready-builder-for-rhel-{{ ansible_facts['distribution_major_version'] }}-x86_64-rpms
       when:
-        - ansible_facts['distribution_major_version'] is version('8', '==')
+        - ansible_facts['distribution_major_version'] is version('8', '>=')
         - nginx_app_protect_use_rhel_subscription_repos | bool
 
 - name: (Oracle Linux) Set up Oracle Linux specific repositories
