@@ -3,7 +3,7 @@
   ansible.builtin.assert:
     that:
       - ansible_facts['distribution'] | lower in nginx_app_protect_waf_distributions.keys() | list
-      - (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | string) if ansible_facts['distribution'] | lower in ['ubuntu'] else ansible_facts['distribution_major_version'] in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | string
+      - (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | string if ansible_facts['distribution'] | lower in ['ubuntu'] else ansible_facts['distribution_major_version'] in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
       - ansible_facts['architecture'] in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['architectures']
     success_msg: Your distribution, {{ nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is supported by NGINX App Protect WAF.
     fail_msg: Your distribution, {{ nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is not supported by NGINX App Protect WAF.
@@ -16,7 +16,7 @@
   ansible.builtin.assert:
     that:
       - ansible_facts['distribution'] | lower in nginx_app_protect_dos_distributions.keys() | list
-      - (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['versions'] | string) if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version'] in nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['versions'] | string
+      - (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['versions'] | string if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version'] in nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
       - ansible_facts['architecture'] in nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['architectures']
     success_msg: Your distribution, {{ nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is supported by NGINX App Protect DoS.
     fail_msg: Your distribution, {{ nginx_app_protect_dos_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is not supported by NGINX App Protect DoS.
@@ -51,8 +51,8 @@
 - name: Check that the variables for 'nginx_app_protect_security_policy_file_enable' are defined
   ansible.builtin.assert:
     that:
-      - "{{ item }} is defined"
-      - "{{ item }} | length > 0"
+      - item is defined
+      - item | length > 0
     fail_msg: If you want to publish a security policy file, don't forget to define at least one 'src' and 'dest' variables
   loop:
     - nginx_app_protect_security_policy_file.0.src
@@ -63,8 +63,8 @@
 - name: Check that the variables for 'nginx_app_protect_log_policy_file_enable' are defined
   ansible.builtin.assert:
     that:
-      - "{{ item }} is defined"
-      - "{{ item }} | length > 0"
+      - item is defined
+      - item | length > 0
     fail_msg: If you want to publish a log policy file, don't forget to define at least one 'src' and 'dest' variables
   loop:
     - nginx_app_protect_log_policy_file.0.src
