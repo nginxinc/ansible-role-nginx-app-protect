@@ -88,7 +88,7 @@
     - name: (Debian/Red Hat OSs) Check that NGINX App Protect WAF/DoS license is valid
       ansible.builtin.assert:
         that:
-          - "{{ not cert['expired'] | bool }}"
-          - "{{ cert['public_key'] == key['public_key'] }}"
+          - not cert['expired'] | bool
+          - cert['public_key'] == key['public_key']
         success_msg: Your NGINX App Protect WAF/DoS license is valid!
         fail_msg: Something went wrong! Make sure your NGINX App Protect WAF/DoS license is valid!
