@@ -77,7 +77,7 @@ platforms:
   - name: rhel-9
     image: redhat/ubi9:9.1.0
     env:
-      SMDEV_CONTAINER_OFF: 1
+      SMDEV_CONTAINER_OFF: "1"
     platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
