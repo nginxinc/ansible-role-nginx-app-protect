@@ -35,7 +35,6 @@
 - name: (Alpine Linux) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF
   community.general.apk:
     name: app-protect
-    repository: "{{ nginx_app_protect_waf_repository | default(nginx_app_protect_waf_default_repository_alpine) }}"
     state: "{{ nginx_app_protect_waf_state }}"
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_app_protect_license_status is not defined
@@ -44,7 +43,6 @@
 - name: (Alpine Linux) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF signatures {{ nginx_app_protect_waf_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   community.general.apk:
     name: app-protect-attack-signatures{{ nginx_app_protect_waf_signatures_version | default('') }}
-    repository: "{{ nginx_app_protect_waf_security_updates_repository | default(nginx_app_protect_waf_security_updates_default_repository_alpine) }}"
     state: "{{ nginx_app_protect_waf_state }}"
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_app_protect_license_status is not defined
@@ -53,7 +51,6 @@
 - name: (Alpine Linux) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF threat campaigns {{ nginx_app_protect_waf_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
   community.general.apk:
     name: app-protect-threat-campaigns{{ nginx_app_protect_waf_threat_campaigns_version | default('') }}
-    repository: "{{ nginx_app_protect_waf_security_updates_repository | default(nginx_app_protect_waf_security_updates_default_repository_alpine) }}"
     state: "{{ nginx_app_protect_waf_state }}"
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_app_protect_license_status is not defined
