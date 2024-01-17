@@ -2,8 +2,14 @@
 
 ## 0.9.1 (Unreleased)
 
+ENHANCEMENTS:
+
+- Bump the Ansible `ansible.posix` collection to `1.5.4`, `community.general` collection to `6.4.0`, `community.crypto` collection to `2.14.1` and `community.docker` collection to `3.4.7`.
+- Oracle Linux 8 requires the Python `python3.11-cryptography` package for validating the NGINX App Protect repository certificate.
+
 CI/CD:
 
+- Split Ansible Lint into its own GitHub Actions job since Molecule no longer runs linters natively.
 - Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
 - Add pre-releases to Release Drafter.
 
