@@ -2,6 +2,11 @@
 
 ## 0.9.1 (Unreleased)
 
+FEATURES:
+
+- Add support for installing NGINX App Protect WAF on Alpine Linux 3.16/3.17, RHEL 9, and Ubuntu jammy.
+- Remove support for installing NGINX App Protect WAF on Ubuntu bionic.
+
 ENHANCEMENTS:
 
 - Bump the Ansible `ansible.posix` collection to `1.5.4`, `community.general` collection to `6.4.0`, `community.crypto` collection to `2.14.1` and `community.docker` collection to `3.4.7`.
