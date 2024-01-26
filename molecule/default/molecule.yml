@@ -66,7 +66,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-8
-    image: redhat/ubi8:8.7
+    image: redhat/ubi8:8.9
     platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -75,7 +75,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-9
-    image: redhat/ubi9:9.1.0
+    image: redhat/ubi9:9.3
     env:
       SMDEV_CONTAINER_OFF: "1"
     platform: amd64

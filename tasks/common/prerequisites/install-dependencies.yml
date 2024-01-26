@@ -63,10 +63,10 @@
         - not nginx_app_protect_use_rhel_subscription_repos | bool
         - nginx_app_protect_dos_enable | bool
 
-    - name: (RHEL) Enable RHEL subscription manager repos management
-      ansible.builtin.command: subscription-manager config --rhsm.manage_repos=1
-      changed_when: false
-      when: nginx_app_protect_use_rhel_subscription_repos | bool
+    # - name: (RHEL) Enable RHEL subscription manager repos management
+    #   ansible.builtin.command: subscription-manager config --rhsm.manage_repos=1
+    #   changed_when: false
+    #   when: nginx_app_protect_use_rhel_subscription_repos | bool
 
     - name: (RHEL 7) Set up RHEL dependencies from RHEL official repositories
       community.general.rhsm_repository:
@@ -81,9 +81,7 @@
     - name: (RHEL 8/9) Set up RHEL dependencies from RHEL official repositories
       community.general.rhsm_repository:
         name: codeready-builder-for-rhel-{{ ansible_facts['distribution_major_version'] }}-x86_64-rpms
-      when:
-        - ansible_facts['distribution_major_version'] is version('8', '>=')
-        - nginx_app_protect_use_rhel_subscription_repos | bool
+      when: ansible_facts['distribution_major_version'] is version('8', '>=')
 
 - name: (Oracle Linux) Set up Oracle Linux specific repositories
   community.general.ini_file:
