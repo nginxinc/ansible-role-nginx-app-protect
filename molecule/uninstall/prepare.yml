@@ -41,7 +41,7 @@
       ansible.builtin.include_role:
         name: ansible-role-nginx-app-protect
       vars:
-        nginx_app_protect_use_rhel_subscription_repos: "{{ rhel_subscription }}"
+        nginx_app_protect_use_rhel_subscription_repos: false
         nginx_app_protect_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
