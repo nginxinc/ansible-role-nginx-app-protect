@@ -55,4 +55,4 @@
         state: absent
       when:
         - ansible_facts['distribution'] == "RedHat"
-        - rhel_subscription | bool
+        - ansible_facts['distribution_major_version'] is version('8', '>=')
