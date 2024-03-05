@@ -25,14 +25,22 @@
     - nginx_app_protect_dos_state != "absent"
   ignore_errors: true # noqa ignore-errors
 
-- name: Warn if installing NGINX App Protect on RHEL >7 without subscription details
-  ansible.builtin.fail:
-    msg: NGINX App Protect cannot be installed on Red Hat Enterprise Linux {{ ansible_facts['distribution_version'] }} without a valid Red Hat Enterprise Linux subscription. Subscribe your target environment before running the role and then set the 'nginx_app_protect_use_rhel_subscription_repos' variable to true.
+- name: Check if you can run NAP
   when:
     - ansible_facts['distribution'] == "RedHat"
-    - ansible_facts['distribution_major_version'] is version('7', '>')
-    - not nginx_app_protect_use_rhel_subscription_repos | bool
-  ignore_errors: true # noqa ignore-errors
+    # - ansible_facts['distribution_major_version'] is version('7', '>')
+    - nginx_app_protect_use_rhel_subscription_repos | bool
+  block:
+    - name: Check if Red Hat subscription is active
+      ansible.builtin.command: subscription-manager status
+      register: rh_subscription_status
+      changed_when: false
+
+    - name: Fail if installing NGINX App Protect on RHEL >7 without subscription details
+      ansible.builtin.fail:
+        msg: NGINX App Protect cannot be installed on Red Hat Enterprise Linux {{ ansible_facts['distribution_version'] }} without a valid Red Hat Enterprise Linux subscription. Subscribe your target environment before running the role.
+      when:
+        - "'Current' not in rh_subscription_status['stdout']"
 
 - name: Check that 'nginx_app_protect_waf_setup' is an allowed value
   ansible.builtin.assert:
