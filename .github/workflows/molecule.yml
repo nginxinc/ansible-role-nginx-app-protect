@@ -54,17 +54,21 @@ jobs:
           - uninstall
     steps:
       - name: Check out the codebase
+        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         uses: actions/checkout@v4
 
       - name: Set up Python 3
+        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         uses: actions/setup-python@v5
         with:
           python-version: 3.x
 
       - name: Install Molecule dependencies
+        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
       - name: Install Ansible core dependencies
+        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 
       - name: Run Molecule tests
@@ -73,4 +77,3 @@ jobs:
         env:
           PY_COLORS: 1
           ANSIBLE_FORCE_COLOR: 1
-
