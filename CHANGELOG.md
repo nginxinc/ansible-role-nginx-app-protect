@@ -9,7 +9,7 @@ BREAKING CHANGES:
 FEATURES:
 
 - Add support for installing NGINX App Protect WAF on Alpine Linux 3.17, RHEL 9, and Ubuntu jammy.
-- Remove support for installing NGINX App Protect WAF/DoS on Ubuntu bionic.
+- Remove support for installing NGINX App Protect WAF/DoS on Alpine Linux 3.15/3.16 and Ubuntu bionic.
 
 ENHANCEMENTS:
 
