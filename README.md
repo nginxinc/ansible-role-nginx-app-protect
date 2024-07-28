@@ -91,12 +91,9 @@ The NGINX App Protect Ansible role supports all platforms supported by [NGINX Pl
 ```yaml
 Amazon Linux 2:
   - any
-CentOS:
-  - 7.4+
 Debian:
   - buster (10)
 RHEL:
-  - 7.4+
   - 8.1+
 Ubuntu:
   - bionic (18.04)
@@ -108,15 +105,10 @@ Ubuntu:
 The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect DoS:
 
 ```yaml
-Alpine:
-  - 3.15
-CentOS:
-  - 7.4+
 Debian:
   - buster (10)
   - bullseye (11)
 RHEL:
-  - 7.4+
   - 8.0+
 Ubuntu:
   - bionic (18.04)

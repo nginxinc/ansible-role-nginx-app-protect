@@ -30,7 +30,6 @@
     msg: NGINX App Protect cannot be installed on Red Hat Enterprise Linux {{ ansible_facts['distribution_version'] }} without a valid Red Hat Enterprise Linux subscription. Subscribe your target environment before running the role and then set the 'nginx_app_protect_use_rhel_subscription_repos' variable to true.
   when:
     - ansible_facts['distribution'] == "RedHat"
-    - ansible_facts['distribution_major_version'] is version('7', '>')
     - not nginx_app_protect_use_rhel_subscription_repos | bool
   ignore_errors: true # noqa ignore-errors
 
