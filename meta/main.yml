@@ -17,7 +17,7 @@ galaxy_info:
     - name: Debian
       versions: [bullseye]
     - name: EL
-      versions: ['7', '8', '9']
+      versions: ['8', '9']
     - name: OracleLinux
       versions: ['8']
     - name: Ubuntu

@@ -18,15 +18,11 @@ nginx_app_protect_dos_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_
 nginx_app_protect_waf_distributions:
   alpine:
     name: Alpine Linux
-    versions: [3.16, 3.17]
+    versions: [3.17]
     architectures: [x86_64]
   amazon:
     name: Amazon Linux
     versions: [2]
-    architectures: [x86_64]
-  centos:
-    name: CentOS
-    versions: [7]
     architectures: [x86_64]
   debian:
     name: Debian
@@ -38,7 +34,7 @@ nginx_app_protect_waf_distributions:
     architectures: [x86_64]
   redhat:
     name: Red Hat Enterprise Linux
-    versions: [7, 8, 9]
+    versions: [8, 9]
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
@@ -47,25 +43,17 @@ nginx_app_protect_waf_distributions:
 
 # Supported NGINX App Protect DoS distributions
 nginx_app_protect_dos_distributions:
-  alpine:
-    name: Alpine Linux
-    versions: [3.15]
-    architectures: [x86_64]
-  centos:
-    name: CentOS
-    versions: [7]
-    architectures: [x86_64]
   debian:
     name: Debian
     versions: [11]
     architectures: [x86_64]
   redhat:
     name: Red Hat Enterprise Linux
-    versions: [7, 8]
+    versions: [8]
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
-    versions: [18.04, 20.04]
+    versions: [20.04]
     architectures: [x86_64]
 
 # Alpine Linux dependencies

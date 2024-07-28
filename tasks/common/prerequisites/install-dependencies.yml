@@ -19,71 +19,32 @@
   loop: "{{ nginx_app_protect_amazon_extras }}"
   when: ansible_facts['distribution'] == "Amazon"
 
-- name: (Amazon Linux/CentOS/RHEL) Install package dependencies
+- name: (Amazon Linux/RHEL) Install package dependencies
   when: ansible_facts['os_family'] == "RedHat"
   block:
-    - name: (Amazon Linux/CentOS/RHEL) Import EPEL GPG key
+    - name: (Amazon Linux/RHEL) Import EPEL GPG key
       ansible.builtin.rpm_key:
         state: present
         key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ (ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version']) }}
 
-    - name: (Amazon Linux/CentOS/RHEL) Install package dependencies
+    - name: (Amazon Linux/RHEL) Install package dependencies
       ansible.builtin.yum:
         name: "{{ nginx_app_protect_redhat_dependencies }}"
         update_cache: true
         state: latest # noqa package-latest
 
 - name: (RHEL) Set up RHEL specific repositories
-  when: ansible_facts['distribution'] == "RedHat"
+  when:
+    - ansible_facts['distribution'] == "RedHat"
+    - nginx_app_protect_use_rhel_subscription_repos | bool
   block:
-    - name: (RHEL 7) Set up RHEL dependencies from OSS repositories
-      ansible.builtin.yum_repository:
-        name: centos
-        description: NGINX App Protect dependencies
-        baseurl: https://ftp.heanet.ie/pub/centos/7/os/$basearch/
-        enabled: true
-        gpgcheck: true
-        gpgkey: https://ftp.heanet.ie/pub/centos/7/os/$basearch/RPM-GPG-KEY-CentOS-7
-        state: "{{ nginx_app_protect_license_status | default('present') }}"
-      when:
-        - ansible_facts['distribution_major_version'] is version('7', '==')
-        - not nginx_app_protect_use_rhel_subscription_repos | bool
-
-    - name: (RHEL 7 DoS) Set up RHEL NGINX App Protect DoS dependencies from OSS repositories
-      ansible.builtin.yum_repository:
-        name: extras
-        description: NGINX App Protect DoS dependencies
-        mirrorlist: http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=extras
-        enabled: true
-        gpgcheck: true
-        gpgkey: http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
-        state: "{{ nginx_app_protect_license_status | default('present') }}"
-      when:
-        - ansible_facts['distribution_major_version'] is version('7', '==')
-        - not nginx_app_protect_use_rhel_subscription_repos | bool
-        - nginx_app_protect_dos_enable | bool
-
     - name: (RHEL) Enable RHEL subscription manager repos management
       ansible.builtin.command: subscription-manager config --rhsm.manage_repos=1
       changed_when: false
-      when: nginx_app_protect_use_rhel_subscription_repos | bool
 
-    - name: (RHEL 7) Set up RHEL dependencies from RHEL official repositories
-      community.general.rhsm_repository:
-        name:
-          - rhel-7-server-optional-rpms
-          - rhel-7-server-extras-rpms
-          - rhel-ha-for-rhel-7-server-rpms
-      when:
-        - ansible_facts['distribution_major_version'] is version('7', '==')
-        - nginx_app_protect_use_rhel_subscription_repos | bool
-
-    - name: (RHEL 8/9) Set up RHEL dependencies from RHEL official repositories
+    - name: (RHEL) Set up RHEL dependencies from RHEL official repositories
       community.general.rhsm_repository:
         name: codeready-builder-for-rhel-{{ ansible_facts['distribution_major_version'] }}-x86_64-rpms
-      when:
-        - ansible_facts['distribution_major_version'] is version('8', '>=')
-        - nginx_app_protect_use_rhel_subscription_repos | bool
 
 - name: (Oracle Linux) Set up Oracle Linux specific repositories
   community.general.ini_file:

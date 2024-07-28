@@ -1,11 +1,15 @@
 # Changelog
 
-## 0.9.1 (Unreleased)
+## 0.10.0 (Unreleased)
+
+BREAKING CHANGES:
+
+- Remove support for RHEL 7 based distributions (RHEL/CentOS/Oracle Linux 7). CentOS 7 has reached EoL, RHEL 7 has reached EoM, and Oracle Linux 7 will reach EoL shortly. These distributions will not be supported by new NGINX App Protect releases moving forward. If you are still using one of these distributions, please consider upgrading. If you still want to use this role for the time being, please use the previous release (0.9.0). Do note that you will only be able to use NGINX App Protect versions released as of the date of the aforementioned release (January 29, 2023).
 
 FEATURES:
 
-- Add support for installing NGINX App Protect WAF on Alpine Linux 3.16/3.17, RHEL 9, and Ubuntu jammy.
-- Remove support for installing NGINX App Protect WAF on Ubuntu bionic.
+- Add support for installing NGINX App Protect WAF on Alpine Linux 3.17, RHEL 9, and Ubuntu jammy.
+- Remove support for installing NGINX App Protect WAF/DoS on Ubuntu bionic.
 
 ENHANCEMENTS:
 
@@ -44,7 +48,7 @@ BUG FIXES:
 TESTS:
 
 - Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
-- Explicitly specify `amd64` as the platform used in Molecule tests. This will ensure that tests work as expected when run on different host architectures (e.g. newer Macbooks with `arm` processors).
+- Explicitly specify `x86_64` as the platform used in Molecule tests. This will ensure that tests work as expected when run on different host architectures (e.g. newer Macbooks with `arm` processors).
 
 ## 0.8.1 (September 28, 2022)
 
