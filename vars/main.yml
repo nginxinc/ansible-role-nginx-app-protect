@@ -26,7 +26,7 @@ nginx_app_protect_waf_distributions:
     architectures: [x86_64]
   debian:
     name: Debian
-    versions: [11]
+    versions: [11, 12]
     architectures: [x86_64]
   oraclelinux:
     name: Oracle Linux
@@ -43,17 +43,25 @@ nginx_app_protect_waf_distributions:
 
 # Supported NGINX App Protect DoS distributions
 nginx_app_protect_dos_distributions:
+  alpine:
+    name: Alpine Linux
+    versions: [3.17]
+    architectures: [x86_64]
   debian:
     name: Debian
-    versions: [11]
+    versions: [11, 12]
     architectures: [x86_64]
   redhat:
     name: Red Hat Enterprise Linux
+    versions: [8, 9]
+    architectures: [x86_64]
+  rocky:
+    name: Rocky Linux
     versions: [8]
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
-    versions: [20.04]
+    versions: [20.04, 22.04]
     architectures: [x86_64]
 
 # Alpine Linux dependencies
