@@ -1,23 +1,23 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    rhel_subscription: false
   pre_tasks:
     - name: (RHEL) Check if there is a valid RHEL subscription
-      ansible.builtin.set_fact:
-        rhel_subscription: true
-      when:
-        - lookup('env', 'RHEL_USERNAME') | length > 0
-        - lookup('env', 'RHEL_PASSWORD') | length > 0
-
-    - name: (RHEL) Register system into RHEL subscription manager
-      community.general.redhat_subscription:
-        username: "{{ lookup('env', 'RHEL_USERNAME') }}"
-        password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
       when:
         - ansible_facts['distribution'] == "RedHat"
-        - rhel_subscription| bool
+        - ansible_facts['distribution_major_version'] is version('8', '>=')
+      block:
+        - name: (RHEL) Pre-emptively fail
+          ansible.builtin.fail:
+            msg: "RHEL subscription is required for this role to work on RHEL 8/9"
+          when:
+            - lookup('env', 'RHEL_USERNAME') | length == 0
+            - lookup('env', 'RHEL_PASSWORD') | length == 0
+
+        - name: (RHEL) Register system into RHEL subscription manager
+          community.general.redhat_subscription:
+            username: "{{ lookup('env', 'RHEL_USERNAME') }}"
+            password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
   tasks:
     - name: Install NGINX App Protect DoS
       ansible.builtin.include_role:
@@ -25,7 +25,7 @@
       vars:
         nginx_app_protect_waf_enable: false
         nginx_app_protect_dos_enable: true
-        nginx_app_protect_use_rhel_subscription_repos: "{{ rhel_subscription }}"
+        nginx_app_protect_use_rhel_subscription_repos: false
         nginx_app_protect_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
