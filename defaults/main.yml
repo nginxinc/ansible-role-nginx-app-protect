@@ -112,7 +112,7 @@ nginx_app_protect_log_policy_file:
   - src: files/config/log-policy.json
     dest: /etc/app_protect/conf/log-policy.json
 
-# Set SELinux enforcing for NGINX (CentOS/Red Hat only) - you may need to open ports on your own
+# Set SELinux enforcing for NGINX (Red Hat only) - you may need to open ports on your own
 nginx_app_protect_selinux: false
 
 # Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)

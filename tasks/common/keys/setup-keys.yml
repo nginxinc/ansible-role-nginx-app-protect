@@ -38,14 +38,14 @@
         url: "{{ nginx_app_protect_waf_signing_key['waf_security_updates'] | default(nginx_app_protect_waf_security_updates_default_signing_key_pgp) }}"
       when: nginx_app_protect_waf_enable | bool
 
-- name: (Amazon Linux/CentOS/RHEL) Set up NGINX App Protect and security updates signing key
+- name: (Amazon Linux/RHEL) Set up NGINX App Protect and security updates signing key
   when: ansible_facts['os_family'] == "RedHat"
   block:
-    - name: (CentOS/RHEL) Add NGINX WAF/DoS signing key
+    - name: (RHEL) Add NGINX WAF/DoS signing key
       ansible.builtin.rpm_key:
         key: "{{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key_pgp) }}"
 
-    - name: (Amazon Linux/CentOS/RHEL) Add NGINX App Protect WAF security updates signing key
+    - name: (Amazon Linux/RHEL) Add NGINX App Protect WAF security updates signing key
       ansible.builtin.rpm_key:
         key: "{{ nginx_app_protect_waf_signing_key['waf_security_updates'] | default(nginx_app_protect_waf_security_updates_default_signing_key_pgp) }}"
       when: nginx_app_protect_waf_enable | bool
