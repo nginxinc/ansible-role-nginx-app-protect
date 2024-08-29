@@ -74,7 +74,7 @@ nginx_app_protect_amazon_extras: [selinux-ng]
 nginx_app_protect_debian_dependencies: [apt-transport-https, ca-certificates]
 
 # Red Hat dependencies
-nginx_app_protect_redhat_dependencies: [ca-certificates, "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}.noarch.rpm"]
+nginx_app_protect_redhat_dependencies: [ca-certificates]
 
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
 # Default settings are the official NGINX signing key hosts.
