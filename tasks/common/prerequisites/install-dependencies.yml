@@ -13,23 +13,38 @@
     state: latest # noqa package-latest
   when: ansible_facts['os_family'] == "Debian"
 
+- name: (Amazon Linux/RHEL) Install package dependencies
+  ansible.builtin.yum:
+    name: "{{ nginx_app_protect_redhat_dependencies }}"
+    update_cache: true
+    state: latest # noqa package-latest
+  when: ansible_facts['os_family'] == "RedHat"
+
 - name: (Amazon Linux) Set up Amazon Linux Extras repositories
   ansible.builtin.command: amazon-linux-extras enable {{ item }}
   changed_when: false
   loop: "{{ nginx_app_protect_amazon_extras }}"
   when: ansible_facts['distribution'] == "Amazon"
 
-- name: (Amazon Linux/RHEL) Install package dependencies
-  when: ansible_facts['os_family'] == "RedHat"
+- name: (Amazon Linux) Install EPEL
+  ansible.builtin.command:
+    cmd: amazon-linux-extras install -y epel
+    creates: /etc/yum.repos.d/epel.repo
+  when: ansible_facts['distribution'] == "Amazon"
+
+- name: (RHEL) Install EPEL
+  when:
+    - ansible_facts['os_family'] == "RedHat"
+    - ansible_facts['distribution'] != "Amazon"
   block:
-    - name: (Amazon Linux/RHEL) Import EPEL GPG key
+    - name: (RHEL) Import EPEL GPG key
       ansible.builtin.rpm_key:
         state: present
-        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ (ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version']) }}
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_facts['distribution_major_version'] }}
 
-    - name: (Amazon Linux/RHEL) Install package dependencies
+    - name: (RHEL) Install package dependencies
       ansible.builtin.yum:
-        name: "{{ nginx_app_protect_redhat_dependencies }}"
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
         update_cache: true
         state: latest # noqa package-latest
 
