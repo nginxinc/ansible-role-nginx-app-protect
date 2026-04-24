@@ -15,7 +15,7 @@ on:
 jobs:
   ansible-lint:
     name: Ansible Lint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the codebase
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -25,22 +25,23 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Install Ansible Lint
+      - name: Install Ansible core and Ansible Lint
         run: pip3 install -r .github/workflows/requirements/requirements_ansible_lint.txt
 
-      - name: Install Ansible collection dependencies
-        run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
+      - name: Install Ansible core collection dependencies
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_collections.yml
 
       - name: Run Ansible Lint
         run: ansible-lint --force-color
 
   molecule:
     name: Molecule
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: ansible-lint
     env:
       NGINX_CRT: ${{ secrets.NGINX_CRT }}
       NGINX_KEY: ${{ secrets.NGINX_KEY }}
+      NGINX_JWT: ${{ secrets.NGINX_JWT }}
       RHEL_USERNAME: ${{ secrets.RHEL_USERNAME }}
       RHEL_PASSWORD: ${{ secrets.RHEL_PASSWORD }}
     strategy:
@@ -61,11 +62,14 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Install Molecule dependencies
+      - name: Install Ansible core and Molecule
+        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
+        
+      - name: Install Ansible core collection dependencies
+        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_collections.yml
 
-      - name: Install Ansible core dependencies
-        run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 
       - name: Run Molecule tests
         if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}

@@ -20,8 +20,8 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: ubuntu-focal
-    image: ubuntu:focal
+  - name: ubuntu-jammy
+    image: ubuntu:jammy
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -31,6 +31,11 @@ platforms:
     command: /sbin/init
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      remote_tmp: /tmp/.ansible/tmp
+  env:
+    ANSIBLE_ROLES_PATH: ~/.cache/molecule/ansible-role-nginx/${MOLECULE_SCENARIO_NAME}/roles:${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
   playbooks:
     prepare: prepare.yml
     converge: converge.yml
