@@ -41,31 +41,11 @@
 - name: (Amazon Linux/RHEL) Set up NGINX App Protect and security updates signing key
   when: ansible_facts['os_family'] == "RedHat"
   block:
-    - name: (RHEL) Add NGINX WAF/DoS signing key
+    - name: (Amazon Linux/RHEL) Add NGINX WAF/DoS signing key
       ansible.builtin.rpm_key:
         key: "{{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key_pgp) }}"
-      when: not (ansible_facts['distribution'] != 'Amazon' and ansible_facts['distribution_major_version'] | int >= 10)
-
-    - name: (RHEL 10+) Add NGINX WAF/DoS signing key
-      ansible.builtin.command:
-        cmd: rpm --import {{ nginx_app_protect_signing_key['nginx_plus'] | default(nginx_app_protect_default_signing_key_pgp) }}
-      changed_when: false
-      when:
-        - ansible_facts['distribution'] != 'Amazon'
-        - ansible_facts['distribution_major_version'] | int >= 10
 
     - name: (Amazon Linux/RHEL) Add NGINX App Protect WAF security updates signing key
       ansible.builtin.rpm_key:
         key: "{{ nginx_app_protect_waf_signing_key['waf_security_updates'] | default(nginx_app_protect_waf_security_updates_default_signing_key_pgp) }}"
-      when:
-        - nginx_app_protect_waf_enable | bool
-        - not (ansible_facts['distribution'] != 'Amazon' and ansible_facts['distribution_major_version'] | int >= 10)
-
-    - name: (RHEL 10+) Add NGINX App Protect WAF security updates signing key
-      ansible.builtin.command:
-        cmd: rpm --import {{ nginx_app_protect_waf_signing_key['waf_security_updates'] | default(nginx_app_protect_waf_security_updates_default_signing_key_pgp) }}
-      changed_when: false
-      when:
-        - nginx_app_protect_waf_enable | bool
-        - ansible_facts['distribution'] != 'Amazon'
-        - ansible_facts['distribution_major_version'] | int >= 10
+      when: nginx_app_protect_waf_enable | bool
