@@ -53,6 +53,7 @@
       when:
         - ansible_facts['distribution'] != "Amazon"
         - ansible_facts['distribution_major_version'] | int >= 10
+      # noqa command-instead-of-module - rpm_key fails on RHEL 10+ due to OpenPGP v6 key in RPM DB
 
     - name: (Amazon Linux/RHEL <= 9) Add NGINX App Protect WAF security updates signing key
       ansible.builtin.rpm_key:
@@ -69,3 +70,4 @@
         - nginx_app_protect_waf_enable | bool
         - ansible_facts['distribution'] != "Amazon"
         - ansible_facts['distribution_major_version'] | int >= 10
+      # noqa command-instead-of-module - rpm_key fails on RHEL 10+ due to OpenPGP v6 key in RPM DB
