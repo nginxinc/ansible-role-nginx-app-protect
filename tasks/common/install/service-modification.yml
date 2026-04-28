@@ -1,7 +1,7 @@
 ---
 - name: Modify NGINX Plus service
   when:
-    - ansible_service_mgr == "systemd"
+    - ansible_facts['service_mgr'] == "systemd"
     - nginx_app_protect_service_modify | bool
   block:
     - name: Create override for NGINX Plus service

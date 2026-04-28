@@ -1,9 +1,9 @@
 # Molecule managed
 
 {% if item.registry is defined %}
-FROM {{ item.registry.url }}/{{ item.image }}
+FROM --platform=linux/amd64 {{ item.registry.url }}/{{ item.image }}
 {% else %}
-FROM {{ item.image }}
+FROM --platform=linux/amd64 {{ item.image }}
 {% endif %}
 
 {% if item.env is defined %}
@@ -21,7 +21,7 @@ RUN \
     && apt-get clean; \
   elif [ $(command -v dnf) ]; then \
     dnf makecache \
-    && dnf --assumeyes install bash iproute sudo /usr/bin/dnf-3 /usr/bin/python3 /usr/bin/python3-config vim \
+    && dnf --assumeyes install bash iproute sudo systemd /usr/bin/dnf-3 /usr/bin/python3 /usr/bin/python3-config python3-cryptography vim \
     && dnf clean all; \
   elif [ $(command -v yum) ]; then \
     yum makecache fast \

@@ -14,8 +14,8 @@ platforms:
       - workload
     networks:
       - name: molecule-test
-  - name: ubuntu-focal
-    image: ubuntu:focal
+  - name: ubuntu-jammy
+    image: ubuntu:jammy
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -32,7 +32,10 @@ provisioner:
   config_options:
     defaults:
       no_target_syslog: true
+      remote_tmp: /tmp/.ansible/tmp
   log: false
+  env:
+    ANSIBLE_ROLES_PATH: ~/.cache/molecule/ansible-role-nginx/${MOLECULE_SCENARIO_NAME}/roles:${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
   playbooks:
     prepare: prepare.yml
     converge: converge.yml
