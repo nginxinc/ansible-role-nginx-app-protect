@@ -69,7 +69,7 @@ nginx_app_protect_dos_distributions:
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
-    versions: [20.04, 22.04]
+    versions: [22.04, 24.04]
     architectures: [x86_64]
 
 # Alpine Linux dependencies
