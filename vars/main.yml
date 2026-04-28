@@ -84,6 +84,9 @@ nginx_app_protect_debian_dependencies: [apt-transport-https, ca-certificates, gn
 # Red Hat dependencies
 nginx_app_protect_redhat_dependencies: [ca-certificates, gnupg2]
 
+# Amazon Linux dependencies (gnupg2-minimal is pre-installed on Amazon Linux 2023 and conflicts with gnupg2)
+nginx_app_protect_amazon_dependencies: [ca-certificates]
+
 # Choose where to fetch the NGINX App Protect and Security Updates signing keys from.
 # Default settings are the official NGINX signing key hosts.
 nginx_app_protect_default_signing_key_pgp: https://nginx.org/keys/nginx_signing.key
