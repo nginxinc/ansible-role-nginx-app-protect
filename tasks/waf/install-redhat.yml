@@ -40,27 +40,36 @@
     - (nginx_app_protect_waf_install_signatures | bool) or (nginx_app_protect_waf_install_threat_campaigns | bool)
     - nginx_app_protect_waf_manage_repo | bool
 
-- name: (Amazon Linux 2023) Configure NGINX App Protect WAF dependencies repository
-  ansible.builtin.get_url:
-    url: https://cs.nginx.com/static/files/dependencies.amazonlinux2023.repo
-    dest: /etc/yum.repos.d/dependencies.amazonlinux2023.repo
+- name: (Amazon Linux 2023) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF dependencies repository
+  ansible.builtin.yum_repository:
+    name: dependencies
+    description: nap dependencies repo
+    baseurl: https://pkgs.nginx.com/epel/2023/$basearch/
+    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+    sslclientkey: /etc/ssl/nginx/nginx-repo.key
+    gpgcheck: false
+    enabled: true
+    state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_waf_setup == 'uninstall') | ternary('absent', 'present')) }}"
     mode: "0644"
   when:
     - nginx_app_protect_waf_manage_repo | bool
     - ansible_facts['distribution'] == 'Amazon'
     - ansible_facts['distribution_major_version'] == '2023'
-    - nginx_app_protect_license_status is not defined
-    - nginx_app_protect_waf_setup != 'uninstall'
 
-- name: (Amazon Linux 2023) Remove NGINX App Protect WAF dependencies repository
-  ansible.builtin.file:
-    path: /etc/yum.repos.d/dependencies.amazonlinux2023.repo
-    state: absent
+- name: (Oracle Linux/RHEL/Rocky Linux) {{ nginx_app_protect_license_status is defined | ternary('Remove', 'Configure') }} NGINX App Protect WAF dependencies repository
+  ansible.builtin.yum_repository:
+    name: dependencies
+    description: nap dependencies repo
+    baseurl: https://pkgs.nginx.com/epel/$releasever/$basearch/
+    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+    sslclientkey: /etc/ssl/nginx/nginx-repo.key
+    gpgcheck: false
+    enabled: true
+    state: "{{ nginx_app_protect_license_status | default((nginx_app_protect_waf_setup == 'uninstall') | ternary('absent', 'present')) }}"
+    mode: "0644"
   when:
     - nginx_app_protect_waf_manage_repo | bool
-    - ansible_facts['distribution'] == 'Amazon'
-    - ansible_facts['distribution_major_version'] == '2023'
-    - (nginx_app_protect_license_status is defined) or (nginx_app_protect_waf_setup == 'uninstall')
+    - ansible_facts['distribution'] != 'Amazon'
 
 - name: (Amazon Linux/RHEL) Force Yum cache refresh
   ansible.builtin.command: yum clean metadata
