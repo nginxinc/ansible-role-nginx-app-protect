@@ -5,11 +5,11 @@
     specify_app_protect_signatures_version: true
     specify_app_protect_threat_campaigns_version: true
     app_protect_signature_version_matrix:
-      debian: =2022.12.29-1
-      redhat: -2022.12.29
+      debian: =2026.03.18-1
+      redhat: -2026.03.18
     app_protect_threat_campaigns_version_matrix:
-      debian: =2023.01.11-1
-      redhat: -2023.01.11
+      debian: =2026.03.23-1
+      redhat: -2026.03.23
   tasks:
     - name: Set NGINX App Protect WAF signature version fact
       ansible.builtin.set_fact:
