@@ -49,7 +49,9 @@ jobs:
       matrix:
         scenario:
           - advanced
-          - default
+          - default-amazon-rhel
+          - default-debian
+          - default-rocky-oracle
           - dos
           - specific-version
           - uninstall
