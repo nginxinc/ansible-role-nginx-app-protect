@@ -11,17 +11,8 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: debian-bullseye
-    image: debian:bullseye-slim
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: oraclelinux-8
-    image: oraclelinux:8
+  - name: rhel-8
+    image: redhat/ubi8:8.10
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -29,23 +20,37 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: ubuntu-jammy
-    image: ubuntu:jammy
+  - name: rhel-9
+    image: redhat/ubi9:9.4
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
+    command: /usr/sbin/init
+  - name: rhel-10
+    image: redhat/ubi10
+    platform: x86_64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
 provisioner:
   name: ansible
   config_options:
     defaults:
       remote_tmp: /tmp/.ansible/tmp
-  env:
-    ANSIBLE_ROLES_PATH: ~/.cache/molecule/ansible-role-nginx/${MOLECULE_SCENARIO_NAME}/roles:${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
   playbooks:
     prepare: ../common/prepare.yml
-    converge: converge.yml
-    verify: verify.yml
+    converge: ../default/converge.yml
+    verify: ../default/verify.yml
+    cleanup: ../common/cleanup.yml
+  inventory:
+    host_vars:
+      rhel-8:
+        ansible_python_interpreter: /usr/libexec/platform-python
+  env:
+    ANSIBLE_ROLES_PATH: ~/.cache/molecule/ansible-role-nginx/${MOLECULE_SCENARIO_NAME}/roles:${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles

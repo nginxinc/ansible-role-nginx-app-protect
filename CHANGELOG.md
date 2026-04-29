@@ -1,6 +1,40 @@
 # Changelog
 
-## 0.10.0 (Unreleased)
+## 0.11.0 (April 24, 2026)
+
+BREAKING CHANGES:
+
+- Replaced Amazon Linux 2 support with Amazon Linux 2023 for both WAF and DoS. `amazon-linux-extras`-based tasks are now skipped on Amazon Linux 2023 (which does not include that tool).
+- Replace Ubuntu focal (20.04) with Ubuntu Noble (24.04) in WAF test platforms. Ubuntu Noble is now a supported WAF platform.
+
+FEATURES:
+
+- Add support for installing NGINX App Protect WAF on Alpine Linux 3.22, Amazon Linux 2023, Debian Bookworm (12), Oracle Linux 8, RHEL 9, RHEL 10, Rocky Linux 8/9, Ubuntu Jammy (22.04), and Ubuntu Noble (24.04).
+- Add support for installing NGINX App Protect DoS on Alpine Linux 3.21/3.22, Amazon Linux 2023, Debian Bullseye (11)/Bookworm (12), RHEL 8/9, and Rocky Linux 8/9.
+- Remove support for installing NGINX App Protect WAF/DoS on Alpine Linux 3.15/3.16/3.17, Amazon Linux 2, and Ubuntu Bionic (18.04).
+- Add NGINX Plus JWT (`license.jwt`) support required for NGINX Plus R33 and later. The `nginx_app_protect_license` variable now accepts an optional `jwt` key. The role will validate the JWT's `iss`, `aud`, `iat`, and `f5_sat` claims after copying it to the target host.
+
+ENHANCEMENTS:
+
+- Bump the Ansible `ansible.posix` collection to `2.0.0`, `community.general` collection to `10.7.0`, `community.crypto` collection to `2.26.2`, and `community.docker` collection to `4.6.0`.
+- Add `gnupg` to Debian/Ubuntu package dependencies to ensure the `gpg` binary is available for signing key tasks.
+- Oracle Linux 8 requires the Python `python3.11-cryptography` package for validating the NGINX App Protect repository certificate.
+- Fix Amazon Linux, NGINX Plus, App Protect WAF, and WAF Security Updates repository URLs to correctly differentiate between Amazon Linux 2 and Amazon Linux 2023.
+- Replace deprecated `ansible_python['version']['major']` fact with `ansible_facts['python']['version']['major']`.
+- Replace deprecated `ansible_service_mgr` variable with `ansible_facts['service_mgr']`.
+
+BUG FIXES:
+
+- Set `ansible_python_interpreter: /usr/libexec/platform-python` for RHEL 8 and Oracle Linux 8 in Molecule to prevent Ansible from selecting Python 3.11 (which lacks `dnf` bindings) on those platforms.
+
+CI/CD:
+
+- Add `remote_tmp: /tmp/.ansible/tmp` to all Molecule scenario `provisioner.config_options.defaults` to fix temporary directory creation failures on Alpine Linux containers.
+- Add `FROM --platform=linux/amd64` to the shared Molecule `Dockerfile.j2` to ensure correct platform images are built when running Molecule on Apple Silicon (arm64) hosts.
+- Add `NGINX_JWT` env var handling to all Molecule prepare playbooks alongside the existing `NGINX_CRT` and `NGINX_KEY` vars.
+- Update all Molecule scenario platform lists to reflect currently supported distributions.
+
+## 0.10.0 (July 28, 2024)
 
 BREAKING CHANGES:
 
@@ -14,7 +48,7 @@ FEATURES:
 
 ENHANCEMENTS:
 
-- Bump the Ansible `ansible.posix` collection to `1.5.4`, `community.general` collection to `6.4.0`, `community.crypto` collection to `2.14.1` and `community.docker` collection to `3.4.7`.
+- Bump the Ansible `ansible.posix` collection to `1.5.4`, `community.general` collection to `6.4.0`, `community.crypto` collection to `2.14.1`, and `community.docker` collection to `3.4.7`.
 - Oracle Linux 8 requires the Python `python3.11-cryptography` package for validating the NGINX App Protect repository certificate.
 
 CI/CD:

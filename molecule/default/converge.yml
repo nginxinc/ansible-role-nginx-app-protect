@@ -26,6 +26,7 @@
         nginx_app_protect_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
+          jwt: license/license.jwt
         nginx_app_protect_use_rhel_subscription_repos: "{{ rhel_subscription }}"
         nginx_app_protect_remove_license: false
         nginx_app_protect_waf_install_signatures: true

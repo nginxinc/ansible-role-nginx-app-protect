@@ -13,15 +13,15 @@ galaxy_info:
     - name: Alpine
       versions: [all]
     - name: Amazon Linux
-      versions: ['2']
+      versions: ['2023']
     - name: Debian
-      versions: [bullseye]
+      versions: [bullseye, bookworm]
     - name: EL
       versions: ['8', '9']
     - name: OracleLinux
       versions: ['8']
     - name: Ubuntu
-      versions: [focal, jammy]
+      versions: [jammy, noble]
 
   galaxy_tags:
     - waf
