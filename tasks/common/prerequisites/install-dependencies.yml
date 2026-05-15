@@ -80,3 +80,10 @@
   ansible.builtin.command: "dnf config-manager --set-enabled {{ (ansible_facts['distribution_major_version'] == '8') | ternary('powertools', 'crb') }}"
   changed_when: false
   when: ansible_facts['distribution'] == "Rocky"
+
+- name: (RHEL) Enable CRB repository
+  ansible.builtin.command: "dnf config-manager --set-enabled crb"
+  changed_when: false
+  when:
+    - ansible_facts['distribution'] == "RedHat"
+    - not nginx_app_protect_use_rhel_subscription_repos | bool
