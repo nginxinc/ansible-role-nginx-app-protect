@@ -84,6 +84,7 @@
 - name: (RHEL) Enable CRB repository
   ansible.builtin.command: "dnf config-manager --set-enabled crb"
   changed_when: false
+  failed_when: false
   when:
     - ansible_facts['distribution'] == "RedHat"
     - not nginx_app_protect_use_rhel_subscription_repos | bool
