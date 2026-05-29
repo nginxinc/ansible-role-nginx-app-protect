@@ -29,7 +29,7 @@
   ansible.builtin.yum_repository:
     name: dependencies
     description: nap dependencies repo
-    baseurl: https://pkgs.nginx.com/epel/$releasever/$basearch/
+    baseurl: "https://pkgs.nginx.com/epel/{{ ansible_facts['distribution_major_version'] }}/$basearch/"
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
     gpgcheck: false
