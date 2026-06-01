@@ -23,3 +23,13 @@
         dest: ../../files/license/license.jwt
         force: false
         mode: "0444"
+
+- name: Wait for containers to be ready
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Wait for systemd to finish booting
+      ansible.builtin.wait_for_connection:
+        delay: 10
+        sleep: 5
+        timeout: 300
