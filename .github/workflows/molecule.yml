@@ -49,7 +49,7 @@ jobs:
       matrix:
         scenario:
           - advanced
-          - default-amazon-rhel
+          # - default-amazon-rhel  # disabled: app-protect-engine 11.665.2 missing libboost deps in pkgs.nginx.com/epel
           - default-debian
           - default-rocky-oracle
           - dos
