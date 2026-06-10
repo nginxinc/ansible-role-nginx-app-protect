@@ -48,13 +48,17 @@ jobs:
       fail-fast: false
       matrix:
         scenario:
-          - advanced
-          # - default-amazon-rhel  # disabled: app-protect-engine 11.665.2 missing libboost deps in pkgs.nginx.com/epel
-          - default-debian
-          - default-rocky-oracle
-          - dos
-          - specific-version
-          - uninstall
+          - waf-advanced
+          # - waf-amazon-rhel  # disabled: app-protect-engine 11.665.2 missing libboost deps in pkgs.nginx.com/epel
+          - waf-debian
+          - waf-default
+          - waf-rocky-oracle
+          - dos-alpine
+          - dos-amazon-rhel
+          - dos-debian
+          - dos-default
+          - waf-specific-version
+          - waf-dos-uninstall
     steps:
       - name: Check out the codebase
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
