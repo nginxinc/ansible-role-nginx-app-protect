@@ -51,7 +51,7 @@ jobs:
           - waf-advanced
           # - waf-amazon-rhel  # disabled: app-protect-engine 11.665.2 missing libboost deps in pkgs.nginx.com/epel
           - waf-debian
-          - waf-default
+          - default
           - waf-rocky-oracle
           - dos-alpine
           - dos-amazon-rhel

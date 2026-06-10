@@ -54,8 +54,8 @@ provisioner:
       remote_tmp: /tmp/.ansible/tmp
   playbooks:
     prepare: ../common/prepare.yml
-    converge: ../waf-default/converge.yml
-    verify: ../waf-default/verify.yml
+    converge: ../default/converge.yml
+    verify: ../default/verify.yml
     cleanup: ../common/cleanup.yml
   env:
     ANSIBLE_ROLES_PATH: ~/.cache/molecule/ansible-role-nginx/${MOLECULE_SCENARIO_NAME}/roles:${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles

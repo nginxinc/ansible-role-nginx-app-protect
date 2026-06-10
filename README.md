@@ -160,10 +160,10 @@ A working functional playbook example can be found in the **`molecule/default/`*
 | Name | Description |
 | ---- | ----------- |
 | **[`molecule/default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/default/converge.yml)** | Install and configure NGINX App Protect WAF |
- **[`molecule/advanced/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/advanced/converge.yml)** | Advanced integration test including NGINX App Protect WAF sending log data to a "remote" syslog server |
-| **[`molecule/dos/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/dos/converge.yml)** | Install NGINX App Protect DoS |
-| **[`molecule/specific-version/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/specific-version/converge.yml)** | Install a specific version of NGINX App Protect WAF signatures |
-| **[`molecule/uninstall/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/uninstall/converge.yml)** | Uninstall NGINX App Protect WAF/DoS |
+ **[`molecule/waf-advanced/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/waf-advanced/converge.yml)** | Advanced integration test including NGINX App Protect WAF sending log data to a "remote" syslog server |
+| **[`molecule/dos-default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/dos-default/converge.yml)** | Install NGINX App Protect DoS |
+| **[`molecule/waf-specific-version/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/waf-specific-version/converge.yml)** | Install a specific version of NGINX App Protect WAF signatures |
+| **[`molecule/waf-dos-uninstall/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/waf-dos-uninstall/converge.yml)** | Uninstall NGINX App Protect WAF/DoS |
 
 ## Other NGINX Ansible Collections and Roles
 
