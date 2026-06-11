@@ -54,7 +54,7 @@
         - ansible_facts['distribution'] == "RedHat"
         - rhel_subscription| bool
   tasks:
-    - name: Install NGINX App Protect WAF
+    - name: Install NGINX App Protect WAF and DoS
       ansible.builtin.include_role:
         name: ansible-role-nginx-app-protect
       vars:
@@ -63,9 +63,11 @@
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
           jwt: license/license.jwt
-        nginx_app_protect_waf_enable: true
-        nginx_app_protect_waf_install_signatures: true
-        nginx_app_protect_waf_install_threat_campaigns: true
+        # Skip WAF on RedHat-family hosts due to known app-protect-engine dependency issue
+        # (same issue as waf-amazon-rhel scenario disabled in molecule.yml)
+        nginx_app_protect_waf_enable: "{{ ansible_facts['os_family'] != 'RedHat' }}"
+        nginx_app_protect_waf_install_signatures: "{{ ansible_facts['os_family'] != 'RedHat' }}"
+        nginx_app_protect_waf_install_threat_campaigns: "{{ ansible_facts['os_family'] != 'RedHat' }}"
         nginx_app_protect_dos_enable: true
   post_tasks:
     - name: (RHEL) Unregister system from RHEL subscription manager
