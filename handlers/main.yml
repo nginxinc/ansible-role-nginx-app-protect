@@ -2,6 +2,7 @@
 - name: (Handler - NGINX App Protect) Systemd daemon-reload
   ansible.builtin.systemd_service:
     daemon_reload: true
+  when: ansible_facts['service_mgr'] == "systemd"
 
 - name: (Handler - NGINX App Protect) Restart NGINX
   ansible.builtin.service:
