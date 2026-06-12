@@ -4,6 +4,7 @@
     daemon_reload: true
   when:
     - ansible_service_mgr == "systemd"
+    - ansible_facts['env']['container'] is not defined
     - not ansible_check_mode | bool
 
 - name: (Handler - NGINX App Protect) Restart NGINX
