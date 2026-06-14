@@ -11,6 +11,12 @@
   when: nginx_app_protect_systemd_running.stat.exists
   listen: "(Handler - NGINX App Protect) Systemd daemon-reload"
 
+- name: (Handler - NGINX App Protect) Check whether systemd is running for NGINX
+  ansible.builtin.stat:
+    path: /run/systemd/system
+  register: nginx_app_protect_nginx_systemd_running
+  listen: (Handler - NGINX App Protect) Run NGINX
+
 - name: (Handler - NGINX App Protect) Restart NGINX
   ansible.builtin.service:
     name: nginx
@@ -19,6 +25,7 @@
   when:
     - nginx_app_protect_start | bool
     - not ansible_check_mode | bool
+    - nginx_app_protect_nginx_systemd_running.stat.exists
   listen: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Handler - NGINX App Protect) Check NGINX
