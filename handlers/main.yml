@@ -20,12 +20,11 @@
 - name: (Handler - NGINX App Protect) Restart NGINX
   ansible.builtin.service:
     name: nginx
-    state: restarted
+    state: "{{ 'restarted' if nginx_app_protect_nginx_systemd_running.stat.exists else 'started' }}"
     enabled: true
   when:
     - nginx_app_protect_start | bool
     - not ansible_check_mode | bool
-    - nginx_app_protect_nginx_systemd_running.stat.exists
   listen: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Handler - NGINX App Protect) Check NGINX
