@@ -15,7 +15,7 @@ galaxy_info:
     - name: Amazon Linux
       versions: ['2023']
     - name: Debian
-      versions: [bullseye, bookworm]
+      versions: [bullseye, bookworm, trixie]
     - name: EL
       versions: ['8', '9']
     - name: OracleLinux
