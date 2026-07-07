@@ -31,3 +31,5 @@
           key: license/nginx-repo.key
           jwt: license/license.jwt
         nginx_app_protect_remove_license: false
+      when:
+        - ansible_facts['distribution'] != "RedHat" or rhel_subscription | bool
