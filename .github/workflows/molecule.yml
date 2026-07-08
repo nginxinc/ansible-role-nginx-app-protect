@@ -68,7 +68,7 @@ jobs:
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 
       - name: Run Molecule tests
-        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
+        if: ${{ env.NGINX_CRT != '' && env.NGINX_KEY != '' }}
         run: molecule test -s ${{ matrix.scenario }}
         env:
           PY_COLORS: 1
