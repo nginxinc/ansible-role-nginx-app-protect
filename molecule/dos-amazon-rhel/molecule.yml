@@ -56,6 +56,6 @@ provisioner:
     ANSIBLE_ROLES_PATH: ~/.cache/molecule/ansible-role-nginx/${MOLECULE_SCENARIO_NAME}/roles:${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
   playbooks:
     prepare: ../common/prepare.yml
-    converge: ../dos-default/converge.yml
-    verify: ../dos-default/verify.yml
+    converge: converge.yml
+    verify: verify.yml
     cleanup: ../common/cleanup.yml

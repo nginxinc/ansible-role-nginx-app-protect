@@ -1,15 +1,6 @@
 ---
 - name: Verify
   hosts: all
-  vars:
-    rhel_subscription: false
-  pre_tasks:
-    - name: (RHEL) Check if there is a valid RHEL subscription
-      ansible.builtin.set_fact:
-        rhel_subscription: true
-      when:
-        - lookup('env', 'RHEL_USERNAME') | length > 0
-        - lookup('env', 'RHEL_PASSWORD') | length > 0
   tasks:
     - name: Check if NGINX Plus is installed
       ansible.builtin.package:
@@ -18,8 +9,6 @@
       check_mode: true
       register: install
       failed_when: (install is changed) or (install is failed)
-      when:
-        - ansible_facts['distribution'] != "RedHat" or rhel_subscription | bool
 
     - name: Check if NGINX App Protect DoS is installed
       ansible.builtin.package:
@@ -28,8 +17,6 @@
       check_mode: true
       register: install
       failed_when: (install is changed) or (install is failed)
-      when:
-        - ansible_facts['distribution'] != "RedHat" or rhel_subscription | bool
 
     - name: Check if NGINX service is running
       ansible.builtin.service:
@@ -39,5 +26,3 @@
       check_mode: true
       register: service
       failed_when: (service is changed) or (service is failed)
-      when:
-        - ansible_facts['distribution'] != "RedHat" or rhel_subscription | bool

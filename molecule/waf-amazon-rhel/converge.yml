@@ -1,0 +1,48 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    rhel_subscription: false
+  pre_tasks:
+    - name: (RHEL) Check if there is a valid RHEL subscription
+      ansible.builtin.set_fact:
+        rhel_subscription: true
+      when:
+        - lookup('env', 'RHEL_USERNAME') | length > 0
+        - lookup('env', 'RHEL_PASSWORD') | length > 0
+
+    - name: (RHEL) Fail when subscription credentials are missing
+      ansible.builtin.fail:
+        msg: RHEL test targets require RHEL_USERNAME and RHEL_PASSWORD to run Molecule coverage on RedHat.
+      when:
+        - ansible_facts['distribution'] == "RedHat"
+        - not rhel_subscription | bool
+
+    - name: (RHEL) Register system into RHEL subscription manager
+      community.general.redhat_subscription:
+        username: "{{ lookup('env', 'RHEL_USERNAME') }}"
+        password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
+      when:
+        - ansible_facts['distribution'] == "RedHat"
+        - rhel_subscription | bool
+  tasks:
+    - name: Install NGINX App Protect WAF
+      ansible.builtin.include_role:
+        name: ansible-role-nginx-app-protect
+      vars:
+        nginx_app_protect_license:
+          certificate: license/nginx-repo.crt
+          key: license/nginx-repo.key
+          jwt: license/license.jwt
+        nginx_app_protect_use_rhel_subscription_repos: "{{ rhel_subscription }}"
+        nginx_app_protect_remove_license: false
+        nginx_app_protect_waf_install_signatures: true
+        nginx_app_protect_waf_install_threat_campaigns: true
+        nginx_app_protect_security_policy_file_enable: true
+        nginx_app_protect_security_policy_file:
+          - src: files/test-security-policy.json
+            dest: /etc/app_protect/conf/test-security-policy.json
+        nginx_app_protect_log_policy_file_enable: true
+        nginx_app_protect_log_policy_file:
+          - src: files/test-log-profile.json
+            dest: /etc/app_protect/conf/test-log-profile.json

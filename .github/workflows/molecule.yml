@@ -68,17 +68,34 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Validate required Molecule secrets
+        run: |
+          missing=0
+          if [ -z "${NGINX_CRT}" ]; then
+            echo "Missing required secret: NGINX_CRT"
+            missing=1
+          fi
+          if [ -z "${NGINX_KEY}" ]; then
+            echo "Missing required secret: NGINX_KEY"
+            missing=1
+          fi
+          if [ -z "${NGINX_JWT}" ]; then
+            echo "Missing required secret: NGINX_JWT"
+            missing=1
+          fi
+          if [ "$missing" -ne 0 ]; then
+            echo "Molecule tests are intentionally failing because required secrets are not available in this run context."
+            exit 1
+          fi
+
       - name: Install Ansible core and Molecule
-        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
         
       - name: Install Ansible core collection dependencies
-        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_collections.yml
 
 
       - name: Run Molecule tests
-        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         run: molecule test -s ${{ matrix.scenario }}
         env:
           PY_COLORS: 1

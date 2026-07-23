@@ -1,0 +1,78 @@
+---
+- name: Verify
+  hosts: all
+  vars:
+    rhel_subscription: false
+  pre_tasks:
+    - name: (RHEL) Check if there is a valid RHEL subscription
+      ansible.builtin.set_fact:
+        rhel_subscription: true
+      when:
+        - lookup('env', 'RHEL_USERNAME') | length > 0
+        - lookup('env', 'RHEL_PASSWORD') | length > 0
+
+    - name: (RHEL) Fail when subscription credentials are missing
+      ansible.builtin.fail:
+        msg: RHEL test targets require RHEL_USERNAME and RHEL_PASSWORD to run Molecule verification on RedHat.
+      when:
+        - ansible_facts['distribution'] == "RedHat"
+        - not rhel_subscription | bool
+  tasks:
+    - name: Check if NGINX Plus is installed
+      ansible.builtin.package:
+        name: nginx-plus
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect WAF is installed
+      ansible.builtin.package:
+        name: app-protect
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect WAF signatures is installed
+      ansible.builtin.package:
+        name: app-protect-attack-signatures
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX App Protect WAF threat campaigns is installed
+      ansible.builtin.package:
+        name: app-protect-threat-campaigns
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX service is running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+      check_mode: true
+      register: service
+      failed_when: (service is changed) or (service is failed)
+
+    - name: Store the statistics of /etc/app_protect/conf/test-security-policy.json in the 'security_policy' variable
+      ansible.builtin.stat:
+        path: /etc/app_protect/conf/test-security-policy.json
+      register: security_policy
+
+    - name: Ensure /etc/app_protect/conf/test-security-policy.json exists
+      ansible.builtin.assert:
+        that: security_policy.stat.exists | bool
+
+    - name: Store the statistics of /etc/app_protect/conf/test-log-profile.json in the 'log_profile' variable
+      ansible.builtin.stat:
+        path: /etc/app_protect/conf/test-log-profile.json
+      register: log_profile
+
+    - name: Ensure /etc/app_protect/conf/test-security-profile.json exists
+      ansible.builtin.assert:
+        that: log_profile['stat']['exists'] | bool
