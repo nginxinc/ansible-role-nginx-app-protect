@@ -50,12 +50,12 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
 - Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule Docker driver.*
 - To run the Molecule tests, you must copy your NGINX App Protect license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
 
-  You can alternatively add your NGINX App Protect repository certificate, key, and JWT to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
+  You can alternatively add your NGINX App Protect repository certificate, key, and JWT to the local environment. Run the following commands to export these files and execute the Molecule tests:
 
   ```bash
   export NGINX_CRT=$( cat <path to your certificate file> | base64 )
   export NGINX_KEY=$( cat <path to your key file> | base64 )
-  export NGINX_JWT=$( cat <path to your JWT file> | base64 )
+  export NGINX_JWT=$( cat <path to your JWT file> )
   molecule test
   ```
 
@@ -135,6 +135,8 @@ Ubuntu:
   - jammy (22.04)
   - noble (24.04)
 ```
+
+**Note:** On Debian Trixie and newer releases, `apt-key` is no longer available. This role installs repository keys using GPG keyrings in `/usr/share/keyrings`.
 
 ## Role Variables
 
