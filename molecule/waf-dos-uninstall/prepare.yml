@@ -17,7 +17,7 @@
         force: false
         mode: "0444"
 
-    - name: Create ephemeral license JWT file from b64 encoded env var # noqa template-instead-of-copy
+    - name: Create ephemeral license JWT file from env var # noqa template-instead-of-copy
       ansible.builtin.copy:
         content: "{{ lookup('env', 'NGINX_JWT') }}"
         dest: ../../files/license/license.jwt
@@ -50,6 +50,7 @@
       community.general.redhat_subscription:
         username: "{{ lookup('env', 'RHEL_USERNAME') }}"
         password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
+        auto_attach: true
       when:
         - ansible_facts['distribution'] == "RedHat"
         - rhel_subscription| bool

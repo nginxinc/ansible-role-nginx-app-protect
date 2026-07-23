@@ -17,7 +17,7 @@
         force: false
         mode: "0444"
 
-    - name: Create ephemeral license JWT file from b64 encoded env var # noqa template-instead-of-copy
+    - name: Create ephemeral license JWT file from env var # noqa template-instead-of-copy
       ansible.builtin.copy:
         content: "{{ lookup('env', 'NGINX_JWT') }}"
         dest: ../../files/license/license.jwt

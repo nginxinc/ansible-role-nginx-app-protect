@@ -49,7 +49,7 @@ jobs:
       matrix:
         scenario:
           - waf-advanced
-          # - waf-amazon-rhel  # disabled: app-protect-engine 11.665.2 missing libboost deps in pkgs.nginx.com/epel
+          - waf-amazon-rhel
           - waf-debian
           - default
           - waf-rocky-oracle

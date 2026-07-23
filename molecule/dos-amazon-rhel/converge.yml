@@ -22,9 +22,10 @@
       community.general.redhat_subscription:
         username: "{{ lookup('env', 'RHEL_USERNAME') }}"
         password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
+        auto_attach: true
       when:
         - ansible_facts['distribution'] == "RedHat"
-        - rhel_subscription| bool
+        - rhel_subscription | bool
   tasks:
     - name: Install NGINX App Protect DoS
       ansible.builtin.include_role:
