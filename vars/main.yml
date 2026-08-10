@@ -82,7 +82,7 @@ nginx_app_protect_amazon_extras: [selinux-ng]
 nginx_app_protect_debian_dependencies: [apt-transport-https, ca-certificates, gnupg]
 
 # Red Hat dependencies
-nginx_app_protect_redhat_dependencies: [ca-certificates, gnupg2]
+nginx_app_protect_redhat_dependencies: [ca-certificates, dnf-plugins-core, gnupg2]
 
 # Amazon Linux dependencies (gnupg2-minimal is pre-installed on Amazon Linux 2023 and conflicts with gnupg2)
 nginx_app_protect_amazon_dependencies: [ca-certificates]
