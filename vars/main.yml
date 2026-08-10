@@ -38,11 +38,11 @@ nginx_app_protect_waf_distributions:
     architectures: [x86_64]
   rocky:
     name: Rocky Linux
-    versions: [8, 9]
+    versions: [8, 9, 10]
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
-    versions: [22.04, 24.04]
+    versions: [22.04, 24.04, 26.04]
     architectures: [x86_64]
 
 # Supported NGINX App Protect DoS distributions

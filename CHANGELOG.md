@@ -1,6 +1,14 @@
 # Changelog
 
-## 0.11.0 (April 24, 2026)
+## 0.11.0 (August 10, 2026)
+
+FEATURES:
+
+- Add support for installing NGINX App Protect WAF on Rocky Linux 10 and Ubuntu Resolute (26.04).
+
+CI/CD:
+
+- Add Rocky Linux 10 and Ubuntu 26.04 to WAF Molecule platform matrices.
 
 BREAKING CHANGES:
 

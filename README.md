@@ -107,9 +107,11 @@ RHEL:
 Rocky Linux:
   - 8
   - 9
+  - 10
 Ubuntu:
   - jammy (22.04)
   - noble (24.04)
+  - resolute (26.04)
 ```
 
 ### NGINX App Protect DoS

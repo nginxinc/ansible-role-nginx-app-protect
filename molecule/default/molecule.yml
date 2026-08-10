@@ -56,6 +56,15 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
+  - name: rockylinux-10
+    image: rockylinux:10
+    platform: x86_64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: ubuntu-jammy
     image: ubuntu:jammy
     platform: x86_64
@@ -67,6 +76,15 @@ platforms:
     command: /sbin/init
   - name: ubuntu-noble
     image: ubuntu:noble
+    platform: x86_64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: ubuntu-26-04
+    image: ubuntu:26.04
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
