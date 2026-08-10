@@ -30,7 +30,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rockylinux-8
-    image: rockylinux:8
+    image: rockylinux/rockylinux:8
     platform: linux/amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -39,7 +39,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rockylinux-9
-    image: rockylinux:9
+    image: rockylinux/rockylinux:9
     platform: linux/amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
