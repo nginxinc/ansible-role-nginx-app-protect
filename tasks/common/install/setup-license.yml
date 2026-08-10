@@ -143,10 +143,6 @@
                 src: "{{ nginx_app_protect_license['jwt']['dest'] | default((ansible_facts['os_family'] == 'FreeBSD') | ternary('/usr/local/etc/nginx/license.jwt', '/etc/nginx/license.jwt')) }}"
               register: jwt_file
 
-            - name: Dump information
-              ansible.builtin.debug:
-                var: jwt_file
-
             - name: Decode JWT payload using base64url
               ansible.builtin.set_fact:
                 jwt_payload_encoded: "{{ (jwt_file['content'] | b64decode | split('.'))[1] }}"
