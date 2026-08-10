@@ -36,6 +36,7 @@ jobs:
 
   molecule:
     name: Molecule
+    if: ${{ github.event_name != 'pull_request' || !github.event.pull_request.head.repo.fork }}
     runs-on: ubuntu-24.04
     needs: ansible-lint
     env:
@@ -100,4 +101,3 @@ jobs:
         env:
           PY_COLORS: 1
           ANSIBLE_FORCE_COLOR: 1
-
