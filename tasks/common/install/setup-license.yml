@@ -117,11 +117,15 @@
 
     - name: Set up JWT
       when:
-        - nginx_app_protect_waf_setup in ['install', 'upgrade'] or nginx_app_protect_dos_setup in ['install', 'upgrade']
-        - nginx_plus_installed_version is defined and (nginx_app_protect_waf_setup == 'upgrade' or nginx_plus_target_version is defined and nginx_plus_target_version is version('33', '>='))
-          or nginx_plus_installed_version is not defined and (nginx_plus_target_version is not defined or nginx_plus_target_version is version('33', '>='))
-        - nginx_plus_installed_version is defined and (nginx_app_protect_dos_setup == 'upgrade' or nginx_plus_target_version is defined and nginx_plus_target_version is version('33', '>='))
-          or nginx_plus_installed_version is not defined and (nginx_plus_target_version is not defined or nginx_plus_target_version is version('33', '>='))
+        - (nginx_app_protect_waf_enable | bool and nginx_app_protect_waf_setup in ['install', 'upgrade'])
+          or (nginx_app_protect_dos_enable | bool and nginx_app_protect_dos_setup in ['install', 'upgrade'])
+        - >-
+          (nginx_plus_target_version is defined and nginx_plus_target_version is version('33', '>='))
+          or (nginx_plus_target_version is not defined and
+              (nginx_plus_installed_version is not defined
+               or nginx_plus_installed_version is version('33', '>=')
+               or (nginx_app_protect_waf_enable | bool and nginx_app_protect_waf_setup == 'upgrade')
+               or (nginx_app_protect_dos_enable | bool and nginx_app_protect_dos_setup == 'upgrade')))
       block:
         - name: Create NGINX Plus main directory
           ansible.builtin.file:
