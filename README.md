@@ -20,7 +20,7 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
 
 ### Ansible
 
-- This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.12`).
+- This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (`2.15` and later).
 - When using Ansible core, you will also need to install the following collections:
 
     ```yaml
@@ -35,6 +35,8 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
       - name: community.docker # Only required if you plan to use Molecule (see below)
         version: 4.6.0
     ```
+
+    **Note:** These collection versions require Ansible core `2.15` or later. Ansible core `2.12`-`2.14` is no longer supported with this dependency set.
 
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
 - Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).
