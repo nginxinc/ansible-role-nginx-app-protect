@@ -3,7 +3,7 @@
   ansible.builtin.assert:
     that:
       - ansible_facts['distribution'] | lower in nginx_app_protect_waf_distributions.keys() | list
-      - (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | string if ansible_facts['distribution'] | lower in ['ubuntu'] else ansible_facts['distribution_major_version'] in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
+      - ((ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version']) | string) in (nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['versions'] | map('string') | list)
       - ansible_facts['architecture'] in nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['architectures']
     success_msg: Your distribution, {{ nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is supported by NGINX App Protect WAF.
     fail_msg: Your distribution, {{ nginx_app_protect_waf_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is not supported by NGINX App Protect WAF.

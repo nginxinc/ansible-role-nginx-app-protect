@@ -146,10 +146,12 @@
               ansible.builtin.slurp:
                 src: "{{ nginx_app_protect_license['jwt']['dest'] | default((ansible_facts['os_family'] == 'FreeBSD') | ternary('/usr/local/etc/nginx/license.jwt', '/etc/nginx/license.jwt')) }}"
               register: jwt_file
+              no_log: true
 
             - name: Decode JWT payload using base64url
               ansible.builtin.set_fact:
                 jwt_payload_encoded: "{{ (jwt_file['content'] | b64decode | split('.'))[1] }}"
+              no_log: true
 
             - name: Decode JWT payload using base64url
               ansible.builtin.set_fact:
@@ -162,6 +164,7 @@
                     | b64decode
                     | from_json
                   }}
+              no_log: true
 
             - name: Assert JWT payload 'iss', 'aud', 'iat', and 'f5_sat' claims
               ansible.builtin.assert:
