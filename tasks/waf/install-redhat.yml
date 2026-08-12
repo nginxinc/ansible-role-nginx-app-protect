@@ -76,7 +76,7 @@
   changed_when: false
 
 - name: (Amazon Linux/RHEL) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: app-protect{{ (nginx_app_protect_waf_state == 'absent') | ternary(',app-protect-compiler,app-protect-engine,app-protect-plugin,nginx-plus-module-appprotect', '') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
@@ -85,7 +85,7 @@
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Amazon Linux/RHEL) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF signatures {{ nginx_app_protect_waf_signatures_version is defined | ternary(nginx_app_protect_signatures_version, '') }}
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: app-protect-attack-signatures{{ nginx_app_protect_waf_signatures_version | default('') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
@@ -97,7 +97,7 @@
   notify: (Handler - NGINX App Protect) Run NGINX
 
 - name: (Amazon Linux/RHEL) {{ nginx_app_protect_waf_setup | capitalize }} NGINX App Protect WAF threat campaigns {{ nginx_app_protect_waf_threat_campaigns_version is defined | ternary(nginx_app_protect_threat_campaigns_version, '') }}
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: app-protect-threat-campaigns{{ nginx_app_protect_waf_threat_campaigns_version | default('') }}
     state: "{{ nginx_app_protect_waf_state }}"
     update_cache: true
