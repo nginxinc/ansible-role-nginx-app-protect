@@ -11,13 +11,20 @@
         - lookup('env', 'RHEL_USERNAME') | length > 0
         - lookup('env', 'RHEL_PASSWORD') | length > 0
 
+    - name: (RHEL) Fail when subscription credentials are missing
+      ansible.builtin.fail:
+        msg: RHEL test targets require RHEL_USERNAME and RHEL_PASSWORD to run Molecule coverage on RedHat.
+      when:
+        - ansible_facts['distribution'] == "RedHat"
+        - not rhel_subscription | bool
+
     - name: (RHEL) Register system into RHEL subscription manager
       community.general.redhat_subscription:
         username: "{{ lookup('env', 'RHEL_USERNAME') }}"
         password: "{{ lookup('env', 'RHEL_PASSWORD') }}"
       when:
         - ansible_facts['distribution'] == "RedHat"
-        - rhel_subscription| bool
+        - rhel_subscription | bool
   tasks:
     - name: Install NGINX App Protect DoS
       ansible.builtin.include_role:
@@ -29,4 +36,7 @@
         nginx_app_protect_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
+          jwt: license/license.jwt
         nginx_app_protect_remove_license: false
+      when:
+        - ansible_facts['distribution'] != "RedHat" or rhel_subscription | bool

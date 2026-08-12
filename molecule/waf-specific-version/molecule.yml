@@ -2,6 +2,15 @@
 driver:
   name: docker
 platforms:
+  - name: amazonlinux-2023
+    image: amazonlinux:2023
+    platform: x86_64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: debian-bullseye
     image: debian:bullseye-slim
     platform: x86_64
@@ -11,8 +20,8 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: rhel-8
-    image: redhat/ubi8:8.10
+  - name: oraclelinux-8
+    image: oraclelinux:8
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -20,8 +29,8 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: ubuntu-focal
-    image: ubuntu:focal
+  - name: ubuntu-jammy
+    image: ubuntu:jammy
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -31,7 +40,12 @@ platforms:
     command: /sbin/init
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      remote_tmp: /tmp/.ansible/tmp
+  env:
+    ANSIBLE_ROLES_PATH: ~/.cache/molecule/ansible-role-nginx/${MOLECULE_SCENARIO_NAME}/roles:${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
   playbooks:
-    prepare: prepare.yml
+    prepare: ../common/prepare.yml
     converge: converge.yml
     verify: verify.yml

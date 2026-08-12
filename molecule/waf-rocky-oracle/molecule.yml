@@ -2,33 +2,6 @@
 driver:
   name: docker
 platforms:
-  - name: alpine-3.22
-    image: alpine:3.22
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: debian-bullseye
-    image: debian:bullseye-slim
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: debian-trixie
-    image: debian:trixie-slim
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
   - name: oraclelinux-8
     image: oraclelinux:8
     platform: x86_64
@@ -65,33 +38,6 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: ubuntu-jammy
-    image: ubuntu:jammy
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: ubuntu-noble
-    image: ubuntu:noble
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: ubuntu-26-04
-    image: ubuntu:26.04
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
 provisioner:
   name: ansible
   config_options:
@@ -99,8 +45,8 @@ provisioner:
       remote_tmp: /tmp/.ansible/tmp
   playbooks:
     prepare: ../common/prepare.yml
-    converge: converge.yml
-    verify: verify.yml
+    converge: ../default/converge.yml
+    verify: ../default/verify.yml
     cleanup: ../common/cleanup.yml
   inventory:
     host_vars:

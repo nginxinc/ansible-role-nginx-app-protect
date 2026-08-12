@@ -1,0 +1,34 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: alpine-3.21
+    image: alpine:3.21
+    platform: x86_64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: alpine-3.22
+    image: alpine:3.22
+    platform: x86_64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      remote_tmp: /tmp/.ansible/tmp
+  env:
+    ANSIBLE_ROLES_PATH: ~/.cache/molecule/ansible-role-nginx/${MOLECULE_SCENARIO_NAME}/roles:${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+  playbooks:
+    prepare: ../common/prepare.yml
+    converge: ../dos-default/converge.yml
+    verify: ../dos-default/verify.yml
+    cleanup: ../common/cleanup.yml

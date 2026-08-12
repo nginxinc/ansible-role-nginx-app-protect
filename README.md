@@ -20,21 +20,23 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
 
 ### Ansible
 
-- This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.12`).
+- This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (`2.15` and later).
 - When using Ansible core, you will also need to install the following collections:
 
     ```yaml
     ---
     collections:
       - name: ansible.posix
-        version: 1.4.0
-      - name: community.crypto
-        version: 2.10.0
+        version: 2.0.0
       - name: community.general
-        version: 6.2.0
-      - name: community.docker  # Only required if you plan to use Molecule (see below)
-        version: 3.4.0
+        version: 10.7.0
+      - name: community.crypto
+        version: 2.26.2
+      - name: community.docker # Only required if you plan to use Molecule (see below)
+        version: 4.6.0
     ```
+
+    **Note:** These collection versions require Ansible core `2.15` or later. Ansible core `2.12`-`2.14` is no longer supported with this dependency set.
 
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
 - Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).
@@ -46,15 +48,16 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
 
 ### Molecule (Optional)
 
-- Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `4.x`.
+- Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `26.x`.
 - Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule Docker driver.*
 - To run the Molecule tests, you must copy your NGINX App Protect license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
 
-  You can alternatively add your NGINX App Protect repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
+  You can alternatively add your NGINX App Protect repository certificate, key, and JWT to the local environment. Run the following commands to export these files and execute the Molecule tests:
 
   ```bash
   export NGINX_CRT=$( cat <path to your certificate file> | base64 )
   export NGINX_KEY=$( cat <path to your key file> | base64 )
+  export NGINX_JWT=$( cat <path to your JWT file> )
   molecule test
   ```
 
@@ -89,15 +92,28 @@ git clone https://github.com/nginxinc/ansible-role-nginx-app-protect.git
 The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect WAF:
 
 ```yaml
-Amazon Linux 2:
-  - any
+Alpine Linux:
+  - 3.22
+Amazon Linux:
+  - 2023
 Debian:
-  - buster (10)
+  - bullseye (11)
+  - bookworm (12)
+  - trixie (13)
+Oracle Linux:
+  - 8
 RHEL:
   - 8.1+
+  - 9.0+
+  - 10.0+
+Rocky Linux:
+  - 8
+  - 9
+  - 10
 Ubuntu:
-  - bionic (18.04)
-  - focal (20.04)
+  - jammy (22.04)
+  - noble (24.04)
+  - resolute (26.04)
 ```
 
 ### NGINX App Protect DoS
@@ -105,15 +121,26 @@ Ubuntu:
 The NGINX App Protect Ansible role supports all platforms supported by [NGINX Plus](https://www.nginx.com/products/technical-specs/) that intersect with the following list of distributions of App Protect DoS:
 
 ```yaml
+Alpine Linux:
+  - 3.21
+  - 3.22
+Amazon Linux:
+  - 2023
 Debian:
-  - buster (10)
   - bullseye (11)
+  - bookworm (12)
 RHEL:
   - 8.0+
+  - 9.0+
+Rocky Linux:
+  - 8
+  - 9
 Ubuntu:
-  - bionic (18.04)
-  - focal (20.04)
+  - jammy (22.04)
+  - noble (24.04)
 ```
+
+**Note:** On Debian Trixie and newer releases, `apt-key` is no longer available. This role installs repository keys using GPG keyrings in `/usr/share/keyrings`.
 
 ## Role Variables
 
@@ -140,10 +167,10 @@ A working functional playbook example can be found in the **`molecule/default/`*
 | Name | Description |
 | ---- | ----------- |
 | **[`molecule/default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/default/converge.yml)** | Install and configure NGINX App Protect WAF |
- **[`molecule/advanced/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/advanced/converge.yml)** | Advanced integration test including NGINX App Protect WAF sending log data to a "remote" syslog server |
-| **[`molecule/dos/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/dos/converge.yml)** | Install NGINX App Protect DoS |
-| **[`molecule/specific-version/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/specific-version/converge.yml)** | Install a specific version of NGINX App Protect WAF signatures |
-| **[`molecule/uninstall/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/uninstall/converge.yml)** | Uninstall NGINX App Protect WAF/DoS |
+ **[`molecule/waf-advanced/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/waf-advanced/converge.yml)** | Advanced integration test including NGINX App Protect WAF sending log data to a "remote" syslog server |
+| **[`molecule/dos-default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/dos-default/converge.yml)** | Install NGINX App Protect DoS |
+| **[`molecule/waf-specific-version/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/waf-specific-version/converge.yml)** | Install a specific version of NGINX App Protect WAF signatures |
+| **[`molecule/waf-dos-uninstall/converge.yml`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/molecule/waf-dos-uninstall/converge.yml)** | Uninstall NGINX App Protect WAF/DoS |
 
 ## Other NGINX Ansible Collections and Roles
 
@@ -165,4 +192,4 @@ You can find the Ansible NGINX Unit role to install NGINX Unit [here](https://gi
 
 [Alessandro Fael Garcia](https://github.com/alessfg)
 
-&copy; [F5, Inc.](https://www.f5.com/) 2020 - 2024
+&copy; [F5, Inc.](https://www.f5.com/) 2020 - 2026

@@ -17,11 +17,28 @@
         force: false
         mode: "0444"
 
+    - name: Create ephemeral license JWT file from env var # noqa template-instead-of-copy
+      ansible.builtin.copy:
+        content: "{{ lookup('env', 'NGINX_JWT') }}"
+        dest: ../../files/license/license.jwt
+        force: false
+        mode: "0444"
+
 - name: Install NGINX App Protect WAF and DoS
   hosts: all
+  gather_facts: false
   vars:
     rhel_subscription: false
   pre_tasks:
+    - name: Wait for containers to be ready
+      ansible.builtin.wait_for_connection:
+        delay: 10
+        sleep: 5
+        timeout: 300
+
+    - name: Gather facts
+      ansible.builtin.gather_facts:
+
     - name: (RHEL) Check if there is a valid RHEL subscription
       ansible.builtin.set_fact:
         rhel_subscription: true
@@ -45,6 +62,7 @@
         nginx_app_protect_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
+          jwt: license/license.jwt
         nginx_app_protect_waf_enable: true
         nginx_app_protect_waf_install_signatures: true
         nginx_app_protect_waf_install_threat_campaigns: true
