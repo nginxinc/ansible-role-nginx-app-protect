@@ -6,9 +6,13 @@ categories:
   - title: "💣 Breaking Changes"
     labels:
       - "breaking change"
+    type: "changelog"
+    semver-increment: "minor"
   - title: "🔔 Deprecation Warnings"
     labels:
       - "deprecation"
+    type: "changelog"
+    semver-increment: "minor"
   - title: "🚀 Features"
     labels:
       - "feature"
@@ -29,19 +33,6 @@ categories:
       - "dependencies"
 exclude-labels:
   - "skip-changelog"
-version-resolver:
-  minor:
-    labels:
-      - "breaking change"
-      - "deprecation"
-  patch:
-    labels:
-      - "bug"
-      - "dependencies"
-      - "documentation"
-      - "feature"
-      - "enhancement"
-  default: patch
 autolabeler:
   - label: "breaking change"
     body:
