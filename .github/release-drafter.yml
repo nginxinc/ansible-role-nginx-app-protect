@@ -37,10 +37,9 @@ categories:
     type: "changelog"
     when:
       label: "dependencies"
-  - title: "Skipped"
-    type: "pre-exclude"
-    labels:
-      - "skip-changelog"
+  - type: "pre-exclude"
+    when:
+      label: "skip-changelog"
 autolabeler:
   - label: "breaking change"
     body:
