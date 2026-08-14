@@ -27,16 +27,16 @@ If you wish to install NGINX App Protect WAF or NGINX App Protect DoS using this
     ---
     collections:
       - name: ansible.posix
-        version: 2.0.0
+        version: 2.2.2
       - name: community.general
-        version: 10.7.0
+        version: 11.4.9
       - name: community.crypto
-        version: 2.26.2
+        version: 2.26.9
       - name: community.docker # Only required if you plan to use Molecule (see below)
-        version: 4.6.0
+        version: 5.2.1
     ```
 
-    **Note:** These collection versions require Ansible core `2.15` or later. Ansible core `2.12`-`2.14` is no longer supported with this dependency set.
+    **Note:** These collection versions require Ansible core `2.16` or later. Ansible core `2.12`-`2.15` is no longer supported with this dependency set.
 
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
 - Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).

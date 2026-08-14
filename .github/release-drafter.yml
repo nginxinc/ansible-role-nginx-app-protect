@@ -4,44 +4,42 @@ tag-template: "$RESOLVED_VERSION"
 include-pre-releases: true
 categories:
   - title: "💣 Breaking Changes"
-    labels:
-      - "breaking change"
+    type: "changelog"
+    semver-increment: "minor"
+    when:
+      label: "breaking change"
   - title: "🔔 Deprecation Warnings"
-    labels:
-      - "deprecation"
+    type: "changelog"
+    semver-increment: "minor"
+    when:
+      label: "deprecation"
   - title: "🚀 Features"
-    labels:
-      - "feature"
+    type: "changelog"
+    when:
+      label: "feature"
   - title: "🎉 Enhancements"
-    labels:
-      - "enhancement"
+    type: "changelog"
+    when:
+      label: "enhancement"
   - title: "🐛 Bug Fixes"
-    labels:
-      - "bug"
+    type: "changelog"
+    when:
+      label: "bug"
   - title: "🧪 Tests"
-    labels:
-      - "tests"
+    type: "changelog"
+    when:
+      label: "tests"
   - title: "📝 Documentation"
-    labels:
-      - "documentation"
+    type: "changelog"
+    when:
+      label: "documentation"
   - title: "⬆️ Dependencies"
-    labels:
-      - "dependencies"
-exclude-labels:
-  - "skip-changelog"
-version-resolver:
-  minor:
-    labels:
-      - "breaking change"
-      - "deprecation"
-  patch:
-    labels:
-      - "bug"
-      - "dependencies"
-      - "documentation"
-      - "feature"
-      - "enhancement"
-  default: patch
+    type: "changelog"
+    when:
+      label: "dependencies"
+  - type: "pre-exclude"
+    when:
+      label: "skip-changelog"
 autolabeler:
   - label: "breaking change"
     body:

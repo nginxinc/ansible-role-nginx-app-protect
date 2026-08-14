@@ -61,7 +61,7 @@
   changed_when: false
 
 - name: (Amazon Linux/RHEL) {{ nginx_app_protect_dos_setup | capitalize }} NGINX App Protect DoS
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: app-protect-dos{{ (nginx_app_protect_dos_state == 'absent') | ternary(',nginx-plus-module-appprotectdos', '') }}
     state: "{{ nginx_app_protect_dos_state }}"
     update_cache: true
