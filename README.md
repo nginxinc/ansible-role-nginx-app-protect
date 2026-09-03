@@ -94,10 +94,10 @@ The NGINX App Protect Ansible role supports all platforms supported by [NGINX Pl
 ```yaml
 Alpine Linux:
   - 3.22
+  - 3.24
 Amazon Linux:
   - 2023
 Debian:
-  - bullseye (11)
   - bookworm (12)
   - trixie (13)
 Oracle Linux:

@@ -18,7 +18,7 @@ nginx_app_protect_dos_state: "{{ nginx_app_protect_state_vals[nginx_app_protect_
 nginx_app_protect_waf_distributions:
   alpine:
     name: Alpine Linux
-    versions: [3.22]
+    versions: [3.22, 3.24]
     architectures: [x86_64]
   amazon:
     name: Amazon Linux
@@ -26,7 +26,7 @@ nginx_app_protect_waf_distributions:
     architectures: [x86_64]
   debian:
     name: Debian
-    versions: [11, 12, 13]
+    versions: [12, 13]
     architectures: [x86_64]
   oraclelinux:
     name: Oracle Linux
