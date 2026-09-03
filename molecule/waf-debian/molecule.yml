@@ -2,24 +2,6 @@
 driver:
   name: docker
 platforms:
-  - name: alpine-3.22
-    image: alpine:3.22
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: debian-bullseye
-    image: debian:bullseye-slim
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
   - name: debian-bookworm
     image: debian:bookworm-slim
     platform: x86_64
